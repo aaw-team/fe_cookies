@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-05-18T11:19:00Z" product-name="fe_cookies">
+        <header/>
+        <body>
+            <trans-unit id="backendmodule.headings.index">
+                <source>Frontend Cookies Management</source>
+                <target>Frontend Cookies Verwaltung</target>
+            </trans-unit>
+
+            <!-- System messages -->
+            <trans-unit id="sysmessage.norootpage.heading">
+                <source>No rootpage selected</source>
+                <target>Keine Wurzelseite ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.norootpage.text">
+                <source>Select a root page from the page tree. You recognize root pages by the "world"-symbol.</source>
+                <target>Wählen Sie eine Wurzelseite aus dem Seitenbaum. Sie erkennen Wurzelseiten am "Welt"-Symbol.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

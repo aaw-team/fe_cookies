@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/AawTeam/FeCookies/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="content">
+
+    <div id="fe_cookie-banner" role="dialog" aria-label="Cookie notice (LLL)" aria-describedby="fe_cookie-text">
+        <div>
+            <div id="fe_cookie-text">
+                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.beforeBlocks" data="{rootPage}" />
+                <f:if condition="{blocks}">
+                    <f:for each="{blocks}" as="block">
+                        <div>{block.bodytext -> f:format.html()}</div>
+                    </f:for>
+                </f:if>
+                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.afterBlocks" data="{rootPage}" />
+            </div>
+            <div>
+                <c:link.eid>
+                    <button id="fe_cookie-button-accept">I do appreciate the notice and accept my faith!</button>
+                </c:link.eid>
+            </div>
+        </div>
+        <button id="fe_cookie-button-close" aria-label="Close cookie notice (LLL)"><span></span><span></span></button>
+    </div>
+
+</f:section>
+
+</html>

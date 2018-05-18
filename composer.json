@@ -1,0 +1,53 @@
+{
+    "name": "aaw-team/fe_cookies",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "homepage": "https://github.com/aaw-team/fe_cookies",
+    "license": "GPL-2.0-or-later",
+    "version": "0.1.0-dev",
+    "authors": [
+        {
+            "name": "Agentur am Wasser | Maeder & Partner AG",
+            "role": "Developer",
+            "homepage": "https://web.agenturamwasser.ch/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6,<7.3",
+        "typo3/cms-core": "^7.6.27 || ^8.7.13"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1",
+        "friendsofphp/php-cs-fixer": "^2.11"
+    },
+    "replace": {
+        "fe_cookies": "self.version",
+        "typo3-ter/fe_cookies": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "AawTeam\\FeCookies\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AawTeam\\FeCookies\\Tests\\": "Tests"
+        }
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/fe_cookies ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/fe_cookies"
+        ]
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/Web"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Backend" />
+
+<f:section name="content">
+    <h1><f:translate key="backendmodule.headings.index" /></h1>
+    <f:be.infobox title="{f:translate(key:'sysmessage.norootpage.heading')}" state="-1">
+        {f:translate(key:'sysmessage.norootpage.text')}
+    </f:be.infobox>
+</f:section>
+    
+</html>

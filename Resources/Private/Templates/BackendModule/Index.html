@@ -1,0 +1,85 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/AawTeam/FeCookies/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Backend" />
+
+<f:section name="content">
+    
+    <f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/Backend/Notification'}" />
+
+    <h1><f:translate key="backendmodule.headings.index" /></h1>
+    
+    <p>
+        Display the state of the message: 'on' or 'off'.
+    </p>
+    
+    <f:if condition="{blocks}">
+        <f:then>
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th class="col-icon nowrap">
+                        <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block"><core:icon identifier="actions-add" /></c:be.link.recordCreate>
+                    </th>
+                    <th class="col-title col-responsive nowrap">Title</th>
+                    <th class="col-control nowrap">Actions</th>
+                </tr>
+                <f:for each="{blocks}" as="block">
+                    <tr>
+                        <td class="col-icon nowrap"><c:be.recordIcon object="{block}" /></td>
+                        <td class="col-title col-responsive nowrap">
+                            <b>{block.title}</b>
+                            <br />
+                            {block.bodytext -> f:format.html() -> f:format.crop(maxCharacters:100,respectHtml:1)}
+                        </td>
+                        <td class="col-control nowrap">
+                            <div class="btn-group">
+                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                                    <core:icon identifier="actions-open" />
+                                </c:be.link.recordEdit>
+                                <f:if condition="{block.hidden}">
+                                    <f:then>
+                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="unhide">
+                                            <core:icon identifier="actions-edit-unhide" />
+                                        </c:be.link.recordChange>
+                                    </f:then>
+                                    <f:else>
+                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="hide">
+                                            <core:icon identifier="actions-edit-hide" />
+                                        </c:be.link.recordChange>
+                                    </f:else>
+                                </f:if>
+                                <c:be.link.recordChange class="btn btn-default t3js-modal-trigger" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
+                                    <core:icon identifier="actions-edit-delete" />
+                                </c:be.link.recordChange>
+                                <f:comment>
+                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                                    <core:icon identifier="actions-move-up" />
+                                </c:be.link.recordEdit>
+                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                                    <core:icon identifier="actions-move-down" />
+                                </c:be.link.recordEdit>
+                                </f:comment>
+                            </div>
+                        </td>
+                    </tr>
+                </f:for>
+            </table>
+        </f:then>
+        <f:else>
+            <p>LLL: There are no message blocks registered atm..</p>
+            
+            
+            
+        </f:else>
+    </f:if>
+    
+    
+    <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block">
+        <core:icon identifier="actions-document-new" /> Create new block
+    </c:be.link.recordCreate>
+    
+</f:section>
+    
+</html>

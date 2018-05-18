@@ -1,0 +1,7 @@
+plugin.tx_fecookies {
+    view {
+        templateRootPath =
+        partialRootPath =
+        layoutRootPath =
+    }
+}
