@@ -8,6 +8,7 @@ namespace AawTeam\FeCookies\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use AawTeam\FeCookies\Utility\FeCookiesUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,16 +55,10 @@ class EidController
     }
 
     /**
-     *
+     * @return bool
      */
     protected function setCookie()
     {
-        $cookieDomain = !empty($GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain'])
-            ? (string)$GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain']
-            : (string)$GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieDomain'];
-        $cookiePath = $cookieDomain ? '/' : GeneralUtility::getIndpEnv('TYPO3_SITE_PATH');
-        $cookieExpire = 0;
-        $cookieSecure = (bool)$GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieSecure'] && GeneralUtility::getIndpEnv('TYPO3_SSL');
-        setcookie('tx_fecookies', '1', $cookieExpire, $cookiePath, $cookieDomain, $cookieSecure, true);
+        return FeCookiesUtility::setCookie();
     }
 }

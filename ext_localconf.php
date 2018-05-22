@@ -17,6 +17,14 @@ $bootstrap = function () {
         ]
     );
 
+    // Configuration cache
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['fecookies_configuration'] = [
+        'backend' => \TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend::class,
+        'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
+        'options' => [],
+        'groups' => ['system'],
+    ];
+
     // Register eID
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 
