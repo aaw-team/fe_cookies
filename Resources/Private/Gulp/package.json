@@ -1,0 +1,31 @@
+{
+  "name": "fe_cookies",
+  "version": "0.1.0-dev",
+  "description": "fe_cookies",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:aaw-team/fe_cookies.git"
+  },
+  "author": "Agentur am Wasser | Maeder & Partner AG <development@agenturamwasser.ch> (https://web.agenturamwasser.ch)",
+  "license": "For the full copyright and license information, please read the LICENSE.txt file that was distributed with this source code.",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-flatmap": "^1.0.0",
+    "gulp-include": "^2.3.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "js-yaml": "^3.9.1",
+    "pump": "^1.0.2",
+    "yargs": "^8.0.2"
+  }
+}

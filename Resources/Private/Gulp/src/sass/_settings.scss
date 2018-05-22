@@ -1,0 +1,21 @@
+@import '_mixins.scss';
+
+// prefix
+$prefix: 'tx_fe_cookies';
+
+// mediaquery
+$mediaquerySmSize: em(768px, 16px);
+
+// style settings
+$fontSize: .8em;
+$background: rgb(26,57,101);
+$color: white;
+$buttonBackground: $color;
+$buttonColor: $background;
+$buttonMinSize: rem(100px);
+$closeColor: $color;
+$closeButtonSize: rem(18px);
+$padding: rem(18px);
+$paddingSideSm: rem(30px);
+$maxWidth: rem(400px);
+$zIndex: 99999999;

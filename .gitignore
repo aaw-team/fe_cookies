@@ -2,3 +2,7 @@
 composer.lock
 .php_cs.cache
 .DS_Store
+.sass-cache
+.tern-project
+npm-debug.log
+node_modules

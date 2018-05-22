@@ -1,0 +1,41 @@
+/*!
+ * Copyright 2018 Agentur am Wasser | Maeder & Partner AG
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
+@import '_settings.scss';
+@import '_mixins.scss';
+
+// Classes for elements when cookie has not been set yet
+html.tx_fe_cookies-noCookie {
+    .tx_fe_cookies-noCookie-display-none {
+        display: none;
+    }
+    .tx_fe_cookies-noCookie-display-block {
+        display: block;
+    }
+    .tx_fe_cookies-noCookie-display-inline {
+        display: inline;
+    }
+    .tx_fe_cookies-noCookie-display-inline-block {
+        display: inline-block;
+    }
+}
+
+// Classes for elements when cookie has been set
+html.tx_fe_cookies-hasCookie {
+    .tx_fe_cookies-hasCookie-display-none {
+        display: none;
+    }
+    .tx_fe_cookies-hasCookie-display-block {
+        display: block;
+    }
+    .tx_fe_cookies-hasCookie-display-inline {
+        display: inline;
+    }
+    .tx_fe_cookies-hasCookie-display-inline-block {
+        display: inline-block;
+    }
+}

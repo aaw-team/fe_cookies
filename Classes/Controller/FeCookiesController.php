@@ -31,12 +31,12 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         // Add the css file
         $this->getPagerenderer()->addCssFile(
-            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/Css/Fecookies.css')
+            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/Css/DefaultStyle.css')
         );
         // Add the js file
         $this->getPagerenderer()->addJsFooterLibrary(
             'fe_cookies',
-            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js')
+            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/FeCookies.js')
         );
 
         // Determine rootpage

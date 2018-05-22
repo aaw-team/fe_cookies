@@ -1,0 +1,186 @@
+/*!
+ * Copyright 2018 Agentur am Wasser | Maeder & Partner AG
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
+@import '_settings.scss';
+@import '_mixins.scss';
+
+#tx_fe_cookies-banner {
+    position: relative;
+    background: $background;
+    font-size: $fontSize;
+    color: $color;
+
+    width: 100%;
+    min-height: rem(50px);
+    padding: $padding;
+    padding-top: $padding * .5 + $closeButtonSize;
+    box-sizing: border-box;
+
+    z-index: $zIndex;
+
+    &.tx_fe_cookies-banner-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        &.tx_fe_cookies-hiding {
+            animation: .5s tx_fe_cookies_hideBanner-bottom ease;
+            animation-fill-mode: both;
+        }
+    }
+
+    &.tx_fe_cookies-banner-top {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+
+        &.tx_fe_cookies-hiding {
+            animation: .5s tx_fe_cookies_hideBanner-top ease;
+            animation-fill-mode: both;
+        }
+    }
+
+    a {
+        text-decoration: underline;
+        color: $color;
+    }
+
+    p {
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    > div {
+        max-width: $maxWidth;
+        margin: 0 auto;
+
+        > div {
+            text-align: left;
+            margin-bottom: $padding
+        }
+
+        > div + div {
+            text-align: center;
+            margin: 0;
+        }
+    }
+
+    #tx_fe_cookies-button-accept {
+        display: inline-block;
+
+        background: $buttonBackground;
+        color: $buttonColor;
+        text-decoration: none;
+        text-align: center;
+
+        min-width: $buttonMinSize;
+        padding: rem(5px) rem(20px);
+        border-radius: rem(2px);
+        box-sizing: border-box;
+    }
+
+    #tx_fe_cookies-button-close {
+        position: absolute;
+        right: $padding * .5;
+        top: $padding * .5;
+
+        background: transparent;
+        font-size: 1em;
+        line-height: 1.3em;
+        cursor: pointer;
+        border: none;
+
+        width: $closeButtonSize;
+        height: $closeButtonSize;
+        padding: 0;
+        margin: 0;
+
+        span {
+            display: block;
+
+            position: absolute;
+
+            background: $closeColor;
+
+            width: $closeButtonSize;
+            height: rem(2px);
+            border-radius: rem(1px);
+
+            transform: rotateZ(-45deg);
+
+            &:first-child {
+                transform: rotateZ(45deg);
+            }
+        }
+    }
+
+    @include mediaquery-sm {
+        padding: $padding $paddingSideSm;
+
+        > div {
+            display: flex;
+            align-items: center;
+            max-width: none;
+            margin-right: $paddingSideSm + $closeButtonSize;
+
+            > div {
+                margin: 0;
+
+                &:first-child {
+                    margin-right: $paddingSideSm;
+                    max-width: calc(100% - #{$buttonMinSize + $paddingSideSm});
+                    width: 100%;
+                }
+
+                + div {
+                    min-width: $buttonMinSize;
+                    text-align: right;
+                }
+            }
+        }
+
+        #tx_fe_cookies-button-accept {
+        }
+
+        #tx_fe_cookies-button-close {
+            height: 100%;
+
+            top: 0;
+            right: $paddingSideSm;
+        }
+    }
+
+    @media print {
+        display: none;
+    }
+}
+
+@keyframes tx_fe_cookies_hideBanner-bottom {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: .5;
+    }
+}
+
+@keyframes tx_fe_cookies_hideBanner-top {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: .5;
+    }
+}

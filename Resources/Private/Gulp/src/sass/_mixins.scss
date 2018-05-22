@@ -1,0 +1,14 @@
+// px to em / rem calculator
+@function em($px, $base: 16px) {
+    @return ($px / $base) * 1em;
+}
+@function rem($px) {
+    @return ($px / 16px) * 1rem;
+}
+
+// mediaquery mixin
+@mixin mediaquery-sm {
+    @media only screen and (min-width : $mediaquerySmSize) {
+        @content;
+    }
+}
