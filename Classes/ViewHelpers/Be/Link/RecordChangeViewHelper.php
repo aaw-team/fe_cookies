@@ -32,7 +32,7 @@ class RecordChangeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTa
         $this->registerArgument('returnUrl', 'string', 'The return URL', false, null);
         $this->registerArgument('table', 'string', 'The table', true);
         $this->registerArgument('uid', 'int', 'The UID of the record to be edited', true);
-        $this->registerArgument('cmd', 'string', 'The command: "moveUp", "moveDown", "hide", "unhide", "delete"', true);
+        $this->registerArgument('cmd', 'string', 'The command: "hide", "unhide", "delete"', true);
     }
 
     /**
@@ -55,9 +55,6 @@ class RecordChangeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTa
                     ]
                 ];
                 $moduleName = 'tce_db';
-                break;
-            case 'moveUp':
-            case 'moveDown':
                 break;
             case 'hide':
             case 'unhide':

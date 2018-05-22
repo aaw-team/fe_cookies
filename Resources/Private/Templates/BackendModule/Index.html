@@ -25,7 +25,7 @@
                     <th class="col-title col-responsive nowrap">Title</th>
                     <th class="col-control nowrap">Actions</th>
                 </tr>
-                <f:for each="{blocks}" as="block">
+                <f:for each="{blocks}" as="block" iteration="iterator">
                     <tr>
                         <td class="col-icon nowrap"><c:be.recordIcon object="{block}" /></td>
                         <td class="col-title col-responsive nowrap">
@@ -53,14 +53,15 @@
                                 <c:be.link.recordChange class="btn btn-default t3js-modal-trigger" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
                                     <core:icon identifier="actions-edit-delete" />
                                 </c:be.link.recordChange>
-                                <f:comment>
-                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                            </div>
+
+                            <div class="btn-group">
+                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}">
                                     <core:icon identifier="actions-move-up" />
-                                </c:be.link.recordEdit>
-                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                                </c:be.link.recordMove>
+                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" direction="down">
                                     <core:icon identifier="actions-move-down" />
-                                </c:be.link.recordEdit>
-                                </f:comment>
+                                </c:be.link.recordMove>
                             </div>
                         </td>
                     </tr>
