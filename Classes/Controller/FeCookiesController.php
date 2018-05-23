@@ -8,10 +8,7 @@ namespace AawTeam\FeCookies\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use AawTeam\FeCookies\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 
 /**
  * FeCookiesController
@@ -40,7 +37,7 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             '|',                                                                      // $splitChar
             false,                                                                    // $async
             // SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/CookieBannerHandler.js", true)) . PHP_EOL;'
-            'sha384-Bm/7z1lLMVTEVljyeX5nE/C9kpzjsCkBCLGMfGmFzxHmEG3gBiYDdVYEiDkMFCeP' // $integrity
+            'sha384-1VuV3tkg3iJ5ine3LmrM+AEUw/fY8Hm4RQBAH2QpqNIS85/MYWRrL1gATeZI2mRg' // $integrity
         );
 
         // Determine rootpage

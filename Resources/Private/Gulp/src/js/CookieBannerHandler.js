@@ -42,7 +42,9 @@
     });
 
     // Register the close click event
-    document.getElementById('tx_fe_cookies-button-close').addEventListener('click', hideFeCookieBanner);
+    if (document.getElementById('tx_fe_cookies-button-close')) {
+        document.getElementById('tx_fe_cookies-button-close').addEventListener('click', hideFeCookieBanner);
+    }
 
     // Hide cookie banner when setCookie event has been fired
     document.addEventListener('setCookie', hideFeCookieBanner);
