@@ -14,6 +14,17 @@
             <trans-unit id="sysmessage.norootpage.text">
                 <source>Select a root page from the page tree. You recognize root pages by the "world"-symbol.</source>
             </trans-unit>
+
+            <!-- Plugin -->
+            <trans-unit id="plugin.label.button.accept">
+                <source>Accept</source>
+            </trans-unit>
+            <trans-unit id="plugin.label.button.close">
+                <source>Close</source>
+            </trans-unit>
+            <trans-unit id="plugin.label.aria.banner">
+                <source>Cookie usage notice</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

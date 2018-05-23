@@ -17,6 +17,20 @@
                 <source>Select a root page from the page tree. You recognize root pages by the "world"-symbol.</source>
                 <target>Wählen Sie eine Wurzelseite aus dem Seitenbaum. Sie erkennen Wurzelseiten am "Welt"-Symbol.</target>
             </trans-unit>
+
+            <!-- Plugin -->
+            <trans-unit id="plugin.label.button.accept">
+                <source>Accept</source>
+                <target>Akzeptieren</target>
+            </trans-unit>
+            <trans-unit id="plugin.label.button.close">
+                <source>Close</source>
+                <target>Schliessen</target>
+            </trans-unit>
+            <trans-unit id="plugin.label.aria.banner">
+                <source>Cookie usage notice</source>
+                <target>Hinweis zur Verwendung von Cookies</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
