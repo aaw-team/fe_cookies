@@ -22,7 +22,7 @@
 
         // "Merge" the configuration with our default values
         this.configuration = {
-            name: configuration.name || 'tx_fe_cookies',
+            name: configuration.name || 'tx_fecookies',
             domain: configuration.domain || null,
             path: configuration.path || '/',
             lifetime: configuration.lifetime || null,
@@ -137,5 +137,5 @@
     };
 
     // Create new instance of FeCookies and bind it to the AawTeam namespace
-    AawTeam.feCookies = new FeCookies({lifetime: 300});
+    AawTeam.feCookies = new FeCookies(typeof fe_cookies_configuration === 'object' ? fe_cookies_configuration : {});
 })();

@@ -25,6 +25,9 @@ $bootstrap = function () {
         'groups' => ['system'],
     ];
 
+    // Register PageRenderer hook
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = \AawTeam\FeCookies\Hook\PageRendererHook::class . '->run';
+
     // Register eID
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 

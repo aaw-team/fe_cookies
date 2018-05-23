@@ -11,6 +11,7 @@ namespace AawTeam\FeCookies\Configuration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Page\PageGenerator;
 
 /**
  * Configuration
@@ -98,6 +99,24 @@ class Configuration implements SingletonInterface
     public function getConfiguration()
     {
         return $this->configuration;
+    }
+
+    /**
+     * @throws \RuntimeException
+     * @return string
+     */
+    public function getJsConfigurationFile()
+    {
+        $currentConfiguration = $this->configuration;
+        unset($currentConfiguration['httpOnly']);
+        $js = '// Auto-generated JavaScript by ' . __METHOD__ . '
+var fe_cookies_configuration=' . json_encode($currentConfiguration) . ';
+';
+        $filename = PageGenerator::inline2TempFile($js, 'js');
+        if (!file_exists(GeneralUtility::getFileAbsFileName($filename))) {
+            throw new \RuntimeException('Cannot generate JS configuration file');
+        }
+        return $filename;
     }
 
     /**
