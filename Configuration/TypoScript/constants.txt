@@ -1,7 +1,10 @@
 plugin.tx_fecookies {
     view {
+        # cat=fe_cookies/file/001; type=string; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.templateRootPath
         templateRootPath =
+        # cat=fe_cookies/file/002; type=string; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.partialRootPath
         partialRootPath =
+        # cat=fe_cookies/file/003; type=string; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.layoutRootPath
         layoutRootPath =
     }
     settings {

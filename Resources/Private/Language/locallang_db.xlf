@@ -33,6 +33,15 @@
             <trans-unit id="constants.settings.includeCssApi">
                 <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
             </trans-unit>
+            <trans-unit id="constants.settings.templateRootPath">
+                <source>Template root path: Sets a specific path for template files.</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.partialRootPath">
+                <source>Partial root path: Sets a specific path for view-partial files.</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.layoutRootPath">
+                <source>Layout root path: Sets a specific path for layout files.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
