@@ -6,4 +6,5 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('fe_cookies', 'Configuration/TypoScript', 'Frontend Cookies');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('fe_cookies', 'Configuration/TypoScript', 'Frontend Cookies: Base');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('fe_cookies', 'Configuration/TypoScript/DefaultStyle', 'Frontend Cookies: Default style');
