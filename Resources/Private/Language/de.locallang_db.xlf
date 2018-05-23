@@ -42,15 +42,15 @@
                 <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
                 <target>CSS API einbinden: Bindet eine CSS-Datei ein, welche verschiedene nützliche CSS Klassen definiert.</target>
             </trans-unit>
-            <trans-unit id="constants.settings.templateRootPath">
+            <trans-unit id="constants.view.templateRootPath">
                 <source>Template root path: Sets a specific path for template files.</source>
                 <target>Template root path: Definiert einen spezifischen Pfad für Template-Dateien.</target>
             </trans-unit>
-            <trans-unit id="constants.settings.partialRootPath">
+            <trans-unit id="constants.view.partialRootPath">
                 <source>Partial root path: Sets a specific path for view-partial files.</source>
                 <target>Partial root path: Definiert einen spezifischen Pfad für View-Partial-Dateien.</target>
             </trans-unit>
-            <trans-unit id="constants.settings.layoutRootPath">
+            <trans-unit id="constants.view.layoutRootPath">
                 <source>Layout root path: Sets a specific path for layout files.</source>
                 <target>Layout root path: Definiert einen spezifischen Pfad für Layout-Dateien.</target>
             </trans-unit>
