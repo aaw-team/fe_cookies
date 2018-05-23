@@ -37,6 +37,11 @@
                 <source>Visibility of message block</source>
                 <target>Sichtbarkeit des Meldungs-Blocks</target>
             </trans-unit>
+            <!-- Constants -->
+            <trans-unit id="constants.settings.includeCssApi">
+                <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
+                <target>CSS API einbinden: Bindet eine CSS-Datei ein, welche verschiedene nützliche CSS Klassen definiert.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

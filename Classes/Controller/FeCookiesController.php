@@ -29,14 +29,18 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function indexAction()
     {
-        // Add the css file
-        $this->getPagerenderer()->addCssFile(
-            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/Css/DefaultStyle.css')
-        );
         // Add the js file
-        $this->getPagerenderer()->addJsFooterLibrary(
-            'fe_cookies',
-            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/FeCookies.js')
+        $this->getPagerenderer()->addJsFooterFile(
+            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/CookieBannerHandler.js'),
+            'text/javascript',
+            false,                                                                    // $compress
+            false,                                                                    // $forceOnTop
+            '',                                                                       // $allWrap
+            false,                                                                    // $excludeFromConcatenation
+            '|',                                                                      // $splitChar
+            false,                                                                    // $async
+            // SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/CookieBannerHandler.js", true)) . PHP_EOL;'
+            'sha384-Bm/7z1lLMVTEVljyeX5nE/C9kpzjsCkBCLGMfGmFzxHmEG3gBiYDdVYEiDkMFCeP' // $integrity
         );
 
         // Determine rootpage

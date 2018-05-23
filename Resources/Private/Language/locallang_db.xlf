@@ -29,6 +29,10 @@
             <trans-unit id="tca.tx_fecookies_domain_model_block.palette.hidden">
                 <source>Visibility of message block</source>
             </trans-unit>
+            <!-- Constants -->
+            <trans-unit id="constants.settings.includeCssApi">
+                <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

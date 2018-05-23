@@ -4,4 +4,8 @@ plugin.tx_fecookies {
         partialRootPath =
         layoutRootPath =
     }
+    settings {
+        # cat=fe_cookies/enable/001; type=boolean; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.includeCssApi
+        includeCssApi = 0
+    }
 }

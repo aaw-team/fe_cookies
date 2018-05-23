@@ -1,3 +1,6 @@
+/**
+ * Base configuration
+ */
 plugin.tx_fecookies {
     view {
         templateRootPaths {
@@ -17,4 +20,23 @@ plugin.tx_fecookies {
         beforeBlocks = TEXT
         afterBlocks = TEXT
     }
+}
+
+/**
+ * Include JS API
+ */
+page.includeJSFooterlibs.fe_cookies = EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js
+page.includeJSFooterlibs.fe_cookies {
+    disableCompression = 1
+    # SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/Fecookies.js", true)) . PHP_EOL;'
+    integrity = sha384-od5CIhmH7xbxmNefpdr5DUxktWszD94Mo+Bqj1W3ARpLLuS3xoRj86FcpQNm3+W9
+}
+
+/**
+ * Include CSS API
+ */
+page.includeCSSLibs.fe_cookies = EXT:fe_cookies/Resources/Public/Css/FeCookiesClasses.css
+page.includeCSSLibs.fe_cookies {
+    if.isTrue = {$plugin.tx_fecookies.settings.includeCssApi}
+    disableCompression = 1
 }
