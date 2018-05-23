@@ -10,5 +10,7 @@ plugin.tx_fecookies {
     settings {
         # cat=fe_cookies/enable/001; type=boolean; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.includeCssApi
         includeCssApi = 0
+        # cat=fe_cookies/enable/002; type=boolean; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableCloseButton
+        enableCloseButton = 1
     }
 }

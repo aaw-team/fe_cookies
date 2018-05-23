@@ -42,6 +42,10 @@
                 <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
                 <target>CSS API einbinden: Bindet eine CSS-Datei ein, welche verschiedene nützliche CSS Klassen definiert.</target>
             </trans-unit>
+            <trans-unit id="constants.settings.enableCloseButton">
+                <source>Enable close-button: Show a button in the cookie banner that closes the message without clicking on the "accept" button. After a page-reload, the message will appear again.</source>
+                <target>Schliessen-Button aktivieren: Zeigt einen Button im Cookie-Banner, welcher es ermöglicht, die Nachricht auszublenden, ohne den "Akzeptieren" Button zu klicken. Nach den Neuladen der Seite wird die Nachricht erneut angezeigt.</target>
+            </trans-unit>
             <trans-unit id="constants.view.templateRootPath">
                 <source>Template root path: Sets a specific path for template files.</source>
                 <target>Template root path: Definiert einen spezifischen Pfad für Template-Dateien.</target>

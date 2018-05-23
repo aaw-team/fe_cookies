@@ -33,6 +33,9 @@
             <trans-unit id="constants.settings.includeCssApi">
                 <source>Include CSS API: Includes a CSS file which defines some useful CSS classes.</source>
             </trans-unit>
+            <trans-unit id="constants.settings.enableCloseButton">
+                <source>Enable close-button: Show a button in the cookie banner that closes the message without clicking on the "accept" button. After a page-reload, the message will appear again.</source>
+            </trans-unit>
             <trans-unit id="constants.view.templateRootPath">
                 <source>Template root path: Sets a specific path for template files.</source>
             </trans-unit>

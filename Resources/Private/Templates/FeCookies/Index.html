@@ -24,7 +24,9 @@
                 </c:link.eid>
             </div>
         </div>
-        <button id="tx_fe_cookies-button-close" aria-label="Close cookie notice (LLL)"><span></span><span></span></button>
+        <f:if condition="{settings.enableCloseButton}">
+            <button id="tx_fe_cookies-button-close" aria-label="Close cookie notice (LLL)"><span></span><span></span></button>
+        </f:if>
     </div>
 
 </f:section>
