@@ -8,13 +8,21 @@ $mediaquerySmSize: em(768px, 16px);
 
 // style settings
 $fontSize: .8em;
-$background: rgb(26,57,101);
-$color: white;
-$buttonBackground: $color;
-$buttonColor: $background;
-$buttonMinSize: rem(100px);
-$closeColor: $color;
-$closeButtonSize: rem(18px);
+
+// colors
+$backgroundColor: rgb(26,57,101);
+$fontColor: #fff;
+$aColor: $fontColor;
+$aColorHover: darken($aColor, 2);
+$buttonAcceptBackgroundColor: $aColor;
+$buttonAcceptBackgroundColorHover: $aColorHover;
+$buttonAcceptFontColor: $backgroundColor;
+$buttonAcceptFontColorHover: darken($buttonAcceptFontColor, 10);
+$buttonCloseColor: $aColor;
+$buttonCloseColorHover: $aColorHover;
+
+$buttonAcceptMinSize: rem(100px);
+$buttonCloseSize: rem(18px);
 $padding: rem(18px);
 $paddingSideSm: rem(30px);
 $maxWidth: rem(400px);
