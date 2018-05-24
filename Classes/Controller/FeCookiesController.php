@@ -49,8 +49,9 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             if (is_array($this->settings['styles']['acceptButton'])) {
                 $styles .= $this->renderCssForProperty($this->settings['styles']['acceptButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-accept');
             }
-            if (is_array($this->settings['styles']['banner'])) {
-                $styles .= $this->renderCssForProperty($this->settings['styles']['closeButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-close span');
+            if (is_array($this->settings['styles']['closeButton'])) {
+                $styles .= $this->renderCssForProperty($this->settings['styles']['closeButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-close', ['backgroundColor']);
+                $styles .= $this->renderCssForProperty(['backgroundColor' => $this->settings['styles']['closeButton']['color']], '#tx_fe_cookies-banner #tx_fe_cookies-button-close span', ['backgroundColor']);
             }
             if (!empty($styles)) {
                 $this->getPagerenderer()->addCssInlineBlock('fe_cookies_custom_styles', $styles);
@@ -88,19 +89,19 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @throws \InvalidArgumentException
      * @return string
      */
-    protected function renderCssForProperty(array $settings, $property)
+    protected function renderCssForProperty(array $settings, $property, $allowedProperties = ['backgroundColor', 'color'])
     {
         if (!is_string($property) || empty($property)) {
             throw new \InvalidArgumentException('$property must be not empty string');
         }
         $style = $bg = $color = '';
-        if (isset($settings['backgroundColor'])
+        if (in_array('backgroundColor', $allowedProperties) && isset($settings['backgroundColor'])
             && is_string($settings['backgroundColor'])
             && $settings['backgroundColor'] != ''
         ) {
             $bg = $this->filterColorString($settings['backgroundColor']);
         }
-        if (isset($settings['color'])
+        if (in_array('color', $allowedProperties) && isset($settings['color'])
             && is_string($settings['color'])
             && $settings['color'] != ''
         ) {
