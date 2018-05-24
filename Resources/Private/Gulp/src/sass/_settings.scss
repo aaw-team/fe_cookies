@@ -9,7 +9,6 @@ $mediaquerySmSize: em(768px, 16px);
 // style settings
 $fontSize: .8em;
 
-// colors
 $backgroundColor: rgb(26,57,101);
 $fontColor: #fff;
 $aColor: $fontColor;
@@ -26,4 +25,5 @@ $buttonCloseSize: rem(18px);
 $padding: rem(18px);
 $paddingSideSm: rem(30px);
 $maxWidth: rem(400px);
-$zIndex: 99999999;
+
+$zIndex: 9999;
