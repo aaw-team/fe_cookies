@@ -40,6 +40,23 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             'sha384-1VuV3tkg3iJ5ine3LmrM+AEUw/fY8Hm4RQBAH2QpqNIS85/MYWRrL1gATeZI2mRg' // $integrity
         );
 
+        // Add custom color definitions
+        if (is_array($this->settings['styles'])) {
+            $styles = '';
+            if (is_array($this->settings['styles']['banner'])) {
+                $styles .= $this->renderCssForProperty($this->settings['styles']['banner'], '#tx_fe_cookies-banner');
+            }
+            if (is_array($this->settings['styles']['acceptButton'])) {
+                $styles .= $this->renderCssForProperty($this->settings['styles']['acceptButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-accept');
+            }
+            if (is_array($this->settings['styles']['banner'])) {
+                $styles .= $this->renderCssForProperty($this->settings['styles']['closeButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-close span');
+            }
+            if (!empty($styles)) {
+                $this->getPagerenderer()->addCssInlineBlock('fe_cookies_custom_styles', $styles);
+            }
+        }
+
         // Determine rootpage
         $rootPage = null;
         foreach ($this->getTypoScriptFrontendController()->rootLine as $page) {
@@ -63,6 +80,56 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             'rootPage' => $rootPage,
             'blocks' => $this->blockRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @param array $settings
+     * @param string $property
+     * @throws \InvalidArgumentException
+     * @return string
+     */
+    protected function renderCssForProperty(array $settings, $property)
+    {
+        if (!is_string($property) || empty($property)) {
+            throw new \InvalidArgumentException('$property must be not empty string');
+        }
+        $style = $bg = $color = '';
+        if (isset($settings['backgroundColor'])
+            && is_string($settings['backgroundColor'])
+            && $settings['backgroundColor'] != ''
+        ) {
+            $bg = $this->filterColorString($settings['backgroundColor']);
+        }
+        if (isset($settings['color'])
+            && is_string($settings['color'])
+            && $settings['color'] != ''
+        ) {
+            $color = $this->filterColorString($settings['color']);
+        }
+        if (!empty($bg) || !empty($color)) {
+            $style .= $property . '{';
+            if (!empty($bg)) {
+                $style .= 'background-color:' . $bg . ';';
+            }
+            if (!empty($color)) {
+                $style .= 'color:' . $color . ';';
+            }
+            $style .= '}';
+        }
+        return $style;
+    }
+
+    /**
+     * @param string $colorString
+     * @return string
+     */
+    protected function filterColorString($colorString)
+    {
+        $return = '';
+        if (preg_match('~^(#[a-f0-9]{3,6})|(rgba?\\s*\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*(?:,\\s*[\\d\\.]+)?\\s*\\))|([a-z\\-]+)$~i', $colorString)) {
+            $return = $colorString;
+        }
+        return $return;
     }
 
     /**

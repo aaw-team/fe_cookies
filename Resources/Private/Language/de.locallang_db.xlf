@@ -58,6 +58,30 @@
                 <source>Layout root path: Sets a specific path for layout files.</source>
                 <target>Layout root path: Definiert einen spezifischen Pfad für Layout-Dateien.</target>
             </trans-unit>
+            <trans-unit id="constants.settings.styles.banner.backgroundColor">
+                <source>Banner background color</source>
+                <target>Banner Hintergrundfarbe</target>
+            </trans-unit>
+            <trans-unit id="constants.settings.styles.banner.color">
+                <source>Banner color</source>
+                <target>Banner Farbe</target>
+            </trans-unit>
+            <trans-unit id="constants.settings.styles.acceptButton.backgroundColor">
+                <source>Accept-button background color</source>
+                <target>Akzeptieren-Button Hintergrundfarbe</target>
+            </trans-unit>
+            <trans-unit id="constants.settings.styles.acceptButton.color">
+                <source>Accept-button color</source>
+                <target>Akzeptieren-Button Farbe</target>
+            </trans-unit>
+            <trans-unit id="constants.settings.styles.closeButton.backgroundColor">
+                <source>Close-button background color</source>
+                <target>Schliessen-Button Hintergrundfarbe</target>
+            </trans-unit>
+            <trans-unit id="constants.settings.styles.closeButton.color">
+                <source>Close-button color</source>
+                <target>Schliessen-Button Farbe</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

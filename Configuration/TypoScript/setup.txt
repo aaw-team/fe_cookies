@@ -20,6 +20,20 @@ plugin.tx_fecookies {
         beforeBlocks = TEXT
         afterBlocks = TEXT
         enableCloseButton = {$plugin.tx_fecookies.settings.enableCloseButton}
+        styles {
+            banner {
+                backgroundColor = {$plugin.tx_fecookies.settings.styles.banner.backgroundColor}
+                color = {$plugin.tx_fecookies.settings.styles.banner.color}
+            }
+            acceptButton {
+                backgroundColor = {$plugin.tx_fecookies.settings.styles.acceptButton.backgroundColor}
+                color = {$plugin.tx_fecookies.settings.styles.acceptButton.color}
+            }
+            closeButton {
+                backgroundColor = {$plugin.tx_fecookies.settings.styles.closeButton.backgroundColor}
+                color = {$plugin.tx_fecookies.settings.styles.closeButton.color}
+            }
+        }
     }
 }
 

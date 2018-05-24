@@ -12,5 +12,26 @@ plugin.tx_fecookies {
         includeCssApi = 0
         # cat=fe_cookies/enable/002; type=boolean; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableCloseButton
         enableCloseButton = 1
+
+        styles {
+            banner {
+                # cat=fe_cookies/color/001; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.banner.backgroundColor
+                backgroundColor =
+                # cat=fe_cookies/color/002; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.banner.color
+                color =
+            }
+            acceptButton {
+                # cat=fe_cookies/color/003; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.acceptButton.backgroundColor
+                backgroundColor =
+                # cat=fe_cookies/color/004; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.acceptButton.color
+                color =
+            }
+            closeButton {
+                # cat=fe_cookies/color/005; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.closeButton.backgroundColor
+                backgroundColor =
+                # cat=fe_cookies/color/006; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.closeButton.color
+                color =
+            }
+        }
     }
 }
