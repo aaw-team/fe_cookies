@@ -24,7 +24,7 @@ $bootstrap = function () {
         'fecookies',
         '',
         [
-            'BackendModule' => 'index,noRootpage',
+            'BackendModule' => 'index,noRootpage,settings',
         ],
         [
             'access' => 'user,group',
@@ -44,6 +44,16 @@ mod.wizards.newContentElement.wizardItems.plugins {
                 CType = list
                 list_type = fecookies_fecookies
             }
+        }
+    }
+}
+mod.fe_cookies {
+    colorManagement {
+        enable = 0
+        templateUid = 0
+        allowedConstantNames {
+            0 = enableCloseButton
+            1 = styles.*
         }
     }
 }

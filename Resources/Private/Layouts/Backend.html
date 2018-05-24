@@ -19,7 +19,9 @@
             </div>
             <div class="module-docheader-bar module-docheader-bar-buttons">
                 <div class="module-docheader-bar-column-left">
-                    &nbsp;
+                    <f:if condition="{toolbarPartial}">
+                        <f:render partial="toolbar/{toolbarPartial}" />
+                    </f:if>
                 </div>
                 <div class="module-docheader-bar-column-right">
                     <f:be.buttons.shortcut />

@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:c="http://typo3.org/ns/AawTeam/FeCookies/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:layout name="Backend" />
+
+<f:section name="content">
+
+    <h1>
+        <f:translate key="backendmodule.headings.index" />
+    </h1>
+
+    <div>
+        <core:iconForRecord table="sys_template" row="{templateRow}" />
+        Editing Template record <b>{templateRow.title}</b>
+    </div>
+
+    <f:form action="settings" method="post" id="FeCookiesEditColors">
+        <f:format.raw>{constantsEditor}</f:format.raw>
+    </f:form>
+
+</f:section>
+
+</html>

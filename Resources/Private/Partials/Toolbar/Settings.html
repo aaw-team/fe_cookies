@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+
+<div class="btn-toolbar" role="toolbar" aria-label="">
+    <f:link.action action="index" class="btn btn-default btn-sm t3js-editform-close" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.closeDoc')}">
+        <core:icon identifier="actions-close" />
+    </f:link.action>
+    <div class="btn-group t3js-splitbutton">
+        <button name="_savedok" class="btn btn-default btn-sm " value="1" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc')}" form="FeCookiesEditColors">
+            <core:icon identifier="actions-document-save" /> <f:translate key="LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc" />
+        </button>
+    </div>
+</div>
+
+</html>

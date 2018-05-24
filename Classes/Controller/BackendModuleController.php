@@ -9,9 +9,11 @@ namespace AawTeam\FeCookies\Controller;
  */
 
 use AawTeam\FeCookies\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\TypoScript\ExtendedTemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * BackendModuleController
@@ -23,6 +25,26 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      * @inject
      */
     protected $blockRepository;
+
+    /**
+     * @var \TYPO3\CMS\Core\TypoScript\ExtendedTemplateService
+     */
+    protected $templateService;
+
+    /**
+     * @var array
+     */
+    protected $allConstants = [];
+
+    /**
+     * @var array
+     */
+    protected $constants = [];
+
+    /**
+     * @var array
+     */
+    protected $templateRow = [];
 
     /**
      *
@@ -44,31 +66,235 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         $this->view->assignMultiple([
             'pageUid' => $pageUid,
             'blocks' => $this->blockRepository->findAll(),
+            'showSettings' => $this->userHasAccessToSettings(),
         ]);
     }
 
+    /**
+     * @return bool
+     */
+    protected function userHasAccessToSettings()
+    {
+        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.enable')['value'];
+    }
 
+    /**
+     * This method does quite the same as
+     * \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateConstantEditorModuleFunctionController
+     *
+     * @see \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateConstantEditorModuleFunctionController
+     */
+    public function settingsAction()
+    {
+        // Check access to this function
+        if (!$this->userHasAccessToSettings()) {
+            $this->addFlashMessage('You have no access to the settings', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('index');
+        }
 
+        if (!$this->isRootpage()) {
+            $this->forward('noRootpage');
+        }
 
-//     /**
-//      * {@inheritDoc}
-//      * @see \TYPO3\CMS\Extbase\Mvc\Controller\AbstractController::addFlashMessage()
-//      */
-//     public function addFlashMessage($messageBody, $messageTitle = '', $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK, $storeInSession = true)
-//     {
-//         return parent::addFlashMessage(
-//             LocalizationUtility::translate($messageBody),
-//             LocalizationUtility::translate($messageTitle),
-//             $severity,
-//             $storeInSession
-//         );
-//     }
+        $pageUid = (int)GeneralUtility::_GP('id');
+
+        /** @var PageRenderer $pagerenderer */
+        $pagerenderer = $this->objectManager->get(PageRenderer::class);
+        $pagerenderer->loadRequireJsModule('TYPO3/CMS/Tstemplate/ConstantEditor');
+
+        // Initialize TemplateService
+        $templateUid = (int)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.templateUid')['value'];
+        $templateExists = $this->initializeTemplateService($pageUid, $templateUid);
+        if ($templateExists) {
+            // Store values, if needed
+            if ($this->request->getMethod() === 'POST') {
+                $this->templateService->changed = 0;
+                $this->templateService->ext_procesInput(GeneralUtility::_POST(), [], $this->allConstants, $this->templateRow);
+                if ($this->templateService->changed) {
+                    $constantsString = implode(LF, $this->templateService->raw);
+                    if ($this->storeTemplateRecord($constantsString)) {
+                        $this->addFlashMessage('Successfully stored the configuration');
+                        /** @var DataHandler $dataHandler */
+                        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+                        $dataHandler->start([], []);
+                        $dataHandler->clear_cacheCmd('all');
+                    } else {
+                        $this->addFlashMessage('Cannot store configuration', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    }
+
+                    // Re-initialize TemplateService
+                    $this->initializeTemplateService($pageUid, $templateUid);
+                }
+            }
+
+            $category = 'fe_cookies';
+            $this->templateService->ext_getTSCE_config($category);
+            $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
+
+            foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
+                $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
+            }
+        } else {
+            // @todo: improve this..
+            $this->addFlashMessage('No template found!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::NOTICE);
+        }
+
+        $this->view->assignMultiple([
+            'pageUid' => $pageUid,
+            'constantsEditor' => $printFields,
+            'templateRow' => $this->templateRow,
+            'toolbarPartial' => 'settings',
+        ]);
+    }
+
+    /**
+     * This method is more or less copied from
+     * TypoScriptTemplateConstantEditorModuleFunctionController::initialize_editor()
+     *
+     * @see \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateConstantEditorModuleFunctionController::initialize_editor()
+     * @param int $pageUid
+     * @param int $templateUid
+     * @return boolean
+     */
+    protected function initializeTemplateService($pageUid, $templateUid = 0)
+    {
+        /** @var ExtendedTemplateService $templateService */
+        $this->templateService = GeneralUtility::makeInstance(ExtendedTemplateService::class);
+        $this->templateService->init();
+        $this->templateRow = $this->templateService->ext_getFirstTemplate($pageUid, $templateUid);
+        if (is_array($this->templateRow)) {
+            // Get the rootLine
+            $rootLine = BackendUtility::BEgetRootLine($pageUid);
+            // This generates the constants/config + hierarchy info for the template.
+            $this->templateService->runThroughTemplates($rootLine, $templateUid);
+            // The editable constants are returned in an array.
+            $this->allConstants = $this->templateService->generateConfig_constants();
+
+            $this->constants = [];
+
+            foreach ($this->allConstants as $key => $value) {
+                if ($this->isAllowedConstantName($key)) {
+                    $this->constants[$key] = $value;
+                }
+            }
+
+            // The returned constants are sorted in categories, that goes into the $tmpl->categories array
+            $this->templateService->ext_categorizeEditableConstants($this->constants);
+            // This array will contain key=[expanded constant name], value=line number in template. (after edit_divider, if any)
+            $this->templateService->ext_regObjectPositions($this->templateRow['constants']);
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true, when a constant can be edited in the backend module,
+     * otherwise false.
+     *
+     * See TSConfig: mod.fe_cookies.colorManagement.allowedConstantNames
+     *
+     * @param string $constantName
+     * @throws \InvalidArgumentException
+     * @return bool
+     */
+    protected function isAllowedConstantName($constantName)
+    {
+        if (!is_string($constantName)) {
+            throw new \InvalidArgumentException('$constantName must be string');
+        }
+
+        $prefix = 'plugin.tx_fecookies.settings.';
+        if (strpos($constantName, $prefix) !== 0) {
+            return false;
+        }
+
+        $allowedConstantNames = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.allowedConstantNames')['properties'];
+
+        $return = false;
+        foreach ($allowedConstantNames as $allowedConstantName) {
+            if ($allowedConstantName === '*') {
+                $return = true;
+                break;
+            }
+            $wildcardPos = strpos($allowedConstantName, '*');
+            if ($wildcardPos !== false) {
+                $parts = explode('*', $allowedConstantName);
+                $parts[0] = $prefix . $parts[0];
+                array_walk($parts, function(&$v, $k) {
+                    $v = preg_quote($v, '~');
+                });
+                $regex = '~^' . implode('(?:.*?)', $parts) . '$~i';
+                if (preg_match($regex, $constantName)) {
+                    $return = true;
+                    break;
+                }
+            } elseif ($prefix . $allowedConstantName === $constantName) {
+                $return = true;
+                break;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param string $constants
+     * @throws \InvalidArgumentException
+     * @return bool
+     */
+    protected function storeTemplateRecord($constants)
+    {
+        if (!is_string($constants)) {
+            throw new \InvalidArgumentException('$constants must be string');
+        }
+        $templateUid = $this->templateRow['_ORIG_uid'] ?: $this->templateRow['uid'];
+        if (version_compare(TYPO3_version, '8.2', '<')) {
+            $connection = $this->getLegacyDatabaseConnection();
+            $success = $connection->exec_UPDATEquery(
+                'sys_template',
+                'uid=' . $templateUid,
+                ['constants' => $constants]
+            );
+        } else {
+            $connection = $this->getConnectionForTable('sys_template');
+            $success = (bool)$connection->update(
+                'sys_template',
+                ['constants' => $constants],
+                ['uid' => $templateUid],
+                [\PDO::PARAM_STR]
+            );
+        }
+        return $success;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \TYPO3\CMS\Extbase\Mvc\Controller\AbstractController::addFlashMessage()
+     */
+    public function addFlashMessage($messageBody, $messageTitle = '', $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK, $storeInSession = true)
+    {
+        return parent::addFlashMessage(
+            LocalizationUtility::translate($messageBody),
+            LocalizationUtility::translate($messageTitle),
+            $severity,
+            $storeInSession
+        );
+    }
 
     /**
      *
      */
     public function noRootpageAction()
     {
+    }
+
+    /**
+     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     */
+    protected function getBackendUserAuthentication()
+    {
+        return $GLOBALS['BE_USER'];
     }
 
     /**
@@ -84,19 +310,19 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         return false;
     }
 
-//     /**
-//      * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-//      */
-//     protected function getLegacyDatabaseConnection()
-//     {
-//         return $GLOBALS['TYPO3_DB'];
-//     }
+    /**
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getLegacyDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
+    }
 
-//     /**
-//      * @return \TYPO3\CMS\Core\Database\Connection
-//      */
-//     protected function getConnectionForTable(string $tableName)
-//     {
-//         return GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getConnectionForTable($tableName);
-//     }
+    /**
+     * @return \TYPO3\CMS\Core\Database\Connection
+     */
+    protected function getConnectionForTable($tableName)
+    {
+        return GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getConnectionForTable($tableName);
+    }
 }
