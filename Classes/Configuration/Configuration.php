@@ -110,7 +110,8 @@ class Configuration implements SingletonInterface
         $currentConfiguration = $this->configuration;
         unset($currentConfiguration['httpOnly']);
         $js = '// Auto-generated JavaScript by ' . __METHOD__ . '
-var fe_cookies_configuration=' . json_encode($currentConfiguration) . ';
+window.AawTeam=window.AawTeam||{};
+window.AawTeam.fe_cookies_configuration=' . json_encode($currentConfiguration) . ';
 ';
         $filename = PageGenerator::inline2TempFile($js, 'js');
         if (!file_exists(GeneralUtility::getFileAbsFileName($filename))) {

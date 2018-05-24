@@ -137,5 +137,5 @@
     };
 
     // Create new instance of FeCookies and bind it to the AawTeam namespace
-    AawTeam.feCookies = new FeCookies(typeof fe_cookies_configuration === 'object' ? fe_cookies_configuration : {});
+    AawTeam.feCookies = new FeCookies(typeof AawTeam.fe_cookies_configuration === 'object' ? AawTeam.fe_cookies_configuration : {});
 })();

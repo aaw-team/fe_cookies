@@ -30,7 +30,7 @@ page.includeJSFooterlibs.fe_cookies = EXT:fe_cookies/Resources/Public/JavaScript
 page.includeJSFooterlibs.fe_cookies {
     disableCompression = 1
     # SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/Fecookies.js", true)) . PHP_EOL;'
-    integrity = sha384-wpd1R2jebH75ikf/t41A3jNR5pHtwCdWNlAPQGJ4eQnN0FbXGSPw5SZRksHQ7yJY
+    integrity = sha384-yyGzLIEPrzRpyy2tfEuy1xl+VsRnMSta5EU+vKnSeSzu6Rs3QKO6WAcD3I9a5kB+
 }
 
 /**
