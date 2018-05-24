@@ -17,11 +17,13 @@ $buttonAcceptBackgroundColor: $aColor;
 $buttonAcceptBackgroundColorHover: $aColorHover;
 $buttonAcceptFontColor: $backgroundColor;
 $buttonAcceptFontColorHover: darken($buttonAcceptFontColor, 10);
+$buttonCloseBackgroundColor: transparent;
+$buttonCloseBackgroundColorHover: $buttonCloseBackgroundColor;
 $buttonCloseColor: $aColor;
 $buttonCloseColorHover: $aColorHover;
 
 $buttonAcceptMinSize: rem(100px);
-$buttonCloseSize: rem(18px);
+$buttonCloseSize: rem(19px);
 $padding: rem(18px);
 $paddingSideSm: rem(30px);
 $maxWidth: rem(400px);
