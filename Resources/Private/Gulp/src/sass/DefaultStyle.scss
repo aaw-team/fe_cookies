@@ -17,7 +17,7 @@
     width: 100%;
     min-height: rem(50px);
     padding: $padding;
-    padding-top: $padding * .5 + $buttonCloseSize;
+    padding-top: $padding + $buttonCloseSize + rem(8px);
     box-sizing: border-box;
 
     z-index: $zIndex;
@@ -78,6 +78,13 @@
             text-align: center;
             margin: 0;
         }
+
+        // close button div
+        + div {
+            position: absolute;
+            right: $padding * .5;
+            top: $padding * .5;
+        }
     }
 
     #tx_fe_cookies-button-accept {
@@ -103,27 +110,38 @@
     }
 
     #tx_fe_cookies-button-close {
-        position: absolute;
-        right: $padding * .5;
-        top: $padding * .5;
-
         background: transparent;
         font-size: 1em;
-        line-height: 1.3em;
+        line-height: inherit;
         cursor: pointer;
         border: none;
 
-        width: $buttonCloseSize;
-        height: $buttonCloseSize;
-        padding: 0;
+        background: $buttonCloseBackgroundColor;
         margin: 0;
+        padding: rem(5px);
+        border-radius: rem(2px);
+        box-sizing: content-box;
+        transition: background .2s;
+
+        width: $buttonCloseSize;
+
+        &:hover,
+        &:focus {
+            background: $buttonCloseBackgroundColorHover;
+
+            span {
+                background: $buttonCloseColorHover;
+            }
+        }
 
         span {
             display: block;
 
             position: absolute;
+            top: calc(50% - #{rem(1px)});
 
             background: $buttonCloseColor;
+            transition: background .2s;
 
             width: $buttonCloseSize;
             height: rem(2px);
@@ -144,7 +162,7 @@
             display: flex;
             align-items: center;
             max-width: none;
-            margin-right: $paddingSideSm + $buttonCloseSize;
+            margin-right: $paddingSideSm + $buttonCloseSize+rem(10px);
 
             > div {
                 margin: 0;
@@ -160,16 +178,20 @@
                     text-align: right;
                 }
             }
+
+            + div {
+                height: 100%;
+                margin: 0;
+
+                top: 0;
+                right: $paddingSideSm;
+            }
         }
 
         #tx_fe_cookies-button-accept {
         }
 
         #tx_fe_cookies-button-close {
-            height: 100%;
-
-            top: 0;
-            right: $paddingSideSm;
         }
     }
 
