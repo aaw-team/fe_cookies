@@ -13,7 +13,7 @@ sass:
 cleancss:
 
 autoprefixer:
-  browsers: 'last 3 versions, Firefox ESR, ie >= 10'
+  browsers: 'last 3 versions, Firefox ESR, not ie < 11, not dead'
 
 uglify:
   output:
