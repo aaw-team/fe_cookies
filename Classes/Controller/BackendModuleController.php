@@ -113,11 +113,31 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                 if ($this->templateService->changed) {
                     $constantsString = implode(LF, $this->templateService->raw);
                     if ($this->storeTemplateRecord($constantsString)) {
-                        $this->addFlashMessage('Successfully stored the configuration');
+                        // Clear cache
                         /** @var DataHandler $dataHandler */
                         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-                        $dataHandler->start([], []);
+
+                        // If the user is not allowed to clear 'all' caches, setup an alternative user object
+                        // just for this purpose
+                        $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') !== '0'));
+                        if ($extendUserPermissionsForCacheClearing) {
+                            $beUser = clone ($this->getBackendUserAuthentication());
+                            is_array($beUser->userTS['options.']) || $beUser->userTS['options.'] = [];
+                            is_array($beUser->userTS['options.']['clearCache.']) || $beUser->userTS['options.']['clearCache.'] = [];
+                            $beUser->userTS['options.']['clearCache.']['all'] = '1';
+                            $dataHandler->start([], [], $beUser);
+                        } else {
+                            $dataHandler->start([], []);
+                        }
                         $dataHandler->clear_cacheCmd('all');
+
+                        // Remove the objects from memory
+                        unset($dataHandler);
+                        if ($extendUserPermissionsForCacheClearing) {
+                            unset($beUser);
+                        }
+
+                        $this->addFlashMessage('Successfully stored the configuration');
                     } else {
                         $this->addFlashMessage('Cannot store configuration', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                     }
