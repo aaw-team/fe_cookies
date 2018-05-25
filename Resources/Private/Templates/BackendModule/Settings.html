@@ -11,15 +11,23 @@
         <f:translate key="backendmodule.headings.index" />
     </h1>
 
-    <div>
-        <core:iconForRecord table="sys_template" row="{templateRow}" />
-        Editing Template record <b>{templateRow.title}</b>
-    </div>
-
-    <f:form action="settings" method="post" id="FeCookiesEditColors">
-        <c:form.formProtection name="csrfToken" />
-        <f:format.raw>{constantsEditor}</f:format.raw>
-    </f:form>
+    <f:if condition="{templateRow}">
+        <f:then>
+            <div>
+                <core:iconForRecord table="sys_template" row="{templateRow}" />
+                Editing Template record <b>{templateRow.title}</b>
+            </div>
+            <f:form action="settings" method="post" id="FeCookiesEditColors">
+                <c:form.formProtection name="csrfToken" />
+                <f:format.raw>{constantsEditor}</f:format.raw>
+            </f:form>
+        </f:then>
+        <f:else>
+            <f:be.infobox title="{f:translate(key:'sysmessage.notemplaterecord.heading')}" state="-1">
+                {f:translate(key:'sysmessage.notemplaterecord.text')}
+            </f:be.infobox>
+        </f:else>
+    </f:if>
 
 </f:section>
 

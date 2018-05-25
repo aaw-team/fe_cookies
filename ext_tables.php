@@ -51,6 +51,7 @@ mod.fe_cookies {
     colorManagement {
         enable = 0
         templateUid = 0
+        templatePid =
         allowedConstantNames {
             0 = enableCloseButton
             1 = styles.*

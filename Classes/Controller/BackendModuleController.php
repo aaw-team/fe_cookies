@@ -106,7 +106,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 
         // Initialize TemplateService
         $templateUid = (int)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.templateUid')['value'];
-        $templateExists = $this->initializeTemplateService($pageUid, $templateUid);
+        $templatePid = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.templatePid')['value'];
+        if (!$templatePid || $templatePid < 1) {
+            $templatePid = $pageUid;
+        }
+
+        $templateExists = $this->initializeTemplateService($templatePid, $templateUid);
         if ($templateExists) {
             // Store values, if needed
             if ($this->request->getMethod() === 'POST') {
@@ -154,7 +159,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                         }
 
                         // Re-initialize TemplateService
-                        $this->initializeTemplateService($pageUid, $templateUid);
+                        $this->initializeTemplateService($templatePid, $templateUid);
                     }
                 } else {
                     $this->addFlashMessage('Invalid POST data detected', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -168,9 +173,6 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
                 $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
             }
-        } else {
-            // @todo: improve this..
-            $this->addFlashMessage('No template found!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::NOTICE);
         }
 
         $this->view->assignMultiple([

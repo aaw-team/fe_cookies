@@ -7,11 +7,13 @@
     <f:link.action action="index" class="btn btn-default btn-sm t3js-editform-close" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.closeDoc')}">
         <core:icon identifier="actions-close" />
     </f:link.action>
-    <div class="btn-group t3js-splitbutton">
-        <button name="_savedok" class="btn btn-default btn-sm " value="1" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc')}" form="FeCookiesEditColors">
-            <core:icon identifier="actions-document-save" /> <f:translate key="LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc" />
-        </button>
-    </div>
+    <f:if condition="{templateRow}">
+        <div class="btn-group t3js-splitbutton">
+            <button name="_savedok" class="btn btn-default btn-sm " value="1" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc')}" form="FeCookiesEditColors">
+                <core:icon identifier="actions-document-save" /> <f:translate key="LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:rm.saveDoc" />
+            </button>
+        </div>
+    </f:if>
 </div>
 
 </html>

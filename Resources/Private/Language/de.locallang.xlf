@@ -17,6 +17,14 @@
                 <source>Select a root page from the page tree. You recognize root pages by the "world"-symbol.</source>
                 <target>Wählen Sie eine Wurzelseite aus dem Seitenbaum. Sie erkennen Wurzelseiten am "Welt"-Symbol.</target>
             </trans-unit>
+            <trans-unit id="sysmessage.notemplaterecord.heading">
+                <source>No template record found</source>
+                <target>Kein Template Datensatz gefunden</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.notemplaterecord.text">
+                <source>Either there is no TypoScript template or the configuration in "mod.fe_cookies" is incorrect.</source>
+                <target>Entweder gibt es keine Template Datensatz oder die Konfiguration in "mod.fe_cookies" ist fehlerhaft.</target>
+            </trans-unit>
 
             <!-- Plugin -->
             <trans-unit id="plugin.label.button.accept">
