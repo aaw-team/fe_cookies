@@ -12,6 +12,7 @@ use AawTeam\FeCookies\Utility\FeCookiesUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 
 /**
  * EidController
@@ -27,25 +28,20 @@ class EidController
     {
         // Analyze query params
         $queryParams = $request->getQueryParams();
-        $returnUrl = $queryParams['returnUrl'] ?: null;
-        $salt = $queryParams['salt'] ?: null;
-        $challenge = $queryParams['challenge'] ?: null;
-        if (
-            $returnUrl === null || !is_string($returnUrl) || empty($returnUrl)
-            || $salt === null || !is_string($salt) || empty($salt)
-            || $challenge === null || !is_string($challenge) || empty($challenge)
-        ) {
-            //$response->getBody()->write('<h1>400 Bad request</h1><p>The server encountered bad arguments.</p>');
+        if (!$this->checkQueryParams($queryParams)) {
             return $response->withStatus(400, 'Bad Request');
         }
+        $returnUrl = $queryParams['returnUrl'];
+        $salt = $queryParams['salt'];
+        $challenge = $queryParams['challenge'];
 
         // Try to verify the challenge
-        $hash = \hash_hmac('sha256', $salt . $returnUrl, $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
-        if (!hash_equals($hash, $challenge)) {
+        if (!$this->verifyChallenge($challenge, $salt, $returnUrl)) {
             return $response->withStatus(400, 'Bad Request');
         }
 
-        $this->setCookie();
+        // Set the cookie
+        FeCookiesUtility::setCookie();
 
         return $response
             ->withStatus(307, 'Temporary Redirect')
@@ -55,10 +51,61 @@ class EidController
     }
 
     /**
+     *
+     */
+    public function legacyAction()
+    {
+        $queryParams = GeneralUtility::_GET();
+        if (!$this->checkQueryParams($queryParams)) {
+            HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_400);
+            die();
+        }
+        $returnUrl = $queryParams['returnUrl'];
+        $salt = $queryParams['salt'];
+        $challenge = $queryParams['challenge'];
+
+        // Try to verify the challenge
+        if (!$this->verifyChallenge($challenge, $salt, $returnUrl)) {
+            HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_400);
+            die();
+        }
+
+        // Set the cookie
+        FeCookiesUtility::setCookie();
+
+        header('X-FeCookie-Set: 1');
+        header('Location: ' . $returnUrl);
+        HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_307);
+    }
+
+    /**
+     * @param string $challenge
+     * @param string $salt
+     * @param string $returnUrl
      * @return bool
      */
-    protected function setCookie()
+    protected function verifyChallenge($challenge, $salt, $returnUrl)
     {
-        return FeCookiesUtility::setCookie();
+        $hash = \hash_hmac('sha256', $salt . $returnUrl, $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
+        return \hash_equals($hash, $challenge);
+    }
+
+    /**
+     * @param array $queryParams
+     * @return bool
+     */
+    protected function checkQueryParams(array $queryParams)
+    {
+        $returnUrl = $queryParams['returnUrl'] ?: null;
+        $salt = $queryParams['salt'] ?: null;
+        $challenge = $queryParams['challenge'] ?: null;
+        if (
+            $returnUrl === null || !is_string($returnUrl) || empty($returnUrl)
+            || $salt === null || !is_string($salt) || empty($salt)
+            || $challenge === null || !is_string($challenge) || empty($challenge)
+        ) {
+            return false;
+        }
+        return true;
     }
 }

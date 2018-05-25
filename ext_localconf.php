@@ -16,15 +16,6 @@ $bootstrap = function () {
             'FeCookies' => 'index',
         ]
     );
-    // Add the default TypoScript right after the plugin registration
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', '
-/**
- * Completely disable the plugin, when cookie is set
- */
-[AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet]
-tt_content.list.20.fecookies_fecookies >
-[global]
-', 'defaultContentRendering');
 
     // Configuration cache
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['fecookies_configuration'] = [
@@ -40,22 +31,45 @@ tt_content.list.20.fecookies_fecookies >
     // Register eID
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 
-    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'content-plugin-fecookies',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        [
-            'source' => 'EXT:fe_cookies/Resources/Public/Icons/Extension.svg'
-        ]
-    );
-    $iconRegistry->registerIcon(
-        'fecookies-block',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        [
-            'source' => 'EXT:fe_cookies/Resources/Public/Icons/Block.svg'
-        ]
-    );
+    // Prepare the default "if-cookie-is-set" condition
+    $cookieSetCondition = 'AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet';
+
+    // Version switch
+    if (version_compare(TYPO3_version, '7', '>=')) {
+        // Configuration for TYPO3 >= 7
+        /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $iconRegistry->registerIcon(
+            'content-plugin-fecookies',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            [
+                'source' => 'EXT:fe_cookies/Resources/Public/Icons/Extension.svg'
+            ]
+        );
+        $iconRegistry->registerIcon(
+            'fecookies-block',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            [
+                'source' => 'EXT:fe_cookies/Resources/Public/Icons/Block.svg'
+            ]
+        );
+
+    } else {
+        // Configuration for TYPO3 < 7
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = 'EXT:fe_cookies/Resources/Private/PHP/EidDispatcher.php';
+
+        // Condition userFunction
+        $cookieSetCondition = 'userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSetLegacy::matchCondition';
+    }
+
+    // Register the default TypoScript
+    $typoScript = '/**
+ * Completely disable the plugin, when cookie is set
+ */
+[' . $cookieSetCondition . ']
+tt_content.list.20.fecookies_fecookies >
+[global]';
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', $typoScript, 'defaultContentRendering');
 };
 $bootstrap();
 unset($bootstrap);

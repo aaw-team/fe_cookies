@@ -159,7 +159,38 @@ if (version_compare(TYPO3_version, '8', '<')) {
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
     ';
+}
+if (version_compare(TYPO3_version, '7', '<')) {
+    $tableConfig['ctrl']['dividers2tabs'] = 1;
+    unset($tableConfig['ctrl']['editlock']);
+    unset($tableConfig['columns']['editlock']);
+    unset($tableConfig['types']['1']['columnsOverrides']);
 
+    // Adjust the default type appearance
+    $tableConfig['types']['1']['showitem'] = '
+            type, title,
+            bodytext;LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:tca.tx_fecookies_domain_model_block.bodytext;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],
+        --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,
+            --palette--;LLL:EXT:cms/locallang_ttc.xlf:palette.visibility;hidden,
+			--palette--;LLL:EXT:cms/locallang_ttc.xlf:palette.access;access,
+editlock,
+		--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended
+    ';
+
+    // Adjust the palettes
+    $tableConfig['palettes']['access'] = [
+        'showitem' => '
+            starttime;LLL:EXT:cms/locallang_ttc.xlf:starttime_formlabel,
+            endtime;LLL:EXT:cms/locallang_ttc.xlf:endtime_formlabel,
+            --linebreak--,
+            fe_group;LLL:EXT:cms/locallang_ttc.xlf:fe_group_formlabel',
+        'canNotCollapse' => 1
+    ];
+    $tableConfig['palettes']['hidden'] = [
+        'showitem' => '
+            hidden;LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:tca.tx_fecookies_domain_model_block.palette.hidden',
+        'canNotCollapse' => 1
+    ];
 }
 
 return $tableConfig;
