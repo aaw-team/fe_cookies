@@ -11,6 +11,7 @@ namespace AawTeam\FeCookies\Controller;
 use AawTeam\FeCookies\Utility\LocalizationUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\TypoScript\ExtendedTemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -83,8 +84,9 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      * \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateConstantEditorModuleFunctionController
      *
      * @see \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateConstantEditorModuleFunctionController
+     * @param string $csrfToken
      */
-    public function settingsAction()
+    public function settingsAction($csrfToken = null)
     {
         // Check access to this function
         if (!$this->userHasAccessToSettings()) {
@@ -108,6 +110,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         if ($templateExists) {
             // Store values, if needed
             if ($this->request->getMethod() === 'POST') {
+                // Check the csrf token
+                if ($csrfToken === null || !FormProtectionFactory::get()->validateToken($csrfToken, 'fe_cookies_formprotection')) {
+                    $this->response->setContent('Security alert: CSRF token validation failed');
+                    throw new \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException();
+                }
+
                 $this->templateService->changed = 0;
                 $this->templateService->ext_procesInput(GeneralUtility::_POST(), [], $this->allConstants, $this->templateRow);
                 if ($this->templateService->changed) {
