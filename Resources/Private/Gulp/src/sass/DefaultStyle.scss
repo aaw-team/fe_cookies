@@ -48,12 +48,6 @@
 
     a {
         text-decoration: underline;
-        color: $aColor;
-
-        &:hover,
-        &:focus {
-            color: $aColorHover;
-        }
     }
 
     p {
@@ -99,14 +93,6 @@
         padding: rem(5px) rem(20px);
         border-radius: rem(2px);
         box-sizing: border-box;
-
-        transition: background .2s, color .2s;
-
-        &:hover,
-        &:focus {
-            background: $buttonAcceptBackgroundColorHover;
-            color: $buttonAcceptFontColorHover;
-        }
     }
 
     #tx_fe_cookies-button-close {
@@ -121,18 +107,8 @@
         padding: rem(5px);
         border-radius: rem(2px);
         box-sizing: content-box;
-        transition: background .2s;
 
         width: $buttonCloseSize;
-
-        &:hover,
-        &:focus {
-            background: $buttonCloseBackgroundColorHover;
-
-            span {
-                background: $buttonCloseColorHover;
-            }
-        }
 
         span {
             display: block;
@@ -141,7 +117,6 @@
             top: calc(50% - #{rem(1px)});
 
             background: $buttonCloseColor;
-            transition: background .2s;
 
             width: $buttonCloseSize;
             height: rem(2px);

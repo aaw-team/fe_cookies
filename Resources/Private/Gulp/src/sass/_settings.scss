@@ -11,16 +11,10 @@ $fontSize: .8em;
 
 $backgroundColor: rgb(26,57,101);
 $fontColor: #fff;
-$aColor: $fontColor;
-$aColorHover: darken($aColor, 2);
-$buttonAcceptBackgroundColor: $aColor;
-$buttonAcceptBackgroundColorHover: $aColorHover;
+$buttonAcceptBackgroundColor: $fontColor;
 $buttonAcceptFontColor: $backgroundColor;
-$buttonAcceptFontColorHover: darken($buttonAcceptFontColor, 10);
 $buttonCloseBackgroundColor: transparent;
-$buttonCloseBackgroundColorHover: $buttonCloseBackgroundColor;
-$buttonCloseColor: $aColor;
-$buttonCloseColorHover: $aColorHover;
+$buttonCloseColor: $fontColor;
 
 $buttonAcceptMinSize: rem(100px);
 $buttonCloseSize: rem(19px);
