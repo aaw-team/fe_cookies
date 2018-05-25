@@ -116,42 +116,48 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                     throw new \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException();
                 }
 
-                $this->templateService->changed = 0;
-                $this->templateService->ext_procesInput(GeneralUtility::_POST(), [], $this->allConstants, $this->templateRow);
-                if ($this->templateService->changed) {
-                    $constantsString = implode(LF, $this->templateService->raw);
-                    if ($this->storeTemplateRecord($constantsString)) {
-                        // Clear cache
-                        /** @var DataHandler $dataHandler */
-                        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+                // Check wether the formdata contains allowed properties
+                $postData = GeneralUtility::_POST();
+                if ($this->checkConstantsFromRequest($postData)) {
+                    $this->templateService->changed = 0;
+                    $this->templateService->ext_procesInput($postData, [], $this->allConstants, $this->templateRow);
+                    if ($this->templateService->changed) {
+                        $constantsString = implode(LF, $this->templateService->raw);
+                        if ($this->storeTemplateRecord($constantsString)) {
+                            // Clear cache
+                            /** @var DataHandler $dataHandler */
+                            $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
 
-                        // If the user is not allowed to clear 'all' caches, setup an alternative user object
-                        // just for this purpose
-                        $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') !== '0'));
-                        if ($extendUserPermissionsForCacheClearing) {
-                            $beUser = clone ($this->getBackendUserAuthentication());
-                            is_array($beUser->userTS['options.']) || $beUser->userTS['options.'] = [];
-                            is_array($beUser->userTS['options.']['clearCache.']) || $beUser->userTS['options.']['clearCache.'] = [];
-                            $beUser->userTS['options.']['clearCache.']['all'] = '1';
-                            $dataHandler->start([], [], $beUser);
+                            // If the user is not allowed to clear 'all' caches, setup an alternative user object
+                            // just for this purpose
+                            $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') !== '0'));
+                            if ($extendUserPermissionsForCacheClearing) {
+                                $beUser = clone ($this->getBackendUserAuthentication());
+                                is_array($beUser->userTS['options.']) || $beUser->userTS['options.'] = [];
+                                is_array($beUser->userTS['options.']['clearCache.']) || $beUser->userTS['options.']['clearCache.'] = [];
+                                $beUser->userTS['options.']['clearCache.']['all'] = '1';
+                                $dataHandler->start([], [], $beUser);
+                            } else {
+                                $dataHandler->start([], []);
+                            }
+                            $dataHandler->clear_cacheCmd('all');
+
+                            // Remove the objects from memory
+                            unset($dataHandler);
+                            if ($extendUserPermissionsForCacheClearing) {
+                                unset($beUser);
+                            }
+
+                            $this->addFlashMessage('Successfully stored the configuration');
                         } else {
-                            $dataHandler->start([], []);
-                        }
-                        $dataHandler->clear_cacheCmd('all');
-
-                        // Remove the objects from memory
-                        unset($dataHandler);
-                        if ($extendUserPermissionsForCacheClearing) {
-                            unset($beUser);
+                            $this->addFlashMessage('Cannot store configuration', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                         }
 
-                        $this->addFlashMessage('Successfully stored the configuration');
-                    } else {
-                        $this->addFlashMessage('Cannot store configuration', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                        // Re-initialize TemplateService
+                        $this->initializeTemplateService($pageUid, $templateUid);
                     }
-
-                    // Re-initialize TemplateService
-                    $this->initializeTemplateService($pageUid, $templateUid);
+                } else {
+                    $this->addFlashMessage('Invalid POST data detected', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 }
             }
 
@@ -173,6 +179,26 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             'templateRow' => $this->templateRow,
             'toolbarPartial' => 'settings',
         ]);
+    }
+
+    /**
+     * @param array $postData
+     */
+    protected function checkConstantsFromRequest(array $postData)
+    {
+        $check = $postData['check'];
+        foreach ($check as $constantName => $_ign) {
+            if (!$this->isAllowedConstantName($constantName)) {
+                return false;
+            }
+        }
+        $data = $postData['data'];
+        foreach ($data as $constantName => $_ign) {
+            if (!$this->isAllowedConstantName($constantName)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
