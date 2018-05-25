@@ -16,6 +16,15 @@ $bootstrap = function () {
             'FeCookies' => 'index',
         ]
     );
+    // Add the default TypoScript right after the plugin registration
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', '
+/**
+ * Completely disable the plugin, when cookie is set
+ */
+[AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet]
+tt_content.list.20.fecookies_fecookies >
+[global]
+', 'defaultContentRendering');
 
     // Configuration cache
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['fecookies_configuration'] = [

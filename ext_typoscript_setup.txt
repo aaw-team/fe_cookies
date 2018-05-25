@@ -1,6 +1,0 @@
-/**
- * Completely disable the plugin, when cookie is set
- */
-[AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet]
-tt_content.list.20.fecookies_fecookies >
-[global]
