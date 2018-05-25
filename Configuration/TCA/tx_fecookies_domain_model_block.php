@@ -6,7 +6,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-return [
+$tableConfig = [
     'ctrl' => [
         'title' => 'LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:tca.tx_fecookies_domain_model_block',
         'label' => 'title',
@@ -145,3 +145,21 @@ return [
         ],
     ],
 ];
+
+if (version_compare(TYPO3_version, '8', '<')) {
+    // RTE for bodytext
+    unset($tableConfig['types']['1']['columnsOverrides']['bodytext']['config']);
+    $tableConfig['types']['1']['columnsOverrides']['bodytext']['defaultExtras'] = 'richtext:rte_transform[mode=ts_css]';
+
+    // Adjust the default type appearance
+    $tableConfig['types']['1']['showitem'] = '
+            type, title, bodytext,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
+            --palette--;;hidden,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+    ';
+
+}
+
+return $tableConfig;

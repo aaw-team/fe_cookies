@@ -170,8 +170,10 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             $this->templateService->ext_getTSCE_config($category);
             $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
 
-            foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
-                $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
+            if (version_compare(TYPO3_version, '8', '>=')) {
+                foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
+                    $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
+                }
             }
         }
 

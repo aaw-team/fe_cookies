@@ -22,13 +22,13 @@ class FormProtectionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\Abstrac
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+     * @see \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
         // Make argument 'name' mandatory
-        $this->overrideArgument('name', $this->argumentDefinitions['name']->getType(), $this->argumentDefinitions['name']->getDescription(), true);
+        $this->overrideArgument('name', 'string', 'Name of input tag', true);
         // Register additional arguments
         $this->registerArgument('action', 'string', 'The "action" argument for generateToken()', false, '');
         $this->registerArgument('formInstanceName', 'string', 'The "formInstanceName" argument for generateToken()', false, '');
