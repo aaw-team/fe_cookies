@@ -87,7 +87,7 @@
         }
 
         // Check for secure flag
-        if (this.configuration.secure) {
+        if (this.configuration.secure === true || (this.configuration.secure === null && window.location.protocol.match(/^https/))) {
             cookie = cookie + '; secure=true';
         }
 
