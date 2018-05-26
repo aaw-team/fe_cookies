@@ -26,7 +26,7 @@
             domain: configuration.domain || null,
             path: configuration.path || '/',
             lifetime: configuration.lifetime || null,
-            secure: (configuration.secure) ? true : false
+            secure: configuration.secure === true || (configuration.secure === null && window.location.protocol.match(/^https/).length === 1),
         };
 
         // Define events
@@ -87,7 +87,7 @@
         }
 
         // Check for secure flag
-        if (this.configuration.secure === true || (this.configuration.secure === null && window.location.protocol.match(/^https/))) {
+        if (this.configuration.secure) {
             cookie = cookie + '; secure=true';
         }
 
