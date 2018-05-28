@@ -14,17 +14,18 @@ const argv           = require('yargs').argv;
 const CONFIG         = yaml.load(fs.readFileSync('configuration.yaml', 'utf8'));
 
 // Build sass (scss) files
-gulp.task('sass', function() {
+var buildSass = function() {
     return gulp.src(CONFIG.paths.sass + '*.scss')
         .pipe(sass(CONFIG.sass)
             .on('error', sass.logError))
         .pipe(autoprefixer(CONFIG.autoprefixer))
         .pipe(cleanCSS(CONFIG.cleancss))
         .pipe(gulp.dest(CONFIG.outputPaths.css));
-});
+};
+
 
 // Build js files
-gulp.task('js', function(cb) {
+var buildJs = function(cb) {
     // read all js
     var stream = gulp.src(CONFIG.paths.js + '*.js')
         // loop over them to include required js
@@ -46,22 +47,24 @@ gulp.task('js', function(cb) {
         gulp.dest(CONFIG.outputPaths.js),
         cb
     );
-});
+};
 
 /**
  * Build task: Calls all required sub tasks
  */
-gulp.task('build', ['sass', 'js']);
+gulp.task('build', gulp.parallel(buildSass, buildJs));
 
 /**
  * Watch task: Watches the files and executes the required tasks.
  */
-gulp.task('watch', ['build'], function() {
-    gulp.watch([CONFIG.paths.sass + '**/*.scss'], ['sass']);
-    gulp.watch([CONFIG.paths.js + '**/*.js'], ['js']);
-});
+//
+var doWatch = function() {
+    gulp.watch([CONFIG.paths.sass + '**/*.scss'], buildSass);
+    gulp.watch([CONFIG.paths.js + '**/*.js'], buildJs);
+};
+gulp.task('watch', gulp.series('build', doWatch));
 
 /**
  * Default task: Calls the build task
  */
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series('build'));
