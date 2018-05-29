@@ -52,8 +52,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      */
     public function indexAction()
     {
-        if (!$this->isRootpage()) {
-            $this->forward('noRootpage');
+        if (!$this->isRequestForPage()) {
+            $this->forward('infoBox', null, null, [
+                'message' => 'sysmessage.nopage.text',
+                'title' => 'sysmessage.nopage.heading',
+                'state' => \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_INFO,
+            ]);
         }
 
         $pageUid = (int)GeneralUtility::_GP('id');
@@ -93,9 +97,11 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             $this->addFlashMessage('You have no access to the settings', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('index');
         }
-
-        if (!$this->isRootpage()) {
-            $this->forward('noRootpage');
+        if (!$this->isRequestForPage()) {
+            $this->forward('infoBox', null, null, [
+                'message' => 'sysmessage.nopage.text',
+                'title' => 'sysmessage.nopage.heading',
+            ]);
         }
 
         $pageUid = (int)GeneralUtility::_GP('id');
@@ -170,7 +176,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             $this->templateService->ext_getTSCE_config($category);
             $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
 
-            if (version_compare(TYPO3_version, '8', '>=')) {
+            if (version_compare(TYPO3_version, '8.1.0', '>=')) {
                 foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
                     $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
                 }
@@ -342,9 +348,19 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 
     /**
      *
+     * @param string $message
+     * @param string $title
+     * @param int $state
      */
-    public function noRootpageAction()
+    public function infoBoxAction($message = '', $title = '', $state = \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_NOTICE)
     {
+        $this->view->assignMultiple([
+            'infoBox' => [
+                'message' => $message,
+                'title' => $title,
+                'state' => $state,
+            ]
+        ]);
     }
 
     /**
@@ -356,16 +372,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    protected function isRootpage()
+    protected function isRequestForPage()
     {
         $pageId = (int)GeneralUtility::_GP('id');
-        $page = BackendUtility::getRecord('pages', $pageId);
-        if (is_array($page)) {
-            return (bool)$page['is_siteroot'];
-        }
-        return false;
+        return $pageId > 0;
     }
 
     /**

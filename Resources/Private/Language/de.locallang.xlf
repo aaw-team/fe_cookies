@@ -9,13 +9,13 @@
             </trans-unit>
 
             <!-- System messages -->
-            <trans-unit id="sysmessage.norootpage.heading">
-                <source>No rootpage selected</source>
-                <target>Keine Wurzelseite ausgewählt</target>
+            <trans-unit id="sysmessage.nopage.heading">
+                <source>No page selected</source>
+                <target>Keine Seite ausgewählt</target>
             </trans-unit>
-            <trans-unit id="sysmessage.norootpage.text">
-                <source>Select a root page from the page tree. You recognize root pages by the "world"-symbol.</source>
-                <target>Wählen Sie eine Wurzelseite aus dem Seitenbaum. Sie erkennen Wurzelseiten am "Welt"-Symbol.</target>
+            <trans-unit id="sysmessage.nopage.text">
+                <source>Please click the page title in the page tree to the left.</source>
+                <target>Bitte klicken Sie auf den Seitentitel im Seitenbaum links.</target>
             </trans-unit>
             <trans-unit id="sysmessage.notemplaterecord.heading">
                 <source>No template record found</source>

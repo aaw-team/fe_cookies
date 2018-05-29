@@ -58,27 +58,29 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             }
         }
 
-        // Determine rootpage
-        $rootPage = null;
-        foreach ($this->getTypoScriptFrontendController()->rootLine as $page) {
-            if ($page['is_siteroot']) {
-                $rootPage = $page;
-                break;
+        // Determine storage page(s)
+        $storagePids = GeneralUtility::intExplode(
+            ',',
+            $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK)['persistence']['storagePid'],
+            true
+        );
+        if (count($storagePids) == 1 && $storagePids[0] === 0) {
+            // No storage page configured, use the rootpage(s) from the rootLine
+            $storagePids = [];
+            foreach ($this->getTypoScriptFrontendController()->rootLine as $page) {
+                if ($page['is_siteroot']) {
+                    $storagePids[] = (int)$page['uid'];
+                }
+            }
+            if (!empty($storagePids)) {
+                $querySettings = $this->blockRepository->createQuery()->getQuerySettings();
+                $querySettings->setStoragePageIds($storagePids);
+                $this->blockRepository->setDefaultQuerySettings($querySettings);
             }
         }
-        if (!$rootPage) {
-            // @todo: error mesaging
-            return 'Error: cannot determine rootpage';
-        }
-
-        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
-        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface::class);
-        $querySettings->setStoragePageIds([$rootPage['uid']]);
-        $this->blockRepository->setDefaultQuerySettings($querySettings);
 
         // Compose the contents
         $this->view->assignMultiple([
-            'rootPage' => $rootPage,
             'blocks' => $this->blockRepository->findAll(),
         ]);
     }

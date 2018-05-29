@@ -10,13 +10,13 @@
     <div id="tx_fe_cookies-banner" class="tx_fe_cookies-banner-bottom" role="dialog" aria-label="{f:translate(key:'plugin.label.aria.banner')}" aria-describedby="tx_fe_cookies-text">
         <div>
             <div id="tx_fe_cookies-text">
-                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.beforeBlocks" data="{rootPage}" />
+                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.beforeBlocks" />
                 <f:if condition="{blocks}">
                     <f:for each="{blocks}" as="block">
                         <div>{block.bodytext -> f:format.html()}</div>
                     </f:for>
                 </f:if>
-                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.afterBlocks" data="{rootPage}" />
+                <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.afterBlocks" />
             </div>
             <div>
                 <c:link.eid id="tx_fe_cookies-button-accept">

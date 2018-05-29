@@ -24,7 +24,7 @@ $bootstrap = function () {
         'fecookies',
         '',
         [
-            'BackendModule' => 'index,noRootpage,settings',
+            'BackendModule' => 'index,settings,infoBox',
         ],
         [
             'access' => 'user,group',
