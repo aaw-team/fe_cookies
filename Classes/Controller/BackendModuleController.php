@@ -72,6 +72,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             'pageUid' => $pageUid,
             'blocks' => $this->blockRepository->findAll(),
             'showSettings' => $this->userHasAccessToSettings(),
+            'toolbarPartial' => 'Index',
         ]);
     }
 
