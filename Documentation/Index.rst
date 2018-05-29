@@ -13,7 +13,7 @@ fe_cookies
         fe_cookies
 
     :Version:
-        0.1.0
+        |release|
 
     :Language:
         en
