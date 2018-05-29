@@ -7,6 +7,42 @@
                 <source>Frontend Cookies Management</source>
                 <target>Frontend Cookies Verwaltung</target>
             </trans-unit>
+            <trans-unit id="backendmodule.label.button.settings">
+                <source>Settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.text.nomessageblocks">
+                <source>No Message block records found</source>
+                <target>Keinbe Meldungs-Block Datensätze gefunden</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.createmessageblock">
+                <source>New Message block</source>
+                <target>Neuer Meldungs-Block</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.editmessageblock">
+                <source>Edit Message block</source>
+                <target>Meldungs-Block bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.hidemessageblock">
+                <source>Hide Message block</source>
+                <target>Meldungs-Block verbergen</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.unhidemessageblock">
+                <source>Un-hide Message block</source>
+                <target>Meldungs-Block sichtbar machen</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.deletemessageblock">
+                <source>Delete Message block</source>
+                <target>Meldungs-Block löschen</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.moveupmessageblock">
+                <source>Move Message block up in list</source>
+                <target>Meldungs-Block in der Liste nach oben schieben</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.movedownmessageblock">
+                <source>Move Message block down in list</source>
+                <target>Meldungs-Block in der Liste nach unten schieben</target>
+            </trans-unit>
 
             <!-- System messages -->
             <trans-unit id="sysmessage.nopage.heading">
@@ -24,6 +60,26 @@
             <trans-unit id="sysmessage.notemplaterecord.text">
                 <source>Either there is no TypoScript template or the configuration in "mod.fe_cookies" is incorrect.</source>
                 <target>Entweder gibt es keine Template Datensatz oder die Konfiguration in "mod.fe_cookies" ist fehlerhaft.</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.noaccess.heading">
+                <source>Acces denied</source>
+                <targetY>Zugriff verweigert</targetY>
+            </trans-unit>
+            <trans-unit id="sysmessage.noaccesstosettings.text">
+                <source>You do not have access to the settings</source>
+                <target>Sie haben keine Zugriffsberechtigung für die Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.success.templaterecordstore">
+                <source>Successfully stored the template record</source>
+                <target>Der Template Datensatz wurde erfolgreich gespeichert</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.error.templaterecordstore">
+                <source>Cannot store the template record</source>
+                <target>Der Template Datensatz konnte nicht gespeichert werden</target>
+            </trans-unit>
+            <trans-unit id="sysmessage.error.invalidrequestdata">
+                <source>Invalid request data detected</source>
+                <target>Ungültige Daten in der Anfrage</target>
             </trans-unit>
 
             <!-- Plugin -->

@@ -13,7 +13,7 @@
 
     <f:if condition="{showSettings}">
         <p>
-            <f:link.action action="settings" class="btn btn-default"><core:icon identifier="actions-open" /> Edit settings</f:link.action>
+            <f:link.action action="settings" class="btn btn-default"><core:icon identifier="actions-open" /> <f:translate key="backendmodule.label.button.settings" /></f:link.action>
         </p>
     </f:if>
 
@@ -22,7 +22,7 @@
             <table class="table table-striped table-hover">
                 <tr>
                     <th class="col-icon nowrap">
-                        <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block"><core:icon identifier="actions-add" /></c:be.link.recordCreate>
+                        <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block" title="{f:translate(key:'backendmodule.label.button.createmessageblock')}"><core:icon identifier="actions-add" /></c:be.link.recordCreate>
                     </th>
                     <th class="col-title col-responsive nowrap"><f:translate key="LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:tca.tx_fecookies_domain_model_block.title" /></th>
                     <th class="col-control nowrap"></th>
@@ -37,31 +37,31 @@
                         </td>
                         <td class="col-control nowrap">
                             <div class="btn-group">
-                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}">
+                                <c:be.link.recordEdit class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" title="{f:translate(key:'backendmodule.label.button.editmessageblock')}">
                                     <core:icon identifier="actions-open" />
                                 </c:be.link.recordEdit>
                                 <f:if condition="{block.hidden}">
                                     <f:then>
-                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="unhide">
+                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="unhide" title="{f:translate(key:'backendmodule.label.button.unhidemessageblock')}">
                                             <core:icon identifier="actions-edit-unhide" />
                                         </c:be.link.recordChange>
                                     </f:then>
                                     <f:else>
-                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="hide">
+                                        <c:be.link.recordChange class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="hide" title="{f:translate(key:'backendmodule.label.button.hidemessageblock')}">
                                             <core:icon identifier="actions-edit-hide" />
                                         </c:be.link.recordChange>
                                     </f:else>
                                 </f:if>
-                                <c:be.link.recordChange class="btn btn-default t3js-modal-trigger" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
+                                <c:be.link.recordChange class="btn btn-default t3js-modal-trigger" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" title="{f:translate(key:'backendmodule.label.button.deletemessageblock')}" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
                                     <core:icon identifier="actions-edit-delete" />
                                 </c:be.link.recordChange>
                             </div>
 
                             <div class="btn-group">
-                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}">
+                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" title="{f:translate(key:'backendmodule.label.button.moveupmessageblock')}">
                                     <core:icon identifier="actions-move-up" />
                                 </c:be.link.recordMove>
-                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" direction="down">
+                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" direction="down" title="{f:translate(key:'backendmodule.label.button.movedownmessageblock')}">
                                     <core:icon identifier="actions-move-down" />
                                 </c:be.link.recordMove>
                             </div>
@@ -71,16 +71,12 @@
             </table>
         </f:then>
         <f:else>
-            <p>LLL: There are no message blocks registered atm..</p>
-            
-            
-            
+            <p><f:translate key="backendmodule.text.nomessageblocks" /></p>
         </f:else>
     </f:if>
     
-    
     <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block">
-        <core:icon identifier="actions-document-new" /> Create new block
+        <core:icon identifier="actions-document-new" /> <f:translate key="backendmodule.label.button.createmessageblock" />
     </c:be.link.recordCreate>
     
 </f:section>

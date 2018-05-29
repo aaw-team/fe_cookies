@@ -6,6 +6,33 @@
             <trans-unit id="backendmodule.headings.index">
                 <source>Frontend Cookies Management</source>
             </trans-unit>
+            <trans-unit id="backendmodule.label.button.settings">
+                <source>Settings</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.text.nomessageblocks">
+                <source>No Message block records found</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.createmessageblock">
+                <source>New Message block</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.editmessageblock">
+                <source>Edit Message block</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.hidemessageblock">
+                <source>Hide Message block</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.unhidemessageblock">
+                <source>Un-hide Message block</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.deletemessageblock">
+                <source>Delete Message block</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.moveupmessageblock">
+                <source>Move Message block up in list</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.button.movedownmessageblock">
+                <source>Move Message block down in list</source>
+            </trans-unit>
 
             <!-- System messages -->
             <trans-unit id="sysmessage.nopage.heading">
@@ -19,6 +46,21 @@
             </trans-unit>
             <trans-unit id="sysmessage.notemplaterecord.text">
                 <source>Either there is no TypoScript template or the configuration in "mod.fe_cookies" is incorrect.</source>
+            </trans-unit>
+            <trans-unit id="sysmessage.noaccess.heading">
+                <source>Acces denied</source>
+            </trans-unit>
+            <trans-unit id="sysmessage.noaccesstosettings.text">
+                <source>You do not have access to the settings</source>
+            </trans-unit>
+            <trans-unit id="sysmessage.success.templaterecordstore">
+                <source>Successfully stored the template record</source>
+            </trans-unit>
+            <trans-unit id="sysmessage.error.templaterecordstore">
+                <source>Cannot store the template record</source>
+            </trans-unit>
+            <trans-unit id="sysmessage.error.invalidrequestdata">
+                <source>Invalid request data detected</source>
             </trans-unit>
 
             <!-- Plugin -->

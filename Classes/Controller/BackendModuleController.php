@@ -94,7 +94,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     {
         // Check access to this function
         if (!$this->userHasAccessToSettings()) {
-            $this->addFlashMessage('You have no access to the settings', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('sysmessage.noaccesstosettings.text', 'sysmessage.noaccess.heading', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('index');
         }
         if (!$this->isRequestForPage()) {
@@ -159,16 +159,16 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                                 unset($beUser);
                             }
 
-                            $this->addFlashMessage('Successfully stored the configuration');
+                            $this->addFlashMessage('sysmessage.success.templaterecordstore');
                         } else {
-                            $this->addFlashMessage('Cannot store configuration', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                            $this->addFlashMessage('sysmessage.error.templaterecordstore', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                         }
 
                         // Re-initialize TemplateService
                         $this->initializeTemplateService($templatePid, $templateUid);
                     }
                 } else {
-                    $this->addFlashMessage('Invalid POST data detected', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    $this->addFlashMessage('sysmessage.error.invalidrequestdata', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 }
             }
 
