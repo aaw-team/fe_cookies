@@ -8,7 +8,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'Frontend cookies',
-    'description' => '',
+    'description' => 'Provides a cookie consent plugin for the frontend, a backend module for convenient cookie-banner management, simple but powerful APIs (PHP, JavaScript and CSS) and lots of configuration possibilities, including separate cookie settings per domain.',
     'category' => 'fe',
     'author' => 'Agentur am Wasser | Maeder & Partner AG',
     'author_email' => 'development@agenturamwasser.ch',

@@ -1,7 +1,7 @@
 {
     "name": "aaw-team/fe_cookies",
     "type": "typo3-cms-extension",
-    "description": "",
+    "description": "Provides a cookie consent plugin for the frontend, a backend module for convenient cookie-banner management, simple but powerful APIs (PHP, JavaScript and CSS) and lots of configuration possibilities, including separate cookie settings per domain.",
     "homepage": "https://github.com/aaw-team/fe_cookies",
     "license": "GPL-2.0-or-later",
     "keywords": [
