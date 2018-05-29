@@ -56,7 +56,7 @@ mod.wizards.newContentElement.wizardItems.plugins {
     }
 }
 mod.fe_cookies {
-    colorManagement {
+    settingsManagement {
         enable = 0
         templateUid = 0
         templatePid =

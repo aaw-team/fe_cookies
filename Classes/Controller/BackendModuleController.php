@@ -80,7 +80,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      */
     protected function userHasAccessToSettings()
     {
-        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.enable')['value'];
+        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.enable')['value'];
     }
 
     /**
@@ -111,8 +111,8 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         $pagerenderer->loadRequireJsModule('TYPO3/CMS/Tstemplate/ConstantEditor');
 
         // Initialize TemplateService
-        $templateUid = (int)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.templateUid')['value'];
-        $templatePid = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.templatePid')['value'];
+        $templateUid = (int)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.templateUid')['value'];
+        $templatePid = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.templatePid')['value'];
         if (!$templatePid || $templatePid < 1) {
             $templatePid = $pageUid;
         }
@@ -256,7 +256,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      * Returns true, when a constant can be edited in the backend module,
      * otherwise false.
      *
-     * See TSConfig: mod.fe_cookies.colorManagement.allowedConstantNames
+     * See TSConfig: mod.fe_cookies.settingsManagement.allowedConstantNames
      *
      * @param string $constantName
      * @throws \InvalidArgumentException
@@ -273,7 +273,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             return false;
         }
 
-        $allowedConstantNames = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.colorManagement.allowedConstantNames')['properties'];
+        $allowedConstantNames = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.allowedConstantNames')['properties'];
 
         $return = false;
         foreach ($allowedConstantNames as $allowedConstantName) {
