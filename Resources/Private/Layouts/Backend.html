@@ -20,7 +20,7 @@
             <div class="module-docheader-bar module-docheader-bar-buttons">
                 <div class="module-docheader-bar-column-left">
                     <f:if condition="{toolbarPartial}">
-                        <f:render partial="toolbar/{toolbarPartial}" arguments="{_all}" />
+                        <f:render partial="Toolbar/{toolbarPartial -> f:format.case(mode:'capital')}" arguments="{_all}" />
                     </f:if>
                 </div>
                 <div class="module-docheader-bar-column-right">
