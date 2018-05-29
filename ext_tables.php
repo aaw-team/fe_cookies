@@ -44,7 +44,7 @@ module.tx_fecookies.view {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.plugins {
     elements {
-        minipoll_form {
+        fecookies_fecookies {
             iconIdentifier = content-plugin-fecookies
             title = LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:plugin.fecookies.title
             description = LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:plugin.fecookies.description
