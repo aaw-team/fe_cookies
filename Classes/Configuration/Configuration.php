@@ -21,6 +21,7 @@ class Configuration implements SingletonInterface
     const CACHE_IDENTIFIER = 'fecookies_configuration';
     const ENTRY_IDENTIFIER = 'configuration';
     const GLOBAL_KEY = '_global_';
+    const DEFAULT_COOKIE_NAME = 'tx_fecookies';
 
     // Option keys
     const OPTION_NAME = 'name';
@@ -214,7 +215,7 @@ window.AawTeam.fe_cookies_configuration=' . json_encode($currentConfiguration) .
     {
         return [
             self::GLOBAL_KEY => [
-                self::OPTION_NAME => 'tx_fecookies',
+                self::OPTION_NAME => self::DEFAULT_COOKIE_NAME,
                 self::OPTION_LIFETIME => null,
                 self::OPTION_DOMAIN => null,
                 self::OPTION_PATH => null,
