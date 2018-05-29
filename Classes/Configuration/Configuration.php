@@ -22,6 +22,14 @@ class Configuration implements SingletonInterface
     const ENTRY_IDENTIFIER = 'configuration';
     const GLOBAL_KEY = '_global_';
 
+    // Option keys
+    const OPTION_NAME = 'name';
+    const OPTION_LIFETIME = 'lifetime';
+    const OPTION_DOMAIN = 'domain';
+    const OPTION_PATH = 'path';
+    const OPTION_SECURE = 'secure';
+    const OPTION_HTTPONLY = 'httpOnly';
+
     /**
      * @var array
      */
@@ -50,47 +58,47 @@ class Configuration implements SingletonInterface
      */
     public function getName()
     {
-        return $this->configuration['name'];
+        return $this->configuration[self::OPTION_NAME];
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDomain()
     {
-        return $this->configuration['domain'];
+        return $this->configuration[self::OPTION_DOMAIN];
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPath()
     {
-        return $this->configuration['path'];
+        return $this->configuration[self::OPTION_PATH];
     }
 
     /**
-     * @return string
+     * @return int|null
      */
     public function getLifetime()
     {
-        return $this->configuration['lifetime'];
+        return $this->configuration[self::OPTION_LIFETIME];
     }
 
     /**
-     * @return string
+     * @return bool|null
      */
     public function getSecure()
     {
-        return $this->configuration['secure'];
+        return $this->configuration[self::OPTION_SECURE];
     }
 
     /**
-     * @return string
+     * @return bool|null
      */
     public function getHttpOnly()
     {
-        return $this->configuration['httpOnly'];
+        return $this->configuration[self::OPTION_HTTPONLY];
     }
 
     /**
@@ -108,7 +116,7 @@ class Configuration implements SingletonInterface
     public function getJsConfigurationFile()
     {
         $currentConfiguration = $this->configuration;
-        unset($currentConfiguration['httpOnly']);
+        unset($currentConfiguration[self::OPTION_HTTPONLY]);
         $js = '// Auto-generated JavaScript by ' . __METHOD__ . '
 window.AawTeam=window.AawTeam||{};
 window.AawTeam.fe_cookies_configuration=' . json_encode($currentConfiguration) . ';
@@ -126,39 +134,39 @@ window.AawTeam.fe_cookies_configuration=' . json_encode($currentConfiguration) .
      */
     protected function checkConfiguration(array $configuration)
     {
-        if (!array_key_exists('name', $configuration)
-            || !is_string($configuration['name'])
+        if (!array_key_exists(self::OPTION_NAME, $configuration)
+            || !is_string($configuration[self::OPTION_NAME])
             // Cookie name is a <token>, @see section "2.2 Basic Rules" in RFC 2616 (https://www.ietf.org/rfc/rfc2616.txt)
-            || preg_match('/[^\x21\x23-\x27\x2a\x2b\x2d\x2e\x30-\x39\x41-\x5a\x5e-\x7a\x7c\x7e]/', $configuration['name'], $matches)
+            || preg_match('/[^\x21\x23-\x27\x2a\x2b\x2d\x2e\x30-\x39\x41-\x5a\x5e-\x7a\x7c\x7e]/', $configuration[self::OPTION_NAME], $matches)
         ) {
             throw new \RuntimeException('The name of a cookie must be a not empty string, containing US-ASCII, except ASCII Control characters (0-31;127), space, tab or one of the following characters: ()<>@,;:"/[]?={}');
         }
-        if (!array_key_exists('domain', $configuration)
-            || ($configuration['domain'] !== null && !is_string($configuration['domain']))
+        if (!array_key_exists(self::OPTION_DOMAIN, $configuration)
+            || ($configuration[self::OPTION_DOMAIN] !== null && !is_string($configuration[self::OPTION_DOMAIN]))
         ) {
             throw new \RuntimeException('The domain of a cookie must be string or null');
         }
 
-        if (!array_key_exists('path', $configuration)
-            || ($configuration['path'] !== null && !is_string($configuration['path']))
+        if (!array_key_exists(self::OPTION_PATH, $configuration)
+            || ($configuration[self::OPTION_PATH] !== null && !is_string($configuration[self::OPTION_PATH]))
         ) {
             throw new \RuntimeException('The path of a cookie must be string or null');
         }
 
-        if (!array_key_exists('lifetime', $configuration)
-            || ($configuration['lifetime'] !== null && (!is_int($configuration['lifetime']) || $configuration['lifetime'] < 0))
+        if (!array_key_exists(self::OPTION_LIFETIME, $configuration)
+            || ($configuration[self::OPTION_LIFETIME] !== null && (!is_int($configuration[self::OPTION_LIFETIME]) || $configuration[self::OPTION_LIFETIME] < 0))
         ) {
             throw new \RuntimeException('The lifetime of a cookie must be positive integer, zero or null');
         }
 
-        if (!array_key_exists('secure', $configuration)
-            || ($configuration['secure'] !== null && !is_bool($configuration['secure']))
+        if (!array_key_exists(self::OPTION_SECURE, $configuration)
+            || ($configuration[self::OPTION_SECURE] !== null && !is_bool($configuration[self::OPTION_SECURE]))
         ) {
             throw new \RuntimeException('The secure-parameter of a cookie must be bool or null');
         }
 
-        if (!array_key_exists('httpOnly', $configuration)
-            || ($configuration['httpOnly'] !== null && !is_bool($configuration['httpOnly']))
+        if (!array_key_exists(self::OPTION_HTTPONLY, $configuration)
+            || ($configuration[self::OPTION_HTTPONLY] !== null && !is_bool($configuration[self::OPTION_HTTPONLY]))
         ) {
             throw new \RuntimeException('The httpOnly-parameter of a cookie must be bool or null');
         }
@@ -206,12 +214,12 @@ window.AawTeam.fe_cookies_configuration=' . json_encode($currentConfiguration) .
     {
         return [
             self::GLOBAL_KEY => [
-                'name' => 'tx_fecookies',
-                'lifetime' => null,
-                'domain' => null,
-                'path' => null,
-                'secure' => null,
-                'httpOnly' => null,
+                self::OPTION_NAME => 'tx_fecookies',
+                self::OPTION_LIFETIME => null,
+                self::OPTION_DOMAIN => null,
+                self::OPTION_PATH => null,
+                self::OPTION_SECURE => null,
+                self::OPTION_HTTPONLY => null,
             ],
         ];
     }
