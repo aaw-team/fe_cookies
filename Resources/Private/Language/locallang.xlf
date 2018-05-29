@@ -10,7 +10,7 @@
                 <source>Settings</source>
             </trans-unit>
             <trans-unit id="backendmodule.text.nomessageblocks">
-                <source>No Message block records found</source>
+                <source>No Message block records found on this page</source>
             </trans-unit>
             <trans-unit id="backendmodule.label.button.createmessageblock">
                 <source>New Message block</source>

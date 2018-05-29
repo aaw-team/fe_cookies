@@ -12,8 +12,8 @@
                 <target>Einstellungen</target>
             </trans-unit>
             <trans-unit id="backendmodule.text.nomessageblocks">
-                <source>No Message block records found</source>
-                <target>Keinbe Meldungs-Block Datensätze gefunden</target>
+                <source>No Message block records found on this page</source>
+                <target>Keine Meldungs-Block Datensätze gefunden auf dieser Seite</target>
             </trans-unit>
             <trans-unit id="backendmodule.label.button.createmessageblock">
                 <source>New Message block</source>
