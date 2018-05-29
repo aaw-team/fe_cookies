@@ -4,7 +4,13 @@
     "description": "",
     "homepage": "https://github.com/aaw-team/fe_cookies",
     "license": "GPL-2.0-or-later",
-    "version": "0.1.0-dev",
+    "keywords": [
+        "cookie",
+        "cookie-banner",
+        "cookie-consent",
+        "GDPR",
+        "DSGVO"
+    ],
     "authors": [
         {
             "name": "Agentur am Wasser | Maeder & Partner AG",
