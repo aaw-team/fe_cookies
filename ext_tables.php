@@ -33,14 +33,6 @@ $bootstrap = function () {
         ]
     );
 
-    if (version_compare(TYPO3_version, '7', '<')) {
-        // Show a convenient message in too old TYPO3 installations by just forcing another template root path
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', '
-module.tx_fecookies.view {
-    templateRootPaths.0 = EXT:fe_cookies/Resources/Private/Templates/TooOldTYPO3/
-}');
-    }
-
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.plugins {
     elements {

@@ -56,7 +56,8 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             $this->forward('infoBox', null, null, [
                 'message' => 'sysmessage.nopage.text',
                 'title' => 'sysmessage.nopage.heading',
-                'state' => \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_INFO,
+                // @todo replace AbstractMessage::INFO with \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_INFO when dropping support for TYPO3 < 7.2
+                'state' => \TYPO3\CMS\Core\Messaging\AbstractMessage::INFO,
             ]);
         }
 
@@ -348,12 +349,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     }
 
     /**
-     *
+     * @todo Replace AbstractMessage::NOTICE with \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_NOTICE when dropping support for TYPO3 < 7.2
      * @param string $message
      * @param string $title
      * @param int $state
      */
-    public function infoBoxAction($message = '', $title = '', $state = \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::STATE_NOTICE)
+    public function infoBoxAction($message = '', $title = '', $state = \TYPO3\CMS\Core\Messaging\AbstractMessage::NOTICE)
     {
         $this->view->assignMultiple([
             'infoBox' => [
@@ -362,6 +363,29 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                 'state' => $state,
             ]
         ]);
+    }
+
+    /**
+     * Extend parent method: for too old TYPO3 versions, override the
+     * action name in every request with 'tooOldTypo3'.
+     *
+     * {@inheritDoc}
+     * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::processRequest()
+     */
+    public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response)
+    {
+        if (version_compare(TYPO3_version, '7', '<')  && ($request instanceof \TYPO3\CMS\Extbase\Mvc\Request)) {
+            $request->setControllerActionName('tooOldTypo3');
+        }
+        return parent::processRequest($request, $response);
+    }
+
+    /**
+     * This action only exists to display a prepared message in the
+     * view. It is forced to be called in old TYPO3 versions.
+     */
+    public function tooOldTypo3Action()
+    {
     }
 
     /**
