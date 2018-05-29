@@ -1,14 +1,29 @@
 # TYPO3 extension "Frontend cookies"
 
-This extension provides ....
+This extension provides lots of possibilities to hide and show contents
+based on the existence or values of cookies. On board is a frontend
+plugin to display "cookie-banners" as well as a configurable API to
+manage cookies for PHP, JavaScript and CSS.
 
 ## Features
 
-* one
-* two
-* three
+1. Frontend plugin to display "cookie-banners". It shows a message as long
+   as the message is not aknowledged (by clicking the accept-button).
+2. An API for PHP and JavaScript to manage cookies. A "CSS-API" to show
+   and hide contents by just using CSS classes (based on the existence
+   or absence of a cookie).
+3. A convenient backend module to give backend users the possiblity to
+   manage the cookie-banner contents as well as some configuration
+   options.
+4. Lots of configuration possibilities.
+5. Wish/need more? Get in touch!
 
-### CSS and JavaScript
+## Documentation
+
+Read the full documentation at https://docs.typo3.org/typo3cms/extensions/fe_cookies/
+
+## Building CSS and JavaScript
+
 All CSS and JavaScript files inside the *Resources/Public/* folder are generated with the [gulp] toolkit. All raw and uncompressed files are located inside *Resources/Private/Gulp/*. To edit or rebuild said files you have to install [npm].
 
 To install all required packages for the build process run `npm install` inside the *Resources/Private/Gulp/* folder.
