@@ -8,12 +8,10 @@ namespace AawTeam\FeCookies\TypoScript\ConditionMatching;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use AawTeam\FeCookies\Utility\FeCookiesUtility;
-
 /**
- * CookieSet
+ * FeCookies
  */
-class CookieSet extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition
+class FeCookies extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition
 {
     /**
      * {@inheritDoc}
@@ -21,6 +19,6 @@ class CookieSet extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatchi
      */
     public function matchCondition(array $conditionParameters)
     {
-        return FeCookiesUtility::hasCookie();
+        return ConditionMatcher::evaluateCondition($conditionParameters);
     }
 }

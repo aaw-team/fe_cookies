@@ -8,18 +8,16 @@ namespace AawTeam\FeCookies\TypoScript\ConditionMatching;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use AawTeam\FeCookies\Utility\FeCookiesUtility;
-
 /**
- * CookieSetLegacy
+ * FeCookiesLegacy
  */
-class CookieSetLegacy
+class FeCookiesLegacy
 {
     /**
      * @param array $conditionParameters
      */
     public static function matchCondition()
     {
-        return FeCookiesUtility::hasCookie();
+        return ConditionMatcher::evaluateCondition(func_get_args());
     }
 }

@@ -17,6 +17,107 @@ They are registered in ``plugin.tx_fecookies``.
     Most of the options are set up with constants, you'd rather want to
     change the values of the constants than those in setup.
 
+.. _section-configuration-typoscript-conditions:
+
+Conditions
+----------
+
+The extension provides an extra TypoScript condition, which let's you
+define the TypoScript rendering based on the presence or the value of the
+cookie.
+
+.. code-block:: typoscript
+
+    [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies <arguments>]
+
+Multiple arguments are accepted, they must be comma separated.
+
+Condition arguments
+^^^^^^^^^^^^^^^^^^^
+
+.. container:: table-row
+
+   Argument
+       ``cookieSet``
+
+   Operators
+       =
+
+   Description
+       Test, whether the cookie is set or not.
+
+       Example:
+
+       .. code-block:: typoscript
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieSet = 1]
+               // cookie is set
+           [global]
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieSet = 0]
+               // cookie is not set
+           [global]
+
+.. container:: table-row
+
+   Argument
+       ``cookieValue``
+
+   Operators
+       =,!=,>,>=,<,<=
+
+   Description
+       Test the cookie value. Does never match, when no cookie is set.
+
+       Several **operators** can be used:
+       
+       =============   ==================================================
+       Operator        Function
+       =============   ==================================================
+       =               The cookie value must exactly match the given
+                       value.
+
+       !=              Inverse of ``=``
+
+       >               The cookie value must be greater than the given
+                       value.
+
+       >=              The cookie value must be greater or equal the
+                       given value.
+
+       <               The cookie value must be less than the given
+                       value.
+
+       <=              The cookie value must be less or equal the given
+                       value.
+       =============   ==================================================
+
+       **Values** can be a single value, or a set of values, separated
+       by "|". The latter will test all values and return true as soon as
+       a match occured ("OR-chain").
+
+       Examples:
+
+       .. code-block:: typoscript
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue = 1]
+               // cookie is set and its value equals 1
+           [global]
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue = 0|1|2]
+               // cookie is set and its value equals 0, 1 or 2
+           [global]
+           
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue >= 2]
+               // cookie is set and its value is greater or equal 2
+           [global]
+
+       .. important::
+
+           Cookies have always the value "1" at the moment (when they are
+           set by the API). In a future version of fe_cookies, it is
+           planned to configure meaningful values.
+
 .. _section-configuration-typoscript-constants:
 
 Constants

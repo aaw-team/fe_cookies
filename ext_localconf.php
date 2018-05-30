@@ -32,7 +32,7 @@ $bootstrap = function () {
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 
     // Prepare the default "if-cookie-is-set" condition
-    $cookieSetCondition = 'AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet';
+    $cookieSetCondition = 'AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieSet = 1';
 
     // Version switch
     if (version_compare(TYPO3_version, '7', '>=')) {
@@ -59,7 +59,7 @@ $bootstrap = function () {
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = 'EXT:fe_cookies/Resources/Private/PHP/EidDispatcher.php';
 
         // Condition userFunction
-        $cookieSetCondition = 'userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSetLegacy::matchCondition';
+        $cookieSetCondition = 'userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookiesLegacy::matchCondition(cookieSet = 1)';
     }
 
     // Register the default TypoScript
