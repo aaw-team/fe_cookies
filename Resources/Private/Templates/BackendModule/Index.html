@@ -7,7 +7,7 @@
 
 <f:section name="content">
 
-    <f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/Backend/Notification'}" />
+    <f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/Backend/Modal'}" />
 
     <h1><f:translate key="backendmodule.headings.index" /></h1>
 
@@ -46,7 +46,7 @@
                                         </c:be.link.recordChange>
                                     </f:else>
                                 </f:if>
-                                <c:be.link.recordChange class="btn btn-default t3js-modal-trigger" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" title="{f:translate(key:'backendmodule.label.button.deletemessageblock')}" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
+                                <c:be.link.recordChange class="btn btn-default t3js-modal-trigger t3js-record-delete" table="tx_fecookies_domain_model_block" uid="{block.uid}" cmd="delete" title="{f:translate(key:'backendmodule.label.button.deletemessageblock')}" data="{title:block.title,severity:'warning',content:'{f:translate(key:\'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:deleteWarning\')}'}">
                                     <core:icon identifier="actions-edit-delete" />
                                 </c:be.link.recordChange>
                             </div>

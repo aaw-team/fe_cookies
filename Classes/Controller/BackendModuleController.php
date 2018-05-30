@@ -175,7 +175,9 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             }
 
             $category = 'fe_cookies';
-            $this->templateService->ext_getTSCE_config($category);
+            if (version_compare(TYPO3_version, '9.0', '<')) {
+                $this->templateService->ext_getTSCE_config($category);
+            }
             $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
 
             if (version_compare(TYPO3_version, '8.1.0', '>=')) {

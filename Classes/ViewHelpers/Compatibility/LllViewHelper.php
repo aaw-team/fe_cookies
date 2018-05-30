@@ -16,7 +16,7 @@ class LllViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
     /**
      * @var bool
      */
-    protected static $isTYPO3V8 = null;
+    protected static $isTYPO3V8OrGreater = null;
 
     /**
      * @var bool
@@ -43,7 +43,7 @@ class LllViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
     {
         $output = '';
         if ($this->arguments['ext'] === 'lang') {
-            if ($this->isV8()) {
+            if ($this->isV8OrGreater()) {
                 $output = 'LLL:EXT:lang/Resources/Private/Language/' . $this->arguments['file'] . ':' . $this->arguments['key'];
             }
             else {
@@ -58,11 +58,11 @@ class LllViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
     /**
      * @return bool
      */
-    protected function isV8()
+    protected function isV8OrGreater()
     {
-        if (self::$isTYPO3V8 === null) {
-            self::$isTYPO3V8 = version_compare(TYPO3_version, '8', '=');
+        if (self::$isTYPO3V8OrGreater === null) {
+            self::$isTYPO3V8OrGreater = version_compare(TYPO3_version, '8', '>=');
         }
-        return self::$isTYPO3V8;
+        return self::$isTYPO3V8OrGreater;
     }
 }

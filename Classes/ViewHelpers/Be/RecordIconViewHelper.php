@@ -11,6 +11,7 @@ namespace AawTeam\FeCookies\ViewHelpers\Be;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * RecordIconViewHelper
@@ -46,7 +47,7 @@ class RecordIconViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
                 throw new \InvalidArgumentException('Argument "object" must be ' . \TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject::class);
             }
             $modelClassName = get_class($this->arguments['object']);
-            $tableName = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->convertClassNameToTableName($modelClassName);
+            $tableName = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->convertClassNameToTableName($modelClassName);
             $row = BackendUtility::getRecord($tableName, $this->arguments['object']->getUid());
         } else {
             $tableName = $this->arguments['table'];
@@ -54,7 +55,7 @@ class RecordIconViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
         }
 
         /** @var IconFactory $iconFactory */
-        $iconFactory = $this->objectManager->get(IconFactory::class);
+        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         return $iconFactory->getIconForRecord($tableName, $row, $this->arguments['size'])->render();
     }
 }

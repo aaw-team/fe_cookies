@@ -77,7 +77,7 @@ class RecordMoveViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagB
         }
 
         /** @var DataMapper $dataMapper */
-        $dataMapper = $this->objectManager->get(DataMapper::class);
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
         $parameters = [
             'cmd' => [
                 $dataMapper->convertClassNameToTableName(get_class($object)) => [
