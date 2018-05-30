@@ -13,11 +13,13 @@
     background: $backgroundColor;
     font-size: $fontSize;
     color: $fontColor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     width: 100%;
     min-height: rem(50px);
     padding: $padding;
-    padding-top: $padding + $buttonCloseSize + rem(8px);
     box-sizing: border-box;
 
     z-index: $zIndex;
@@ -62,6 +64,8 @@
     > div {
         max-width: $maxWidth;
         margin: 0 auto;
+        order: 2;
+        flex: 1 1 auto;
 
         > div {
             text-align: left;
@@ -75,9 +79,9 @@
 
         // close button div
         + div {
-            position: absolute;
-            right: $padding * .5;
-            top: $padding * .5;
+            order: 1;
+            height: $buttonCloseSize;
+            margin-bottom: rem(10px);
         }
     }
 
@@ -96,6 +100,10 @@
     }
 
     #tx_fe_cookies-button-close {
+        position: absolute;
+        right: $padding * .5;
+        top: $padding * .5;
+
         background: transparent;
         font-size: 1em;
         line-height: inherit;
@@ -132,12 +140,15 @@
 
     @include mediaquery-sm {
         padding: $padding $paddingSideSm;
+        flex-direction: row;
+        align-items: center;
 
         > div {
             display: flex;
             align-items: center;
             max-width: none;
-            margin-right: $paddingSideSm + $buttonCloseSize+rem(10px);
+            width: 100%;
+            order: 1;
 
             > div {
                 margin: 0;
@@ -149,17 +160,16 @@
                 }
 
                 + div {
-                    min-width: $buttonAcceptMinSize;
                     text-align: right;
                 }
             }
 
             + div {
-                height: 100%;
+                height: auto;
                 margin: 0;
-
-                top: 0;
-                right: $paddingSideSm;
+                order: 2;
+                width: $buttonCloseSize + rem(10px);
+                margin-left: $padding;
             }
         }
 
@@ -167,6 +177,9 @@
         }
 
         #tx_fe_cookies-button-close {
+            position: static;
+            right: auto;
+            top: auto;
         }
     }
 
