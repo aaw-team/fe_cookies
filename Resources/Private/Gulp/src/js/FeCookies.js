@@ -26,7 +26,7 @@
             domain: configuration.domain || null,
             path: configuration.path || '/',
             lifetime: configuration.lifetime || null,
-            secure: configuration.secure === true || (configuration.secure === null && window.location.protocol.match(/^https/).length === 1),
+            secure: configuration.secure === true || (configuration.secure === null && window.location.protocol.match(/^https/) !== null),
         };
 
         // Define events
