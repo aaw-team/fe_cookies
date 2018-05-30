@@ -110,6 +110,22 @@
     };
 
     /**
+     * Returns the value of the cookie
+     *
+     * @returns {boolean}|{text}
+     */
+    FeCookies.prototype.getCookieValue = function() {
+        if (!this.hasCookie()) {
+            return false;
+        }
+        var matches = document.cookie.match(new RegExp(this.configuration.name + '=([^\s;]*)'));
+        if (matches) {
+            return matches[1];
+        }
+        return false;
+    };
+
+    /**
      * Removes the cookie
      *
      * @returns {boolean} whether the cookie has been removed or not

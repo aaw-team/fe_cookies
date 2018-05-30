@@ -31,6 +31,11 @@ PHP API
         public static function getCookieName();
 
         /**
+         * @return string|false
+         */
+        public static function getCookieValue();
+
+        /**
          * @return bool
          */
         public static function setCookie();
@@ -59,6 +64,11 @@ JavaScript API
          * @return string
          */
         function getCookieName();
+
+        /**
+         * @return string|false
+         */
+        function getCookieValue();
 
         /**
          * @return bool

@@ -83,7 +83,18 @@ class FeCookiesUtility
      */
     public static function hasCookie()
     {
-        return isset($_COOKIE[self::getCookieName()]) && $_COOKIE[self::getCookieName()] = self::VALUE_DEFAULT;
+        return isset($_COOKIE[self::getCookieName()]);
+    }
+
+    /**
+     * @return string|false
+     */
+    public static function getCookieValue()
+    {
+        if (self::hasCookie()) {
+            return $_COOKIE[self::getCookieName()];
+        }
+        return false;
     }
 
     /**
