@@ -12,6 +12,8 @@ plugin.tx_fecookies {
         includeCssApi = 0
         # cat=fe_cookies/enable/002; type=boolean; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableCloseButton
         enableCloseButton = 0
+        # cat=fe_cookies/enable/003; type=options[LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.0=0,LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.1=1,LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.-1=-1]; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin
+        enableFrontendPlugin = 1
 
         styles {
             banner {

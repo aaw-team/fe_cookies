@@ -36,6 +36,18 @@
             <trans-unit id="constants.settings.enableCloseButton">
                 <source>Enable close-button: Show a button in the cookie banner that closes the message without clicking on the "accept" button. After a page-reload, the message will appear again.</source>
             </trans-unit>
+            <trans-unit id="constants.settings.enableFrontendPlugin">
+                <source>Enable frontend plugin: Enables the frontend plugin.</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.enableFrontendPlugin.0">
+                <source>No</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.enableFrontendPlugin.1">
+                <source>Yes</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.enableFrontendPlugin.-1">
+                <source>Force for logged-in backend users</source>
+            </trans-unit>
             <trans-unit id="constants.view.templateRootPath">
                 <source>Template root path: Sets a specific path for template files.</source>
             </trans-unit>

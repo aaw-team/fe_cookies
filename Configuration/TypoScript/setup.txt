@@ -20,6 +20,7 @@ plugin.tx_fecookies {
         beforeBlocks = TEXT
         afterBlocks = TEXT
         enableCloseButton = {$plugin.tx_fecookies.settings.enableCloseButton}
+        enableFrontendPlugin = {$plugin.tx_fecookies.settings.enableFrontendPlugin}
         styles {
             banner {
                 backgroundColor = {$plugin.tx_fecookies.settings.styles.banner.backgroundColor}

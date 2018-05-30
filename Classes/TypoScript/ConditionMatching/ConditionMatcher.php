@@ -34,7 +34,7 @@ class ConditionMatcher
 
         $result = null;
         foreach ($conditionParameters as $conditionParameter) {
-            if (preg_match('~^(cookieSet|cookieValue)\s*([!<>=]+)\s*(.+)$~', $conditionParameter, $matches)) {
+            if (preg_match('~^(cookieSet|cookieValue|showFrontendPlugin)\s*([!<>=]+)\s*(.+)$~', $conditionParameter, $matches)) {
                 $rule = $matches[1];
                 $operator = $matches[2];
                 $value = trim($matches[3]);
@@ -45,6 +45,9 @@ class ConditionMatcher
                     case 'cookieValue' :
                         $result = self::cookieValue($operator, $value);
                         break;
+                    case 'showFrontendPlugin' :
+                        $result = self::showFrontendPlugin($operator, $value);
+                        break;
                 }
                 if ($result !== null) {
                     break;
@@ -53,6 +56,38 @@ class ConditionMatcher
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $operator
+     * @param string $value
+     * @return bool|null
+     */
+    protected static function showFrontendPlugin($operator, $value)
+    {
+        if (!in_array($operator, ['=', '!'])) {
+            return null;
+        }
+        $hasCookie = FeCookiesUtility::hasCookie();
+        $return = null;
+        switch ($value) {
+            case '0':
+                // Never show
+                $return = false;
+                break;
+            case '1':
+                // Show when cookie is not set
+                $return = !$hasCookie;
+                break;
+            case '-1':
+                // Show when a backend user is logged in
+                $return = isset($GLOBALS['BE_USER']) && is_array($GLOBALS['BE_USER']->user) && $GLOBALS['BE_USER']->user['uid'] > 0;
+                break;
+        }
+        if ($operator === '!' && is_bool($return)) {
+            $return = !$return;
+        }
+        return $return;
     }
 
     /**

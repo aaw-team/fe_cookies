@@ -54,7 +54,8 @@ mod.fe_cookies {
         templatePid =
         allowedConstantNames {
             0 = enableCloseButton
-            1 = styles.*
+            1 = enableFrontendPlugin
+            2 = styles.*
         }
     }
 }

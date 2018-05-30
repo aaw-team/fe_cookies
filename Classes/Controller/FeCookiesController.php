@@ -22,23 +22,39 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $blockRepository;
 
     /**
+     * @return bool
+     */
+    protected function shouldIncludeJs()
+    {
+        if ($this->settings['enableFrontendPlugin'] == -1) {
+            return !(
+                isset($GLOBALS['BE_USER'])
+                && is_array($GLOBALS['BE_USER']->user)
+                && $GLOBALS['BE_USER']->user['uid'] > 0);
+        }
+        return (bool)$this->settings['enableFrontendPlugin'];
+    }
+
+    /**
      *
      */
     public function indexAction()
     {
         // Add the js file
-        $this->getPagerenderer()->addJsFooterFile(
-            $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/CookieBannerHandler.js'),
-            'text/javascript',
-            false,                                                                    // $compress
-            false,                                                                    // $forceOnTop
-            '',                                                                       // $allWrap
-            false,                                                                    // $excludeFromConcatenation
-            '|',                                                                      // $splitChar
-            false,                                                                    // $async
-            // SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/CookieBannerHandler.js", true)) . PHP_EOL;'
-            'sha384-1VuV3tkg3iJ5ine3LmrM+AEUw/fY8Hm4RQBAH2QpqNIS85/MYWRrL1gATeZI2mRg' // $integrity
-        );
+        if ($this->shouldIncludeJs()) {
+            $this->getPagerenderer()->addJsFooterFile(
+                $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/CookieBannerHandler.js'),
+                'text/javascript',
+                false,                                                                    // $compress
+                false,                                                                    // $forceOnTop
+                '',                                                                       // $allWrap
+                false,                                                                    // $excludeFromConcatenation
+                '|',                                                                      // $splitChar
+                false,                                                                    // $async
+                // SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/CookieBannerHandler.js", true)) . PHP_EOL;'
+                'sha384-1VuV3tkg3iJ5ine3LmrM+AEUw/fY8Hm4RQBAH2QpqNIS85/MYWRrL1gATeZI2mRg' // $integrity
+            );
+        }
 
         // Add custom color definitions
         if (is_array($this->settings['styles'])) {

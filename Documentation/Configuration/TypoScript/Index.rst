@@ -118,6 +118,46 @@ Condition arguments
            set by the API). In a future version of fe_cookies, it is
            planned to configure meaningful values.
 
+.. container:: table-row
+
+   Argument
+       ``showFrontendPlugin``
+
+   Operators
+       =,!
+
+   Description
+       Test, whether the frontend plugin should be shown or not. This is
+       a rather special one: the argument and the value must be set as
+       defined, you can steer the logic with the operator only.
+
+       Argument MUST be ``showFrontendPlugin``, value MUST be the
+       predefined constant
+       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``.
+
+       This condition is used internally to give logged in backend users
+       the possibility to show the cookie-banner always during setup.
+
+       Example:
+
+       .. code-block:: typoscript
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin = {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
+               // frontend plugin is shown
+           [global]
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
+               // frontend plugin is hidden
+           [global]
+
+       In the defaultContentRendering TypoScript, it is used like this:
+
+       .. code-block:: typoscript
+
+           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
+               tt_content.list.20.fecookies_fecookies >
+           [global]
+
 .. _section-configuration-typoscript-constants:
 
 Constants
