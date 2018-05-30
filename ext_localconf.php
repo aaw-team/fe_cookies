@@ -31,9 +31,6 @@ $bootstrap = function () {
     // Register eID
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 
-    // Condition: should the frontend plugin be invoked or not
-    $disableFrontendPluginCondition = 'AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin}';
-
     // Version switch
     if (version_compare(TYPO3_version, '7', '>=')) {
         // Configuration for TYPO3 >= 7
@@ -57,16 +54,13 @@ $bootstrap = function () {
     } else {
         // Configuration for TYPO3 < 7
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = 'EXT:fe_cookies/Resources/Private/PHP/EidDispatcher.php';
-
-        // Condition userFunction
-        $disableFrontendPluginCondition = 'userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookiesLegacy::matchCondition( showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin})';
     }
 
     // Register the default TypoScript
     $typoScript = '/**
- * Completely disable the plugin, when cookie is set
+ * Completely disable the plugin, when not enabled
  */
-[' . $disableFrontendPluginCondition . ']
+[userFunc = AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
 tt_content.list.20.fecookies_fecookies >
 [global]';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', $typoScript, 'defaultContentRendering');

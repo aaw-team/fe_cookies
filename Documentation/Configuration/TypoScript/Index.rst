@@ -22,52 +22,82 @@ They are registered in ``plugin.tx_fecookies``.
 Conditions
 ----------
 
-The extension provides an extra TypoScript condition, which let's you
-define the TypoScript rendering based on the presence or the value of the
-cookie.
+The extension provides some API methods, that can be used in TypoScript
+conditions. They let you define the TypoScript rendering based on the
+presence or the value of the cookie without getting in trouble with the
+TYPO3 page cache. Learn more about userFunc conditions in the
+:ref:`TypoScript Reference <t3tsref:condition-userfunc>`.
+
+The available methods are grouped in the class
+``AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies``.
+
+**Usage:**
 
 .. code-block:: typoscript
 
-    [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies <arguments>]
+    [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::<method>(<arguments>)]
 
-Multiple arguments are accepted, they must be comma separated.
-
-Condition arguments
-^^^^^^^^^^^^^^^^^^^
+Condition methods
+^^^^^^^^^^^^^^^^^
 
 .. container:: table-row
 
-   Argument
-       ``cookieSet``
+   Method
+       ``cookieIsSet``
 
-   Operators
-       =
+   Arguments
+       none
 
    Description
-       Test, whether the cookie is set or not.
+       Returns true, when the cookie is set.
 
        Example:
 
        .. code-block:: typoscript
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieSet = 1]
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieIsSet()]
                // cookie is set
-           [global]
-
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieSet = 0]
+           [else]
                // cookie is not set
            [global]
 
 .. container:: table-row
 
-   Argument
-       ``cookieValue``
+   Method
+       ``cookieIsNotSet``
 
-   Operators
-       =,!=,>,>=,<,<=
+   Arguments
+       none
 
    Description
-       Test the cookie value. Does never match, when no cookie is set.
+       Returns true, when the cookie is not set.
+
+       Example:
+
+       .. code-block:: typoscript
+
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieIsNotSet()]
+               // cookie is not set
+           [else]
+               // cookie is set
+           [global]
+
+.. container:: table-row
+
+   Method
+       ``cookieValue``
+
+   Arguments
+       string
+
+   Description
+       Returns true when the cookie value matches at least one of the
+       arguments. Returns false when no cookie is set.
+
+       Multiple arguments are accepted, they must be comma separated.
+
+       The arguments are divided into an operator and a value part. One
+       argument must be composed by ``<operator>[SPACE]<value>``.
 
        Several **operators** can be used:
        
@@ -77,7 +107,7 @@ Condition arguments
        =               The cookie value must exactly match the given
                        value.
 
-       !=              Inverse of ``=``
+       !=              Inverse of "="
 
        >               The cookie value must be greater than the given
                        value.
@@ -100,16 +130,20 @@ Condition arguments
 
        .. code-block:: typoscript
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue = 1]
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 1)]
                // cookie is set and its value equals 1
            [global]
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue = 0|1|2]
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 0|1|2)]
                // cookie is set and its value equals 0, 1 or 2
            [global]
-           
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies cookieValue >= 2]
+
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(>= 2)]
                // cookie is set and its value is greater or equal 2
+           [global]
+
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 0, > 2)]
+               // cookie is set and its value is either 0 or greater than 2
            [global]
 
        .. important::
@@ -120,20 +154,45 @@ Condition arguments
 
 .. container:: table-row
 
-   Argument
+   Method
        ``showFrontendPlugin``
 
-   Operators
-       =,!
+   Arguments
+       int (``0``, ``1`` or ``-1``)
 
    Description
-       Test, whether the frontend plugin should be shown or not. This is
-       a rather special one: the argument and the value must be set as
-       defined, you can steer the logic with the operator only.
+       Returns true, when the frontend plugin should be shown. The
+       argument should be the value of the predefined constant
 
-       Argument MUST be ``showFrontendPlugin``, value MUST be the
-       predefined constant
-       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``.
+       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``
+       
+       which happens to be either ``0``, ``1`` or ``-1``.
+
+       Example:
+
+       .. code-block:: typoscript
+
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::showFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
+               // frontend plugin should be shown
+           [else]
+               // frontend plugin should be hidden
+           [global]
+
+.. container:: table-row
+
+   Method
+       ``hideFrontendPlugin``
+
+   Arguments
+       int (``0``, ``1`` or ``-1``)
+
+   Description
+       Returns true, when the frontend plugin should be hidden. The
+       argument should be the value of the predefined constant
+
+       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``
+       
+       which happens to be either ``0``, ``1`` or ``-1``.
 
        This condition is used internally to give logged in backend users
        the possibility to show the cookie-banner always during setup.
@@ -142,21 +201,21 @@ Condition arguments
 
        .. code-block:: typoscript
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin = {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
-               // frontend plugin is shown
+           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
+               // frontend plugin should be hidden
+           [else]
+               // frontend plugin should be shown
            [global]
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
-               // frontend plugin is hidden
-           [global]
+       .. tip::
 
-       In the defaultContentRendering TypoScript, it is used like this:
+           In the defaultContentRendering TypoScript, it is used like this:
 
-       .. code-block:: typoscript
+           .. code-block:: typoscript
 
-           [AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies showFrontendPlugin ! {$plugin.tx_fecookies.settings.enableFrontendPlugin}]
-               tt_content.list.20.fecookies_fecookies >
-           [global]
+               [userFunc = AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
+                   tt_content.list.20.fecookies_fecookies >
+               [global]
 
 .. _section-configuration-typoscript-constants:
 

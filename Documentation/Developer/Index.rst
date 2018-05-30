@@ -51,6 +51,42 @@ PHP API
         public static function removeCookie();
     }
 
+Following public API is designed to be used in TypoScript Conditions. For
+detailed information read the
+:ref:`Chapter about TypoScript conditions <section-configuration-typoscript-conditions>`.
+
+.. code-block:: php
+
+    class \AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies {
+        /**
+         * @return bool
+         */
+        public static function cookieIsSet();
+
+        /**
+         * @return bool
+         */
+        public static function cookieIsNotSet();
+
+        /**
+         * @param string ...$conditionParameters
+         * @return bool
+         */
+        public static function cookieValue(...$conditionParameters);
+
+        /**
+         * @param string $enableFrontendPlugin
+         * @return bool
+         */
+        public static function showFrontendPlugin($enableFrontendPlugin);
+
+        /**
+         * @param string $enableFrontendPlugin
+         * @return bool
+         */
+        public static function hideFrontendPlugin($enableFrontendPlugin);
+    }
+
 
 .. _section-developer-javascript:
 
