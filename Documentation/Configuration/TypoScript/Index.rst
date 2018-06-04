@@ -308,6 +308,22 @@ These options s are defined in ``plugin.tx_fecookies.settings``.
 
        **Default value:** ``0``
 
+.. container:: table-row
+
+   Option
+       bannerPosition
+
+   Data type
+       string
+
+   Description
+       This option defines the position of the cookie-banner message in
+       the default frontend plugin template by setting a CSS class. Valid
+       values are "bottom" or "top". If the option is set to any other
+       value, no (positioning) CSS class is set.
+
+       **Default value:** ``bottom``
+
 .. _section-configuration-typoscript-setup:
 
 Setup

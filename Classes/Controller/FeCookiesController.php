@@ -97,6 +97,7 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
         // Compose the contents
         $this->view->assignMultiple([
+            'bannerPositionClass' => $this->settings['bannerPosition'] == 'bottom' ? 'tx_fe_cookies-banner-bottom' : ($this->settings['bannerPosition'] == 'top' ? 'tx_fe_cookies-banner-top' : ''),
             'blocks' => $this->blockRepository->findAll(),
         ]);
     }

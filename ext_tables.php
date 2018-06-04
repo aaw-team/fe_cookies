@@ -55,7 +55,8 @@ mod.fe_cookies {
         allowedConstantNames {
             0 = enableCloseButton
             1 = enableFrontendPlugin
-            2 = styles.*
+            2 = bannerPosition
+            3 = styles.*
         }
     }
 }

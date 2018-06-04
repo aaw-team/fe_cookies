@@ -15,6 +15,9 @@ plugin.tx_fecookies {
         # cat=fe_cookies/enable/003; type=options[LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.0=0,LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.1=1,LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin.-1=-1]; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.enableFrontendPlugin
         enableFrontendPlugin = 1
 
+        # cat=fe_cookies/dims/001; type=options[LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.bannerPosition.bottom=bottom,LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.bannerPosition.top=top]; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.bannerPosition
+        bannerPosition = bottom
+
         styles {
             banner {
                 # cat=fe_cookies/color/001; type=color; label=LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:constants.settings.styles.banner.backgroundColor

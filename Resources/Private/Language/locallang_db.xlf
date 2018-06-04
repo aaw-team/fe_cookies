@@ -48,6 +48,15 @@
             <trans-unit id="constants.settings.enableFrontendPlugin.-1">
                 <source>Force for logged-in backend users</source>
             </trans-unit>
+            <trans-unit id="constants.settings.bannerPosition">
+                <source>Banner position</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.bannerPosition.bottom">
+                <source>Bottom</source>
+            </trans-unit>
+            <trans-unit id="constants.settings.bannerPosition.top">
+                <source>Top</source>
+            </trans-unit>
             <trans-unit id="constants.view.templateRootPath">
                 <source>Template root path: Sets a specific path for template files.</source>
             </trans-unit>
