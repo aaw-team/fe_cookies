@@ -87,7 +87,57 @@ class EidController
     protected function verifyChallenge($challenge, $salt, $returnUrl)
     {
         $hash = \hash_hmac('sha256', $salt . $returnUrl, $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
-        return \hash_equals($hash, $challenge);
+        return self::hashEquals($hash, $challenge);
+    }
+
+    /**
+     * @param string $knownString
+     * @param string $userString
+     * @return bool
+     */
+    final protected static function hashEquals($knownString, $userString)
+    {
+        if (function_exists('hash_equals')) {
+            return \hash_equals($knownString, $userString);
+        }
+
+        // do the same as in hash_equals()
+        if (func_num_args() !== 2) {
+            // handle wrong parameter count as the native implementation
+            trigger_error('hashEquals() expects exactly 2 parameters, ' . func_num_args() . ' given', E_USER_WARNING);
+            return null;
+        }
+        if (is_string($knownString) !== true) {
+            trigger_error('Expected $knownString to be string, ' . gettype($knownString) . ' given', E_USER_WARNING);
+            return false;
+        }
+        if (is_string($userString) !== true) {
+            trigger_error('Expected $userString to be string, ' . gettype($userString) . ' given', E_USER_WARNING);
+            return false;
+        }
+        if (self::strlen($knownString) !== self::strlen($userString)) {
+            return false;
+        }
+
+        $comp = ($knownString ^ $userString);
+        $result = 0;
+        for ($j = 0; $j < self::strlen($comp); $j++) {
+            $result |= ord($comp[$j]);
+        }
+        return ($result === 0);
+    }
+
+    /**
+     * @param string $string
+     * @return mixed
+     */
+    final protected static function strlen($string)
+    {
+        static $useMbstring = null;
+        if ($useMbstring === null) {
+            $useMbstring = \function_exists('mb_strlen');
+        }
+        return $useMbstring ? mb_strlen($string, '8bit') : strlen($string);
     }
 
     /**
