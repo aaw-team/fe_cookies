@@ -38,7 +38,7 @@ class EidViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVie
     public function render()
     {
         $requestUri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
-        $salt = bin2hex(\random_bytes(32));
+        $salt = bin2hex($this->getRandomBytes(32));
         $challenge = \hash_hmac('sha256', $salt . $requestUri, $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder $uriBuilder */
@@ -61,5 +61,21 @@ class EidViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVie
             $result = $this->renderChildren();
         }
         return $result;
+    }
+
+    /**
+     * This method must stay in place as long as PHP < 7 is supported
+     * and, thus, paragonie/random_compat is required.
+     *
+     * @param int $bytes
+     * @return string
+     */
+    private function getRandomBytes($bytes)
+    {
+        try {
+            return \random_bytes($bytes);
+        } catch (\Exception $e) {
+        }
+        return GeneralUtility::generateRandomBytes($bytes);
     }
 }

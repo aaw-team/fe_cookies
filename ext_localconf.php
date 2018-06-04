@@ -64,6 +64,12 @@ $bootstrap = function () {
 tt_content.list.20.fecookies_fecookies >
 [global]';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', $typoScript, 'defaultContentRendering');
+
+    // Register polyfill
+    // This happens only on PHP < 7 or on non-composer systems
+    if (!function_exists('random_bytes')) {
+        require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('fe_cookies') . 'Resources/Private/PHP/random_compat/vendor/autoload.php';
+    }
 };
 $bootstrap();
 unset($bootstrap);

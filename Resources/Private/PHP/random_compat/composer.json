@@ -1,0 +1,12 @@
+{
+    "minimum-stability": "stable",
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "prepend-autoloader": false
+    },
+    "require": {
+        "paragonie/random_compat": "^2"
+    }
+}
+
