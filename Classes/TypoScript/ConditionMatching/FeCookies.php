@@ -36,11 +36,13 @@ class FeCookies
      * @param string ...$conditionParameters
      * @return bool
      */
-    public static function cookieValue(...$conditionParameters)
+    public static function cookieValue()
     {
         if (!FeCookiesUtility::hasCookie()) {
             return false;
         }
+
+        $conditionParameters = func_get_args();
 
         $return = false;
         $cookieValue = FeCookiesUtility::getCookieValue();
