@@ -147,13 +147,23 @@ $tableConfig = [
 ];
 
 if (version_compare(TYPO3_version, '8', '<')) {
+    // labels
+    $tableConfig['ctrl']['prependAtCopy'] = 'LLL:EXT:lang/locallang_general.xlf:LGL.prependAtCopy';
+    $tableConfig['columns']['l18n_parent']['label'] = 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent';
+
     // RTE for bodytext
     unset($tableConfig['types']['1']['columnsOverrides']['bodytext']['config']);
     $tableConfig['types']['1']['columnsOverrides']['bodytext']['defaultExtras'] = 'richtext:rte_transform[mode=ts_css]';
 
+    // 'general' palette
+    $tableConfig['palettes']['general'] = [
+        'showitem' => 'type,sys_language_uid;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:sys_language_uid_formlabel,l18n_parent',
+        'canNotCollapse' => 1
+    ];
+
     // Adjust the default type appearance
     $tableConfig['types']['1']['showitem'] = '
-            type, title, bodytext,
+            --palette--;;general, title, bodytext,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
             --palette--;;hidden,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
