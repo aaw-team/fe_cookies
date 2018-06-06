@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-05-18T11:19:00Z" product-name="fe_cookies">
+        <header/>
+        <body>
+            <trans-unit id="plugin.label.button.accept">
+                <source>Accept</source>
+                <target>Akzeptieren</target>
+            </trans-unit>
+            <trans-unit id="plugin.label.button.close">
+                <source>Close</source>
+                <target>Schliessen</target>
+            </trans-unit>
+            <trans-unit id="plugin.label.aria.banner">
+                <source>Cookie usage notice</source>
+                <target>Hinweis zur Verwendung von Cookies</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

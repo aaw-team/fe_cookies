@@ -9,6 +9,9 @@
             <trans-unit id="backendmodule.label.button.settings">
                 <source>Settings</source>
             </trans-unit>
+            <trans-unit id="backendmodule.label.button.language">
+                <source>Language</source>
+            </trans-unit>
             <trans-unit id="backendmodule.text.nomessageblocks">
                 <source>No Message block records found on this page</source>
             </trans-unit>
@@ -33,6 +36,18 @@
             <trans-unit id="backendmodule.label.button.movedownmessageblock">
                 <source>Move Message block down in list</source>
             </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.language">
+                <source>Language</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.button.accept">
+                <source>Accept-button text</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.button.close">
+                <source>Close-button label</source>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.aria.banner">
+                <source>Aria-label</source>
+            </trans-unit>
 
             <!-- System messages -->
             <trans-unit id="sysmessage.nopage.heading">
@@ -53,6 +68,9 @@
             <trans-unit id="sysmessage.noaccesstosettings.text">
                 <source>You do not have access to the settings</source>
             </trans-unit>
+            <trans-unit id="sysmessage.noaccesstolanguage.text">
+                <source>You do not have access to the language management</source>
+            </trans-unit>
             <trans-unit id="sysmessage.success.templaterecordstore">
                 <source>Successfully stored the template record</source>
             </trans-unit>
@@ -62,16 +80,8 @@
             <trans-unit id="sysmessage.error.invalidrequestdata">
                 <source>Invalid request data detected</source>
             </trans-unit>
-
-            <!-- Plugin -->
-            <trans-unit id="plugin.label.button.accept">
-                <source>Accept</source>
-            </trans-unit>
-            <trans-unit id="plugin.label.button.close">
-                <source>Close</source>
-            </trans-unit>
-            <trans-unit id="plugin.label.aria.banner">
-                <source>Cookie usage notice</source>
+            <trans-unit id="sysmessage.success.languagelabelsstore">
+                <source>Successfully stored the language labels</source>
             </trans-unit>
         </body>
     </file>

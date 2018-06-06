@@ -9,7 +9,9 @@ namespace AawTeam\FeCookies\Controller;
  */
 
 use AawTeam\FeCookies\Utility\LocalizationUtility;
+use AawTeam\FeCookies\Utility\SysLanguagesUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
@@ -81,6 +83,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             'pageUid' => $pageUid,
             'blocks' => $blocks,
             'showSettings' => $this->userHasAccessToSettings(),
+            'showLanguage' => $this->userHasAccessToLanguage(),
             'toolbarPartial' => 'Index',
         ]);
     }
@@ -91,6 +94,70 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     protected function userHasAccessToSettings()
     {
         return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.enable')['value'];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function userHasAccessToLanguage()
+    {
+        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.languageManagement.enable')['value'];
+    }
+
+    /**
+     * @param array userdefinedLabels
+     * @param string $csrfToken
+     */
+    public function languageAction(array $userdefinedLabels = null, $csrfToken = null)
+    {
+        // Check access to this function
+        if (!$this->userHasAccessToLanguage()) {
+            $this->addFlashMessage('sysmessage.noaccesstolanguage.text', 'sysmessage.noaccess.heading', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('index');
+        }
+        if (!$this->isRequestForPage()) {
+            $this->forward('infoBox', null, null, [
+                'message' => 'sysmessage.nopage.text',
+                'title' => 'sysmessage.nopage.heading',
+                'state' => \TYPO3\CMS\Core\Messaging\AbstractMessage::INFO,
+            ]);
+        }
+        $pageUid = (int)GeneralUtility::_GP('id');
+
+        $allowedLabels = LocalizationUtility::getAllowedUserdefinedLabels();
+
+        if ($this->request->getMethod() === 'POST') {
+            // Check the csrf token
+            if ($csrfToken === null || !FormProtectionFactory::get()->validateToken($csrfToken, 'fe_cookies_formprotection')) {
+                $this->response->setContent('Security alert: CSRF token validation failed');
+                throw new \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException();
+            }
+
+            $count = LocalizationUtility::storeUserdefinedLabels($userdefinedLabels);
+            $this->addFlashMessage('sysmessage.success.languagelabelsstore');
+
+            // Clear caches
+            /** @var CacheManager $cacheManager */
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+            $cacheManager->getCache('l10n')->flush();
+            $cacheManager->flushCachesInGroup('pages');
+            return $this->redirect('language');
+        }
+
+        $languages = SysLanguagesUtility::getSysLanguageRecords($pageUid, true);
+        // Remove the languages which the user does not have access to
+        foreach (array_keys($languages) as $languageUid) {
+            if (!LocalizationUtility::backendUserHasAccessToLanguage($languageUid)) {
+                unset($languages[$languageUid]);
+            }
+        }
+
+        $this->view->assignMultiple([
+            'pageUid' => $pageUid,
+            'toolbarPartial' => 'Language',
+            'languages' => $languages,
+            'allowedLabels' => $allowedLabels,
+        ]);
     }
 
     /**

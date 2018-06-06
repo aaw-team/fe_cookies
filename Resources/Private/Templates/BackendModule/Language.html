@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:c="http://typo3.org/ns/AawTeam/FeCookies/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:layout name="Backend" />
+
+<f:section name="content">
+
+    <h1>
+        <f:translate key="backendmodule.headings.index" />
+    </h1>
+
+    <f:if condition="{languages}">
+        <f:form action="language" id="FeCookiesLanguage">
+            <c:form.formProtection name="csrfToken" />
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th class="col-icon nowrap"></th>
+                    <th class="col-responsive nowrap">
+                        <f:translate key="backendmodule.label.tableheading.language" />
+                    </th>
+                    <f:for each="{allowedLabels}" as="allowedLabel">
+                        <th class="col-responsive nowrap">
+                            <f:translate key="backendmodule.label.tableheading.{allowedLabel}" />
+                        </th>
+                    </f:for>
+                </tr>
+                <f:for each="{languages}" as="language">
+                    <tr class="{f:if(condition:language.hidden,then:'danger')}">
+                        <td class="col-icon nowrap">
+                            <c:be.recordIcon table="sys_language" row="{language}" />
+                        </td>
+                        <td class="col-responsive nowrap">
+                            {language.title}
+                        </td>
+                        <f:for each="{allowedLabels}" as="allowedLabel">
+                            <td class="col-responsive nowrap">
+                                <c:form.userdefinedLanguageLabel class="form-control" language="{language}" label="{allowedLabel}" />
+                            </td>
+                        </f:for>
+                    </tr>
+                </f:for>
+            </table>
+        </f:form>
+    </f:if>
+
+</f:section>
+
+</html>

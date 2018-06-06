@@ -24,7 +24,7 @@ $bootstrap = function () {
         'fecookies',
         '',
         [
-            'BackendModule' => 'index,settings,infoBox',
+            'BackendModule' => 'index,settings,language,infoBox',
         ],
         [
             'access' => 'user,group',
@@ -58,6 +58,12 @@ mod.fe_cookies {
             2 = bannerPosition
             3 = styles.*
         }
+    }
+    languageManagement {
+        enable = 0
+        defaultLanguageIsocode = default
+        storageMode = global
+        allowedLanguageLabels = plugin.label.button.accept,plugin.label.button.close,plugin.label.aria.banner
     }
 }
     ');

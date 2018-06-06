@@ -11,6 +11,10 @@
                 <source>Settings</source>
                 <target>Einstellungen</target>
             </trans-unit>
+            <trans-unit id="backendmodule.label.button.language">
+                <source>Language</source>
+                <target>Sprache</target>
+            </trans-unit>
             <trans-unit id="backendmodule.text.nomessageblocks">
                 <source>No Message block records found on this page</source>
                 <target>Keine Meldungs-Block Datensätze gefunden auf dieser Seite</target>
@@ -43,6 +47,22 @@
                 <source>Move Message block down in list</source>
                 <target>Meldungs-Block in der Liste nach unten schieben</target>
             </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.language">
+                <source>Language</source>
+                <target>Sprache</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.button.accept">
+                <source>Accept-button text</source>
+                <target>Akzeptieren-Button Text</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.button.close">
+                <source>Close-button label</source>
+                <target>Schliessen-Button Bezeichnung</target>
+            </trans-unit>
+            <trans-unit id="backendmodule.label.tableheading.plugin.label.aria.banner">
+                <source>Aria-label</source>
+                <target>Aria-Bezeichnung</target>
+            </trans-unit>
 
             <!-- System messages -->
             <trans-unit id="sysmessage.nopage.heading">
@@ -69,6 +89,10 @@
                 <source>You do not have access to the settings</source>
                 <target>Sie haben keine Zugriffsberechtigung für die Einstellungen</target>
             </trans-unit>
+            <trans-unit id="sysmessage.noaccesstolanguage.text">
+                <source>You do not have access to the language management</source>
+                <targert>Sie haben keine Zugriffsberechtigung für die Sprach-Verwaltung</targert>
+            </trans-unit>
             <trans-unit id="sysmessage.success.templaterecordstore">
                 <source>Successfully stored the template record</source>
                 <target>Der Template Datensatz wurde erfolgreich gespeichert</target>
@@ -81,19 +105,9 @@
                 <source>Invalid request data detected</source>
                 <target>Ungültige Daten in der Anfrage</target>
             </trans-unit>
-
-            <!-- Plugin -->
-            <trans-unit id="plugin.label.button.accept">
-                <source>Accept</source>
-                <target>Akzeptieren</target>
-            </trans-unit>
-            <trans-unit id="plugin.label.button.close">
-                <source>Close</source>
-                <target>Schliessen</target>
-            </trans-unit>
-            <trans-unit id="plugin.label.aria.banner">
-                <source>Cookie usage notice</source>
-                <target>Hinweis zur Verwendung von Cookies</target>
+            <trans-unit id="sysmessage.success.languagelabelsstore">
+                <source>Successfully stored the language labels</source>
+                <target>Die Sprachen wurden erfolgreich gespeichert</target>
             </trans-unit>
         </body>
     </file>
