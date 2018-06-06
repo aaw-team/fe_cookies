@@ -11,7 +11,6 @@ namespace AawTeam\FeCookies\ViewHelpers\Be\Link;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
-use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * RecordMoveViewHelper
@@ -32,7 +31,9 @@ class RecordMoveViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagB
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
         $this->registerArgument('returnUrl', 'string', 'The return URL', false, null);
-        $this->registerArgument('object', AbstractDomainObject::class, 'Model to be moved', true);
+        $this->registerArgument('object', AbstractDomainObject::class, 'Model to be moved', false);
+        $this->registerArgument('table', 'string', 'The table', false);
+        $this->registerArgument('uid', 'int', 'The UID of the record to be edited', false);
         $this->registerArgument('objects', \ArrayAccess::class, 'All objects that are used in the f:for', true);
         $this->registerArgument('iterator', 'array', 'The itertator (from a f:for view helper)', true);
         $this->registerArgument('direction', 'string', 'The direction: "up" or "down"', false, 'up');
@@ -45,7 +46,21 @@ class RecordMoveViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagB
     {
         $direction = strtolower($this->arguments['direction']);
         $iterator = $this->arguments['iterator'];
-        $object = $this->arguments['object'];
+        if ($this->arguments['object'] instanceof AbstractDomainObject) {
+            $table = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->convertClassNameToTableName(get_class($this->arguments['object']));
+            $uid = $this->arguments['object']->getUid();
+            $proceed = $this->arguments['object']->_getProperty('_localizedUid') === $uid;
+        } else {
+            $table = $this->arguments['table'];
+            $uid = $this->arguments['uid'];
+            $row = BackendUtility::getRecord($table, $uid);
+            $proceed = $row[$GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']] == 0;
+        }
+
+        if (!$proceed) {
+            return '';
+        }
+
         /** @var \ArrayAccess $objects */
         $objects = $this->arguments['objects'];
 
@@ -55,16 +70,22 @@ class RecordMoveViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagB
                 return '';
             } elseif ($iterator['index'] == 1) {
                 $position = 1;
-            } elseif ($objects->offsetExists($iterator['index'] - 2)) {
-                $position = $objects->offsetGet($iterator['index'] - 2)->getUid() * -1;
+            } elseif (isset($objects[$iterator['index'] - 2])) {
+                $position = ($objects[$iterator['index'] - 2] instanceof AbstractDomainObject)
+                    ? $objects[$iterator['index'] - 2]->getUid()
+                    : $objects[$iterator['index'] - 2]['uid'];
+                $position *= -1;
             } else {
                 // something went wrong?
             }
         } elseif ($direction == 'down') {
             if ($iterator['isLast']) {
                 return '';
-            } elseif ($objects->offsetExists($iterator['index'] + 1)) {
-                $position = $objects->offsetGet($iterator['index'] + 1)->getUid() * -1;
+            } elseif (isset($objects[$iterator['index'] + 1])) {
+                $position = ($objects[$iterator['index'] + 1] instanceof AbstractDomainObject)
+                    ? $objects[$iterator['index'] + 1]->getUid()
+                    : $objects[$iterator['index'] + 1]['uid'];
+                $position *= -1;
             } else {
                 // something went wrong?
             }
@@ -76,12 +97,10 @@ class RecordMoveViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagB
             return '';
         }
 
-        /** @var DataMapper $dataMapper */
-        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
         $parameters = [
             'cmd' => [
-                $dataMapper->convertClassNameToTableName(get_class($object)) => [
-                    $object->getUid() => [
+                $table => [
+                    $uid => [
                         'move' => $position,
                     ],
                 ],

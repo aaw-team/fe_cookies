@@ -23,7 +23,9 @@
                 </tr>
                 <f:for each="{blocks}" as="block" iteration="iterator">
                     <tr>
-                        <td class="col-icon nowrap"><c:be.recordIcon object="{block}" /></td>
+                        <td class="col-icon nowrap" style="{f:if(condition:'{block.l18n_parent}>0',then:'padding-left:2em;')}">
+                            <c:be.recordIcon table="tx_fecookies_domain_model_block" row="{block}" />
+                        </td>
                         <td class="col-title col-responsive nowrap">
                             <b>{block.title}</b>
                             <br />
@@ -52,10 +54,10 @@
                             </div>
 
                             <div class="btn-group">
-                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" title="{f:translate(key:'backendmodule.label.button.moveupmessageblock')}">
+                                <c:be.link.recordMove class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" objects="{blocks}" iterator="{iterator}" title="{f:translate(key:'backendmodule.label.button.moveupmessageblock')}">
                                     <core:icon identifier="actions-move-up" />
                                 </c:be.link.recordMove>
-                                <c:be.link.recordMove class="btn btn-default" object="{block}" objects="{blocks}" iterator="{iterator}" direction="down" title="{f:translate(key:'backendmodule.label.button.movedownmessageblock')}">
+                                <c:be.link.recordMove class="btn btn-default" table="tx_fecookies_domain_model_block" uid="{block.uid}" objects="{blocks}" iterator="{iterator}" direction="down" title="{f:translate(key:'backendmodule.label.button.movedownmessageblock')}">
                                     <core:icon identifier="actions-move-down" />
                                 </c:be.link.recordMove>
                             </div>

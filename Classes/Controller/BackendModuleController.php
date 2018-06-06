@@ -69,9 +69,17 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         $querySettings->setIgnoreEnableFields(true);
         $this->blockRepository->setDefaultQuerySettings($querySettings);
 
+        // Do not display records in languages, the user has no access to
+        $blocks = $this->blockRepository->findAllForBackendList();
+        foreach (array_keys($blocks) as $key) {
+            if (!$this->getBackendUserAuthentication()->checkLanguageAccess($blocks[$key]['sys_language_uid'])) {
+                unset($blocks[$key]);
+            }
+        }
+
         $this->view->assignMultiple([
             'pageUid' => $pageUid,
-            'blocks' => $this->blockRepository->findAll(),
+            'blocks' => $blocks,
             'showSettings' => $this->userHasAccessToSettings(),
             'toolbarPartial' => 'Index',
         ]);
