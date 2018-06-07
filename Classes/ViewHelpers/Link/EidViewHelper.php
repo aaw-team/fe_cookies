@@ -64,18 +64,18 @@ class EidViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVie
     }
 
     /**
-     * This method must stay in place as long as PHP < 7 is supported
-     * and, thus, paragonie/random_compat is required.
-     *
      * @param int $bytes
      * @return string
      */
     private function getRandomBytes($bytes)
     {
-        try {
-            return \random_bytes($bytes);
-        } catch (\Exception $e) {
+        static $useOldApi = null;
+        if ($useOldApi === null) {
+            $useOldApi = version_compare(TYPO3_version, '8', '<');
         }
-        return GeneralUtility::generateRandomBytes($bytes);
+        if ($useOldApi) {
+            return GeneralUtility::generateRandomBytes($bytes);
+        }
+        return GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\Random::class)->generateRandomBytes($bytes);
     }
 }
