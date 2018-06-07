@@ -58,8 +58,9 @@ Edit settings
 
 If you have the permission to do so, you can open the settings for the
 frontend plugin. It can be accessed through the link inside the
-"toolbar", which is located right above the content-editing area. If you
-cannot see this link, you are not allowed to edit the settings.
+"toolbar", which is located right above the content-editing area (see the
+**green mark** in the :ref:`picture above <section-user-backendmodule>`).
+If you cannot see the link, you are not allowed to edit the settings.
 
 
 .. figure:: ../Images/UserManual/BackendModuleSettings.png
@@ -73,3 +74,24 @@ cannot see this link, you are not allowed to edit the settings.
    picture. The options you're allowed to edit are defined by your
    integrator.
 
+Edit language labels
+--------------------
+
+If you have the permission to do so, you can open the management of the
+language labels, which will be used in the frontend plugin. It can be
+accessed through the link inside the "toolbar", which is located right
+above the content-editing area (see **orange mark** in the
+:ref:`picture above <section-user-backendmodule>`). If you cannot see
+the button, you are not allowed to edit the language labels.
+
+
+.. figure:: ../Images/UserManual/BackendModuleLanguages.png
+   :alt: Language labels management overview
+
+   Language labels management overview
+
+.. tip::
+
+   It is very likely, that you don't see the same languages as in the
+   picture. The languages you're allowed to edit are defined by your
+   integrator (and by the requirements of your website as well).
