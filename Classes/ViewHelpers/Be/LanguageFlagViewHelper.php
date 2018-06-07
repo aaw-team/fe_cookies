@@ -57,6 +57,10 @@ class LanguageFlagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
                 $row = SysLanguagesUtility::getDefaultLanguage();
             } else {
                 $row = BackendUtility::getRecord('sys_language', $uid);
+                // If no record matches, create an empty row
+                if (!is_array($row)) {
+                    $row = [];
+                }
             }
         }
 
