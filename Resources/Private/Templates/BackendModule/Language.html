@@ -29,7 +29,7 @@
                 <f:for each="{languages}" as="language">
                     <tr class="{f:if(condition:language.hidden,then:'danger')}">
                         <td class="col-icon nowrap">
-                            <c:be.recordIcon table="sys_language" row="{language}" />
+                            <c:be.languageFlag row="{language}" />
                         </td>
                         <td class="col-responsive nowrap">
                             {language.title}

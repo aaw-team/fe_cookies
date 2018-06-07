@@ -19,6 +19,7 @@
                         <c:be.link.recordCreate class="btn btn-default" table="tx_fecookies_domain_model_block" title="{f:translate(key:'backendmodule.label.button.createmessageblock')}"><core:icon identifier="actions-add" /></c:be.link.recordCreate>
                     </th>
                     <th class="col-title col-responsive nowrap"><f:translate key="LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:tca.tx_fecookies_domain_model_block.title" /></th>
+                    <th class="col-icon nowrap"></th>
                     <th class="col-control nowrap"></th>
                 </tr>
                 <f:for each="{blocks}" as="block" iteration="iterator">
@@ -30,6 +31,9 @@
                             <b>{block.title}</b>
                             <br />
                             {block.bodytext -> f:format.html() -> f:format.crop(maxCharacters:100,respectHtml:1)}
+                        </td>
+                        <td class="col-icon nowrap">
+                            <c:be.languageFlag uid="{block.sys_language_uid}" />
                         </td>
                         <td class="col-control nowrap">
                             <div class="btn-group">
