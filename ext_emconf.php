@@ -6,7 +6,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Frontend cookies',
     'description' => 'Provides a cookie consent plugin for the frontend, a backend module for convenient cookie-banner management, simple but powerful APIs (PHP, JavaScript and CSS) and lots of configuration possibilities, including separate cookie settings per domain.',
     'category' => 'fe',
@@ -15,12 +15,12 @@ $EM_CONF[$_EXTKEY] = array(
     'state' => 'beta',
     'clearCacheOnLoad' => true,
     'version' => '0.5.0-dev',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'php' => '5.6.0-7.2.999',
             'typo3' => '6.2.31-9.2.999',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(),
-    ),
-);
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
+];
