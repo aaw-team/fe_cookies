@@ -138,7 +138,7 @@ following (or equivalent) TypoScript:
 .. code-block:: typoscript
 
     config.htmlTag_setParams = class="tx_fe_cookies-noCookie"
-    [AawTeam\FeCookies\TypoScript\ConditionMatching\CookieSet]
+    [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieIsSet()]
         config.htmlTag_setParams = class="tx_fe_cookies-hasCookie"
     [global]
 
