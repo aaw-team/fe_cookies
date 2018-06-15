@@ -5,6 +5,8 @@ based on the existence or values of cookies. On board is a frontend
 plugin to display "cookie-banners" as well as a configurable API to
 manage cookies for PHP, JavaScript and CSS.
 
+See the extension in the [TYPO3 Extension Repository](https://typo3.org/extensions/repository/view/fe_cookies).
+
 ## Features
 
 1. Frontend plugin to display "cookie-banners". It shows a message as long
@@ -24,7 +26,7 @@ Read the full documentation at https://docs.typo3.org/typo3cms/extensions/fe_coo
 
 ## Building CSS and JavaScript
 
-All CSS and JavaScript files inside the *Resources/Public/* folder are generated with the [gulp] toolkit. All raw and uncompressed files are located inside *Resources/Private/Gulp/*. To edit or rebuild said files you have to install [npm].
+All CSS and JavaScript files in the *Resources/Public* folder are generated with the [gulp](https://gulpjs.com/) toolkit. The source files are located in *Resources/Private/Gulp/src*. To edit or rebuild said files you have to install [npm](https://www.npmjs.com/).
 
 To install all required packages for the build process run `npm install` inside the *Resources/Private/Gulp/* folder.
 
@@ -38,11 +40,7 @@ npm run watch # builds and watches for file changes
 After building the files are automatically moved to *Resources/Public/*.
 
 #### Default Style
-The default style is written in [Sass] with the SCSS syntax. The raw SCSS files are located inside the *Resources/Private/Gulp/src/sass/* folder. Most style relevant settings can be changed inside the *_settings.scss* file.
-
-[gulp]: https://gulpjs.com/
-[npm]: https://www.npmjs.com/
-[Sass]: https://sass-lang.com/
+The default style is written in [Sass](https://sass-lang.com/) with the SCSS syntax. The raw SCSS files are located inside the *Resources/Private/Gulp/src/sass/* folder. Most style relevant settings can be changed inside the *_settings.scss* file.
 
 ## Contribuiting
 
