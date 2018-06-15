@@ -11,13 +11,7 @@ defined('TYPO3_MODE') or die();
 $bootstrap = function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_fecookies_domain_model_block');
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'AawTeam.FeCookies',
-        'fecookies',
-        'LLL:EXT:fe_cookies/Resources/Private/Language/locallang_db.xlf:plugin.fecookies.title',
-        'EXT:fe_cookies/Resources/Public/Icons/Extension.svg'
-    );
-
+    // Register the backend module
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'AawTeam.FeCookies',
         'web',
@@ -33,6 +27,7 @@ $bootstrap = function () {
         ]
     );
 
+    // Register default page TSConfig
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.plugins {
     elements {
