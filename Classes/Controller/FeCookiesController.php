@@ -52,7 +52,7 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 '|',                                                                      // $splitChar
                 false,                                                                    // $async
                 // SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/CookieBannerHandler.js", true)) . PHP_EOL;'
-                'sha384-1VuV3tkg3iJ5ine3LmrM+AEUw/fY8Hm4RQBAH2QpqNIS85/MYWRrL1gATeZI2mRg' // $integrity
+                'sha384-atkX67bFl1ULS0WNbCCndQThCFHcO662Ojk5ZNhUOM4cD1brVBhQuLU0b5u/pVKl' // $integrity
             );
         }
 
@@ -103,8 +103,12 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
 
         // Compose the contents
+        $bannerPosition = $this->settings['bannerPosition'];
+        if (empty($bannerPosition)) {
+            $bannerPosition = 'bottom';
+        }
         $this->view->assignMultiple([
-            'bannerPositionClass' => $this->settings['bannerPosition'] == 'bottom' ? 'tx_fe_cookies-banner-bottom' : ($this->settings['bannerPosition'] == 'top' ? 'tx_fe_cookies-banner-top' : ''),
+            'bannerPositionClass' => 'tx_fe_cookies-banner-position-' . $bannerPosition,
             'blocks' => $this->blockRepository->findAll(),
         ]);
     }

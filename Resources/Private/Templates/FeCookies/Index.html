@@ -7,26 +7,26 @@
 
 <f:section name="content">
 
-    <div id="tx_fe_cookies-banner" class="{bannerPositionClass}" role="dialog" aria-label="{c:translateUserdefinedLabel(key:'plugin.label.aria.banner')}" aria-describedby="tx_fe_cookies-text">
+    <div class="tx_fe_cookies-banner {bannerPositionClass}" role="dialog" aria-label="{c:translateUserdefinedLabel(key:'plugin.label.aria.banner')}">
         <div>
-            <div id="tx_fe_cookies-text">
+            <div class="tx_fe_cookies-message-blocks">
                 <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.beforeBlocks" />
                 <f:if condition="{blocks}">
                     <f:for each="{blocks}" as="block">
-                        <div>{block.bodytext -> f:format.html()}</div>
+                        <div class="tx_fe_cookies-message-block">{block.bodytext -> f:format.html()}</div>
                     </f:for>
                 </f:if>
                 <f:cObject typoscriptObjectPath="plugin.tx_fecookies.settings.afterBlocks" />
             </div>
             <div>
-                <c:link.eid id="tx_fe_cookies-button-accept" title="{c:translateUserdefinedLabel(key:'plugin.label.button.accept')}">
+                <c:link.eid class="tx_fe_cookies-button-accept" title="{c:translateUserdefinedLabel(key:'plugin.label.button.accept')}">
                     <c:translateUserdefinedLabel key="plugin.label.button.accept" />
                 </c:link.eid>
             </div>
         </div>
         <f:if condition="{settings.enableCloseButton}">
             <div>
-                <button id="tx_fe_cookies-button-close" title="{c:translateUserdefinedLabel(key:'plugin.label.button.close')}" aria-label="{c:translateUserdefinedLabel(key:'plugin.label.button.close')}">&nbsp;<span></span><span></span></button>
+                <button class="tx_fe_cookies-button-close" title="{c:translateUserdefinedLabel(key:'plugin.label.button.close')}" aria-label="{c:translateUserdefinedLabel(key:'plugin.label.button.close')}">&nbsp;<span></span><span></span></button>
             </div>
         </f:if>
     </div>

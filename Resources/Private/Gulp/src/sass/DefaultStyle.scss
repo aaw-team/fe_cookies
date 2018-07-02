@@ -8,7 +8,7 @@
 @import '_settings.scss';
 @import '_mixins.scss';
 
-#tx_fe_cookies-banner {
+.tx_fe_cookies-banner {
     position: relative;
     background: $backgroundColor;
     font-size: $fontSize;
@@ -24,7 +24,7 @@
 
     z-index: $zIndex;
 
-    &.tx_fe_cookies-banner-bottom {
+    &.tx_fe_cookies-banner-position-bottom {
         position: fixed;
         left: 0;
         right: 0;
@@ -36,7 +36,7 @@
         }
     }
 
-    &.tx_fe_cookies-banner-top {
+    &.tx_fe_cookies-banner-position-top {
         position: fixed;
         left: 0;
         right: 0;
@@ -85,7 +85,7 @@
         }
     }
 
-    #tx_fe_cookies-button-accept {
+    .tx_fe_cookies-button-accept {
         display: inline-block;
 
         background: $buttonAcceptBackgroundColor;
@@ -99,7 +99,7 @@
         box-sizing: border-box;
     }
 
-    #tx_fe_cookies-button-close {
+    .tx_fe_cookies-button-close {
         position: absolute;
         right: $padding * .5;
         top: $padding * .5;
@@ -173,10 +173,10 @@
             }
         }
 
-        #tx_fe_cookies-button-accept {
+        .tx_fe_cookies-button-accept {
         }
 
-        #tx_fe_cookies-button-close {
+        .tx_fe_cookies-button-close {
             position: static;
             right: auto;
             top: auto;
