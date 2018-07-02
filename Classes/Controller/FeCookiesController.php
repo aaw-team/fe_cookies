@@ -75,24 +75,31 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
 
         // Determine storage page(s)
-        $storagePids = GeneralUtility::intExplode(
+        $storagePids = array_filter(array_unique(GeneralUtility::intExplode(
             ',',
             $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK)['persistence']['storagePid'],
             true
-        );
-        if (count($storagePids) == 1 && $storagePids[0] === 0) {
-            // No storage page configured, use the rootpage(s) from the rootLine
-            $storagePids = [];
+        )), function($v) {
+            return is_int($v) && $v > 0;
+        });
+
+        // No storage page configured
+        if (empty($storagePids)) {
+            // Add the current page
+            if (!$this->getTypoScriptFrontendController()->page['is_siteroot']) {
+                $storagePids[] = (int)$this->getTypoScriptFrontendController()->id;
+            }
+            // Add the rootpage(s) from the rootLine
             foreach ($this->getTypoScriptFrontendController()->rootLine as $page) {
                 if ($page['is_siteroot']) {
                     $storagePids[] = (int)$page['uid'];
                 }
             }
-            if (!empty($storagePids)) {
-                $querySettings = $this->blockRepository->createQuery()->getQuerySettings();
-                $querySettings->setStoragePageIds($storagePids);
-                $this->blockRepository->setDefaultQuerySettings($querySettings);
-            }
+        }
+        if (!empty($storagePids)) {
+            $querySettings = $this->blockRepository->createQuery()->getQuerySettings();
+            $querySettings->setStoragePageIds($storagePids);
+            $this->blockRepository->setDefaultQuerySettings($querySettings);
         }
 
         // Compose the contents
