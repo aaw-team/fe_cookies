@@ -41,14 +41,21 @@ class Configuration implements SingletonInterface
      */
     public function __construct()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-        $cache = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class)->getCache(self::CACHE_IDENTIFIER);
-        if ($cache->has(self::ENTRY_IDENTIFIER)) {
-            $configuration = $cache->requireOnce(self::ENTRY_IDENTIFIER);
+        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+        $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        if ($cacheManager->hasCache(self::CACHE_IDENTIFIER)) {
+            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
+            $cache = $cacheManager->getCache(self::CACHE_IDENTIFIER);
+            if ($cache->has(self::ENTRY_IDENTIFIER)) {
+                $configuration = $cache->requireOnce(self::ENTRY_IDENTIFIER);
+            } else {
+                $configuration = $this->build();
+                $cache->set(self::ENTRY_IDENTIFIER, 'return ' . ArrayUtility::arrayExport($configuration) . ';');
+            }
         } else {
             $configuration = $this->build();
-            $cache->set(self::ENTRY_IDENTIFIER, 'return ' . ArrayUtility::arrayExport($configuration) . ';');
         }
+
         $configuration = $this->extractCurrentDomainConfiguration($configuration);
         $this->checkConfiguration($configuration);
         $this->configuration = $configuration;
