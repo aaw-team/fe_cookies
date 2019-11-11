@@ -106,7 +106,7 @@ class BlockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         static $tableName = null;
         if ($tableName === null) {
-            $tableName = GeneralUtility::makeInstance(
+            $tableName = $this->objectManager->get(
                 \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class
             )->convertClassNameToTableName(
                 \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateRepositoryNameToModelName(get_class($this))
