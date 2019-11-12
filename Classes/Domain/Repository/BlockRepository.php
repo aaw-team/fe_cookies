@@ -11,6 +11,7 @@ namespace AawTeam\FeCookies\Domain\Repository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * BlockRepository
@@ -106,11 +107,7 @@ class BlockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         static $tableName = null;
         if ($tableName === null) {
-            $tableName = GeneralUtility::makeInstance(
-                \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class
-            )->convertClassNameToTableName(
-                \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateRepositoryNameToModelName(get_class($this))
-            );
+            $tableName = $this->objectManager->get(DataMapper::class)->convertClassNameToTableName($this->objectType);
         }
         return $tableName;
     }
