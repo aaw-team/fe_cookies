@@ -22,7 +22,7 @@ See the extension in the [TYPO3 Extension Repository](https://typo3.org/extensio
 
 ## Documentation
 
-Read the full documentation at https://docs.typo3.org/typo3cms/extensions/fe_cookies/
+Read the full documentation at https://docs.typo3.org/p/aaw-team/fe_cookies/master/en-us/
 
 ## Building CSS and JavaScript
 
