@@ -20,7 +20,7 @@ manage cookies for PHP, JavaScript and CSS.
 
 ## Documentation
 
-Read the full documentation at https://docs.typo3.org/typo3cms/extensions/fe_cookies/
+Read the full documentation at https://docs.typo3.org/p/aaw-team/fe_cookies/master/en-us/
 
 ## Building CSS and JavaScript
 
