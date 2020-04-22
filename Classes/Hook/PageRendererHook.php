@@ -90,7 +90,7 @@ class PageRendererHook
             return $params['jsFooterLibs']['fe_cookies']['section'];
         }
 
-        $filename = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize('EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js');
+        $filename = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize('EXT:fe_cookies/Resources/Public/JavaScript/FeCookies.js');
         if (isset($params['jsFiles'][$filename])) {
             return $params['jsFiles'][$filename]['section'];
         } elseif (isset($params['jsFooterFiles'][$filename])) {

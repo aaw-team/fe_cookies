@@ -42,10 +42,10 @@ plugin.tx_fecookies {
 /**
  * Include JS API
  */
-page.includeJSFooterlibs.fe_cookies = EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js
+page.includeJSFooterlibs.fe_cookies = EXT:fe_cookies/Resources/Public/JavaScript/FeCookies.js
 page.includeJSFooterlibs.fe_cookies {
     disableCompression = 1
-    # SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/Fecookies.js", true)) . PHP_EOL;'
+    # SRI hash generated with: php -r 'print "sha384-" . base64_encode(hash_file("sha384", "Resources/Public/JavaScript/FeCookies.js", true)) . PHP_EOL;'
     integrity = sha384-9W18z93tYf6l78W2AuqXU0HtVyBZQXpIZuAVNHN+xy8QLFD0yrU6rh7eZr5pODkG
 }
 
