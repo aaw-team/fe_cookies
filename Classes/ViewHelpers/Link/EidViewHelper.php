@@ -39,7 +39,7 @@ class EidViewHelper extends AbstractTagBasedViewHelper
     public function render()
     {
         $requestUri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
-        $salt = bin2hex($this->getRandomBytes(32));
+        $salt = substr(hash('sha256', random_bytes(32)), -32);
         $challenge = \hash_hmac('sha256', $salt . $requestUri, $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder $uriBuilder */
@@ -62,21 +62,5 @@ class EidViewHelper extends AbstractTagBasedViewHelper
             $result = $this->renderChildren();
         }
         return $result;
-    }
-
-    /**
-     * @param int $bytes
-     * @return string
-     */
-    private function getRandomBytes($bytes)
-    {
-        static $useOldApi = null;
-        if ($useOldApi === null) {
-            $useOldApi = version_compare(TYPO3_version, '8', '<');
-        }
-        if ($useOldApi) {
-            return GeneralUtility::generateRandomBytes($bytes);
-        }
-        return GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\Random::class)->generateRandomBytes($bytes);
     }
 }

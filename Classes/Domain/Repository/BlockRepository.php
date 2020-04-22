@@ -65,39 +65,22 @@ class BlockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $pids = $this->createQuery()->getQuerySettings()->getStoragePageIds();
 
-        if (version_compare(TYPO3_version, '8.2', '<')) {
-            $orderings = [];
-            foreach ($this->defaultOrderings as $field => $orderDir) {
-                $orderings[] = '`' . $this->getDatabaseTableName() . '`.`' . $this->getLegacyDatabaseConnection()->quoteStr($field, $this->getDatabaseTableName()) . '` ' . ($orderDir === \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING ? 'DESC' : 'ASC');
-            }
-            $rows = $this->getLegacyDatabaseConnection()->exec_SELECTgetRows(
-                '*',
-                $this->getDatabaseTableName(),
-                'pid IN (' . implode(',', $pids) . ') AND l18n_parent=' . $l18nParent . ' ' . BackendUtility::deleteClause($this->getDatabaseTableName()),
-                '',
-                implode(', ', $orderings)
+        $queryBuilder = $this->getConnectionForTable($this->getDatabaseTableName())->createQueryBuilder();
+        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder
+            ->select('*')
+            ->from($this->getDatabaseTableName())
+            ->where(
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->in('pid', $pids),
+                    $queryBuilder->expr()->eq('l18n_parent', $l18nParent)
+                )
             );
-            if (!is_array($rows)) {
-                $rows = [];
-            }
-        } else {
-            $queryBuilder = $this->getConnectionForTable($this->getDatabaseTableName())->createQueryBuilder();
-            $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-            $queryBuilder
-                ->select('*')
-                ->from($this->getDatabaseTableName())
-                ->where(
-                    $queryBuilder->expr()->andX(
-                        $queryBuilder->expr()->in('pid', $pids),
-                        $queryBuilder->expr()->eq('l18n_parent', $l18nParent)
-                    )
-                );
-            foreach ($this->defaultOrderings as $field => $orderDir) {
-                $queryBuilder->addOrderBy($field, $orderDir);
-            }
-            $rows = $queryBuilder->execute()->fetchAll();
+        foreach ($this->defaultOrderings as $field => $orderDir) {
+            $queryBuilder->addOrderBy($field, $orderDir);
         }
-        return $rows;
+
+        return $queryBuilder->execute()->fetchAll();
     }
 
     /**
@@ -110,14 +93,6 @@ class BlockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $tableName = $this->objectManager->get(DataMapper::class)->convertClassNameToTableName($this->objectType);
         }
         return $tableName;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected function getLegacyDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 
     /**

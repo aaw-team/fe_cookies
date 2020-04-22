@@ -250,15 +250,10 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             }
 
             $category = 'fe_cookies';
-            if (version_compare(TYPO3_version, '9.0', '<')) {
-                $this->templateService->ext_getTSCE_config($category);
-            }
             $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
 
-            if (version_compare(TYPO3_version, '8.1.0', '>=')) {
-                foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
-                    $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
-                }
+            foreach ($this->templateService->getInlineJavaScript() as $name => $inlineJavaScript) {
+                $this->objectManager->get(PageRenderer::class)->addJsInlineCode($name, $inlineJavaScript);
             }
         }
 
@@ -392,22 +387,12 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             throw new \InvalidArgumentException('$constants must be string');
         }
         $templateUid = $this->templateRow['_ORIG_uid'] ?: $this->templateRow['uid'];
-        if (version_compare(TYPO3_version, '8.2', '<')) {
-            $connection = $this->getLegacyDatabaseConnection();
-            $success = $connection->exec_UPDATEquery(
-                'sys_template',
-                'uid=' . $templateUid,
-                ['constants' => $constants]
-            );
-        } else {
-            $connection = $this->getConnectionForTable('sys_template');
-            $success = (bool)$connection->update(
-                'sys_template',
-                ['constants' => $constants],
-                ['uid' => $templateUid],
-                [\PDO::PARAM_STR]
-            );
-        }
+        $success = (bool)$this->getConnectionForTable('sys_template')->update(
+            'sys_template',
+            ['constants' => $constants],
+            ['uid' => $templateUid],
+            [\PDO::PARAM_STR]
+        );
         return $success;
     }
 
@@ -443,29 +428,6 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     }
 
     /**
-     * Extend parent method: for too old TYPO3 versions, override the
-     * action name in every request with 'tooOldTypo3'.
-     *
-     * {@inheritDoc}
-     * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::processRequest()
-     */
-    public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response)
-    {
-        if (version_compare(TYPO3_version, '7', '<')  && ($request instanceof \TYPO3\CMS\Extbase\Mvc\Request)) {
-            $request->setControllerActionName('tooOldTypo3');
-        }
-        return parent::processRequest($request, $response);
-    }
-
-    /**
-     * This action only exists to display a prepared message in the
-     * view. It is forced to be called in old TYPO3 versions.
-     */
-    public function tooOldTypo3Action()
-    {
-    }
-
-    /**
      * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
      */
     protected function getBackendUserAuthentication()
@@ -480,14 +442,6 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     {
         $pageId = (int)GeneralUtility::_GP('id');
         return $pageId > 0;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected function getLegacyDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 
     /**

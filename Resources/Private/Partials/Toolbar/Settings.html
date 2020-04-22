@@ -5,13 +5,13 @@
 
 
 <div class="btn-toolbar" role="toolbar" aria-label="">
-    <f:link.action action="index" class="btn btn-default btn-sm t3js-editform-close" title="{f:translate(key:'{c:compatibility.lll(key:\'rm.closeDoc\',ext:\'lang\',file:\'locallang_core.xlf\')}')}">
+    <f:link.action action="index" class="btn btn-default btn-sm t3js-editform-close" title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.closeDoc')}">
         <core:icon identifier="actions-close" />
     </f:link.action>
     <f:if condition="{templateRow}">
         <div class="btn-group t3js-splitbutton">
-            <button name="_savedok" class="btn btn-default btn-sm " value="1" title="{f:translate(key:'{c:compatibility.lll(key:\'rm.saveDoc\',ext:\'lang\',file:\'locallang_core.xlf\')}')}" form="FeCookiesSettings">
-                <core:icon identifier="actions-document-save" /> <f:translate key="{c:compatibility.lll(key:'rm.saveDoc',ext:'lang',file:'locallang_core.xlf')}" />
+            <button name="_savedok" class="btn btn-default btn-sm " value="1" title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDoc')}" form="FeCookiesSettings">
+                <core:icon identifier="actions-document-save" /> <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDoc" />
             </button>
         </div>
     </f:if>

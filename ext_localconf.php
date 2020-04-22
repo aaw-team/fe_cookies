@@ -31,30 +31,22 @@ $bootstrap = function () {
     // Register eID
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = \AawTeam\FeCookies\Controller\EidController::class . '::mainAction';
 
-    // Version switch
-    if (version_compare(TYPO3_version, '7', '>=')) {
-        // Configuration for TYPO3 >= 7
-        /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-        $iconRegistry->registerIcon(
-            'content-plugin-fecookies',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            [
-                'source' => 'EXT:fe_cookies/Resources/Public/Icons/Extension.svg'
-            ]
-        );
-        $iconRegistry->registerIcon(
-            'fecookies-block',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            [
-                'source' => 'EXT:fe_cookies/Resources/Public/Icons/Block.svg'
-            ]
-        );
-
-    } else {
-        // Configuration for TYPO3 < 7
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['fecookies'] = 'EXT:fe_cookies/Resources/Private/PHP/EidDispatcher.php';
-    }
+    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'content-plugin-fecookies',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        [
+            'source' => 'EXT:fe_cookies/Resources/Public/Icons/Extension.svg'
+        ]
+    );
+    $iconRegistry->registerIcon(
+        'fecookies-block',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        [
+            'source' => 'EXT:fe_cookies/Resources/Public/Icons/Block.svg'
+        ]
+    );
 
     // Register the default TypoScript
     $typoScript = '/**

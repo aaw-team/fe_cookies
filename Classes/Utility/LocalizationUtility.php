@@ -9,8 +9,8 @@ namespace AawTeam\FeCookies\Utility;
  */
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * LocalizationUtility
@@ -353,7 +353,7 @@ class LocalizationUtility
     }
 
     /**
-     * @return \TYPO3\CMS\Lang\LanguageService
+     * @return LanguageService
      */
     public static function getLanguageServiceForLanguage($language = 'default')
     {

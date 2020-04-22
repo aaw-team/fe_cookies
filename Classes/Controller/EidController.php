@@ -11,8 +11,6 @@ namespace AawTeam\FeCookies\Controller;
 use AawTeam\FeCookies\Utility\FeCookiesUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
 
 /**
  * EidController
@@ -48,34 +46,6 @@ class EidController
             ->withHeader('Location', $returnUrl)
             ->withHeader('X-FeCookie-Set', '1')
         ;
-    }
-
-    /**
-     *
-     */
-    public function legacyAction()
-    {
-        $queryParams = GeneralUtility::_GET();
-        if (!$this->checkQueryParams($queryParams)) {
-            HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_400);
-            die();
-        }
-        $returnUrl = $queryParams['returnUrl'];
-        $salt = $queryParams['salt'];
-        $challenge = $queryParams['challenge'];
-
-        // Try to verify the challenge
-        if (!$this->verifyChallenge($challenge, $salt, $returnUrl)) {
-            HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_400);
-            die();
-        }
-
-        // Set the cookie
-        FeCookiesUtility::setCookie();
-
-        header('X-FeCookie-Set: 1');
-        header('Location: ' . $returnUrl);
-        HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_307);
     }
 
     /**
