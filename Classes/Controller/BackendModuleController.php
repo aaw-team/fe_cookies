@@ -25,7 +25,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 {
     /**
      * @var \AawTeam\FeCookies\Domain\Repository\BlockRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $blockRepository;
 
