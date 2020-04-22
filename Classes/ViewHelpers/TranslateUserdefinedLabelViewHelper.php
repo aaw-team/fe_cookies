@@ -9,6 +9,7 @@ namespace AawTeam\FeCookies\ViewHelpers;
  */
 
 use AawTeam\FeCookies\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -48,13 +49,10 @@ class TranslateUserdefinedLabelViewHelper extends AbstractViewHelper
         if ($language === null) {
             $language = 'default';
             if (TYPO3_MODE === 'FE') {
-                if (isset($GLOBALS['TSFE']->config['config']['language'])) {
-                    $language = $GLOBALS['TSFE']->config['config']['language'];
+                $siteLanguage = $GLOBALS['TYPO3_REQUEST']->getAttribute('language');
+                if ($siteLanguage instanceof SiteLanguage) {
+                    $language = $siteLanguage->getTypo3Language();
                 }
-            } elseif (!empty($GLOBALS['BE_USER']->uc['lang'])) {
-                $language = $GLOBALS['BE_USER']->uc['lang'];
-            } elseif (!empty($GLOBALS['LANG']->lang)) {
-                $language = $GLOBALS['LANG']->lang;
             }
         }
         return $language;
