@@ -22,200 +22,104 @@ They are registered in ``plugin.tx_fecookies``.
 Conditions
 ----------
 
-The extension provides some API methods, that can be used in TypoScript
-conditions. They let you define the TypoScript rendering based on the
+The extension provides a set of TypoScript conditions in symfony expression
+language. They let you define the TypoScript rendering based on the
 presence or the value of the cookie without getting in trouble with the
-TYPO3 page cache. Learn more about userFunc conditions in the
-:ref:`TypoScript Reference <t3tsref:condition-userfunc>`.
+TYPO3 page cache. Learn more about conditions in the
+:ref:`official TypoScript Reference <t3tsref:conditions>`.
 
-The available methods are grouped in the class
-``AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies``.
+Condition functions
+^^^^^^^^^^^^^^^^^^^
 
-**Usage:**
+cookieIsSet
+"""""""""""
 
-.. code-block:: typoscript
+:aspect:`Function`
+    cookieIsSet
 
-    [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::<method>(<arguments>)]
+:aspect:`Parameter`
+    none
 
-Condition methods
-^^^^^^^^^^^^^^^^^
+:aspect:`Type`
+    bool
 
-.. container:: table-row
+:aspect:`Description`
+    Returns true, when the cookie is set.
 
-   Method
-       ``cookieIsSet``
+:aspect:`Example`
+    True if cookie is set:
 
-   Arguments
-       none
+    .. code-block:: typoscript
 
-   Description
-       Returns true, when the cookie is set.
+        [cookieIsSet()]
 
-       Example:
+    True if cookie is not set:
 
-       .. code-block:: typoscript
+    .. code-block:: typoscript
 
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieIsSet()]
-               // cookie is set
-           [else]
-               // cookie is not set
-           [global]
+        [not cookieIsSet()]
 
-.. container:: table-row
 
-   Method
-       ``cookieIsNotSet``
+cookieValue
+"""""""""""
 
-   Arguments
-       none
+:aspect:`Function`
+    cookieValue
 
-   Description
-       Returns true, when the cookie is not set.
+:aspect:`Parameter`
+    none
 
-       Example:
+:aspect:`Type`
+    int / string
 
-       .. code-block:: typoscript
+:aspect:`Description`
+    Returns the cookie value.
 
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieIsNotSet()]
-               // cookie is not set
-           [else]
-               // cookie is set
-           [global]
+:aspect:`Example`
+    True if the cookie value is 1:
 
-.. container:: table-row
+    .. code-block:: typoscript
 
-   Method
-       ``cookieValue``
+        [cookieValue() == 1]
+  
+.. important::
 
-   Arguments
-       string
+    Cookies have always the value "1" at the moment (when they are set by the
+    API). In a future version of fe_cookies, it is planned to configure
+    meaningful values.
 
-   Description
-       Returns true when the cookie value matches at least one of the
-       arguments. Returns false when no cookie is set.
 
-       Multiple arguments are accepted, they must be comma separated.
+showFrontendPlugin
+""""""""""""""""""
 
-       The arguments are divided into an operator and a value part. One
-       argument must be composed by ``<operator>[SPACE]<value>``.
+:aspect:`Function`
+    showFrontendPlugin
 
-       Several **operators** can be used:
-       
-       =============   ==================================================
-       Operator        Function
-       =============   ==================================================
-       =               The cookie value must exactly match the given
-                       value.
+:aspect:`Parameter`
+    int (:code:`0`, :code:`1` or :code:`-1`)
 
-       !=              Inverse of "="
+:aspect:`Type`
+    bool
 
-       >               The cookie value must be greater than the given
-                       value.
+:aspect:`Description`
+    Returns true, when the frontend plugin should be shown. The parameter should
+    be the value of the predefined constant
+    typoscript:`{$plugin.tx_fecookies.settings.enableFrontendPlugin}` which
+    happens to be either :code:`0`, :code:`1` or :code:`-1`.
 
-       >=              The cookie value must be greater or equal the
-                       given value.
+:aspect:`Example`
+    True if the frontend plugin should be shown:
 
-       <               The cookie value must be less than the given
-                       value.
+    .. code-block:: typoscript
 
-       <=              The cookie value must be less or equal the given
-                       value.
-       =============   ==================================================
+        [showFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
 
-       **Values** can be a single value, or a set of values, separated
-       by "|". The latter will test all values and return true as soon as
-       a match occured ("OR-chain").
+    True if the frontend plugin should not be shown:
 
-       Examples:
+    .. code-block:: typoscript
 
-       .. code-block:: typoscript
+        [not showFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
 
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 1)]
-               // cookie is set and its value equals 1
-           [global]
-
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 0|1|2)]
-               // cookie is set and its value equals 0, 1 or 2
-           [global]
-
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(>= 2)]
-               // cookie is set and its value is greater or equal 2
-           [global]
-
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::cookieValue(= 0, > 2)]
-               // cookie is set and its value is either 0 or greater than 2
-           [global]
-
-       .. important::
-
-           Cookies have always the value "1" at the moment (when they are
-           set by the API). In a future version of fe_cookies, it is
-           planned to configure meaningful values.
-
-.. container:: table-row
-
-   Method
-       ``showFrontendPlugin``
-
-   Arguments
-       int (``0``, ``1`` or ``-1``)
-
-   Description
-       Returns true, when the frontend plugin should be shown. The
-       argument should be the value of the predefined constant
-
-       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``
-       
-       which happens to be either ``0``, ``1`` or ``-1``.
-
-       Example:
-
-       .. code-block:: typoscript
-
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::showFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
-               // frontend plugin should be shown
-           [else]
-               // frontend plugin should be hidden
-           [global]
-
-.. container:: table-row
-
-   Method
-       ``hideFrontendPlugin``
-
-   Arguments
-       int (``0``, ``1`` or ``-1``)
-
-   Description
-       Returns true, when the frontend plugin should be hidden. The
-       argument should be the value of the predefined constant
-
-       ``{$plugin.tx_fecookies.settings.enableFrontendPlugin}``
-       
-       which happens to be either ``0``, ``1`` or ``-1``.
-
-       This condition is used internally to give logged in backend users
-       the possibility to show the cookie-banner always during setup.
-
-       Example:
-
-       .. code-block:: typoscript
-
-           [userFunc=AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
-               // frontend plugin should be hidden
-           [else]
-               // frontend plugin should be shown
-           [global]
-
-       .. tip::
-
-           In the defaultContentRendering TypoScript, it is used like this:
-
-           .. code-block:: typoscript
-
-               [userFunc = AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
-                   tt_content.list.20.fecookies_fecookies >
-               [global]
 
 .. _section-configuration-typoscript-constants:
 
