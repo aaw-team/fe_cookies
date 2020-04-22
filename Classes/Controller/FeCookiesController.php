@@ -19,7 +19,7 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 {
     /**
      * @var \AawTeam\FeCookies\Domain\Repository\BlockRepository
-     * @TYPO3\CMS\Extbase\Annotation\Injects
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $blockRepository;
 
