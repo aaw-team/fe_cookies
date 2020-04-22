@@ -9,6 +9,7 @@ namespace AawTeam\FeCookies\Utility;
  */
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -105,14 +106,10 @@ class LocalizationUtility
     }
 
     /**
-     * @param bool $absolute
      * @return string
      */
-    public static function getUserdefinedLllFilesDir($absolute = true)
+    public static function getUserdefinedLllFilesDir()
     {
-        if (!is_bool($absolute)) {
-            throw new \InvalidArgumentException('$absolute must be bool');
-        }
         $path = self::getUserdefinedLllFilesBaseDir();
 
         if (self::isInFrontendMode()) {
@@ -131,7 +128,7 @@ class LocalizationUtility
             }
         }
 
-        return $absolute ? $path : substr($path, strlen(PATH_site));
+        return $path;
     }
 
     /**
@@ -161,7 +158,7 @@ class LocalizationUtility
             throw new \InvalidArgumentException('$language must be not empty string');
         }
 
-        $absoluteDirname = self::getUserdefinedLllFilesDir(true);
+        $absoluteDirname = self::getUserdefinedLllFilesDir();
         $fileName = $absoluteDirname . DIRECTORY_SEPARATOR . self::getUserdefinedLllFileName($language);
         if (is_file($fileName)) {
             return @unlink($fileName);
@@ -174,7 +171,7 @@ class LocalizationUtility
      */
     protected static function getUserdefinedLllFilesBaseDir()
     {
-        return PATH_typo3conf . 'tx_fecookies' . DIRECTORY_SEPARATOR . 'UserdefinedLanguageLabels';
+        return implode(DIRECTORY_SEPARATOR, [Environment::getConfigPath(), 'tx_fecookies', 'UserdefinedLanguageLabels']);
     }
 
     /**
@@ -211,7 +208,7 @@ class LocalizationUtility
             throw new \InvalidArgumentException('$xml must be not empty string');
         }
 
-        $absoluteDirname = self::getUserdefinedLllFilesDir(true);
+        $absoluteDirname = self::getUserdefinedLllFilesDir();
         GeneralUtility::mkdir_deep($absoluteDirname);
 
         $fileName = self::getUserdefinedLllFileName($language);
@@ -286,7 +283,7 @@ class LocalizationUtility
         }
         self::$LOCAL_LANG_userdefined[$language] = [];
 
-        $lllFilesDir = self::getUserdefinedLllFilesDir(true);
+        $lllFilesDir = self::getUserdefinedLllFilesDir();
         if (is_dir($lllFilesDir) && is_readable($lllFilesDir)) {
             $lllFileName = $lllFilesDir . DIRECTORY_SEPARATOR . self::getUserdefinedLllFileName($language);
             if (is_file($lllFileName) && is_readable($lllFileName)) {
