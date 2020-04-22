@@ -213,28 +213,9 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
                         $constantsString = implode(LF, $this->templateService->raw);
                         if ($this->storeTemplateRecord($constantsString)) {
                             // Clear cache
-                            /** @var DataHandler $dataHandler */
-                            $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-
-                            // If the user is not allowed to clear 'all' caches, setup an alternative user object
-                            // just for this purpose
-                            $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfig()['options.']['clearCache.']['all'] ?? false || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfig()['options.']['clearCache.']['all'] !== '0'));
-                            if ($extendUserPermissionsForCacheClearing) {
-                                $beUser = clone ($this->getBackendUserAuthentication());
-                                is_array($beUser->userTS['options.']) || $beUser->userTS['options.'] = [];
-                                is_array($beUser->userTS['options.']['clearCache.']) || $beUser->userTS['options.']['clearCache.'] = [];
-                                $beUser->userTS['options.']['clearCache.']['all'] = '1';
-                                $dataHandler->start([], [], $beUser);
-                            } else {
-                                $dataHandler->start([], []);
-                            }
-                            $dataHandler->clear_cacheCmd('all');
-
-                            // Remove the objects from memory
-                            unset($dataHandler);
-                            if ($extendUserPermissionsForCacheClearing) {
-                                unset($beUser);
-                            }
+                            /** @var CacheManager $cacheManager */
+                            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+                            $cacheManager->flushCaches();
 
                             $this->addFlashMessage('sysmessage.success.templaterecordstore');
                         } else {
