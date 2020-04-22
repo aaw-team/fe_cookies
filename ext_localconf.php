@@ -52,7 +52,7 @@ $bootstrap = function () {
     $typoScript = '/**
  * Completely disable the plugin, when not enabled
  */
-[userFunc = AawTeam\FeCookies\TypoScript\ConditionMatching\FeCookies::hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
+[hideFrontendPlugin({$plugin.tx_fecookies.settings.enableFrontendPlugin})]
 tt_content.list.20.fecookies_fecookies >
 [global]';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('fe_cookies', 'setup', $typoScript, 'defaultContentRendering');
