@@ -6,9 +6,6 @@
 Introduction
 ============
 
-.. contents:: Table of Contents
-    :local:
-
 .. _section-what-it-does:
 
 What does it do?
@@ -19,16 +16,10 @@ based on the existence or values of cookies. On board is a frontend
 plugin to display "cookie-banners" as well as a configurable API to
 manage cookies for PHP, JavaScript and CSS.
 
-Features
---------
+**Features**
 
 1. Frontend plugin to display "cookie-banners". It shows a message as long
    as the message is not aknowledged (by clicking the accept-button).
-
-   .. figure:: ../Images/Introduction/FrontendPluginPreview.png
-      :alt: Cookie banner plugin preview
-
-      Cookie banner plugin preview
 
 2. An API for PHP and JavaScript to manage cookies. A "CSS-API" to show
    and hide contents by just using CSS classes (based on the existence
@@ -39,11 +30,21 @@ Features
 4. Lots of configuration possibilities.
 5. Wish/need more? Get in touch: https://github.com/aaw-team/fe_cookies
 
+
+Screenshots
+-----------
+
+.. figure:: ../Images/Introduction/FrontendPluginPreview.png
+   :alt: Cookie banner plugin preview
+
+   Cookie banner plugin preview
+
+
 .. _section-credits:
 
 Credits
 -------
 
-Thanks to the `Agentur am Wasser <https://web.agenturamwasser.ch/>`_, our
+Thanks to the `Agentur am Wasser <https://www.agenturamwasser.ch/>`_, our
 company, for giving us the possibility to realize this extension and
 share it with the TYPO3 community.

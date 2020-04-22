@@ -16,6 +16,7 @@
 .. role:: php(code)
 .. role:: typoscript(code)
 .. role:: js(code)
+.. role:: css(code)
 
 .. role:: ts(typoscript)
    :class: typoscript

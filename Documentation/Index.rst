@@ -3,48 +3,45 @@
 
 .. _start:
 
-=============================================================
-fe_cookies
-=============================================================
+================
+Frontend Cookies
+================
 
-.. only:: html
+:Version:
+    |release|
 
-    :Classification:
-        fe_cookies
+:Language:
+    en
 
-    :Version:
-        |release|
+:Description:
+    Manual covering TYPO3 extension fe_cookies
 
-    :Language:
-        en
+:Keywords:
+    cookie, cookie-banner, cookie-consent, GDPR, DSGVO
 
-    :Description:
-        Manual covering TYPO3 extension fe_cookies
+:Author:
+    Christian Futterlieb
 
-    :Keywords:
-        cookie, cookie-banner, cookie-consent, GDPR, DSGVO
+:Email:
+    development@agenturamwasser.ch
 
-    :Copyright:
-        2018 by Agentur am Wasser | Maeder & Partner AG (https://web.agenturamwasser.ch)
-
-    :Author:
-        Christian Futterlieb
-
-    :Email:
-        development@agenturamwasser.ch
-
-    :License:
-        This document is published under the Open Publication License
-        available from https://www.opencontent.org/openpub/
-
-    :Rendered:
-        |today|
-
-    The content of this document is related to TYPO3,
-    a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`__.
+:License:
+   This extension documentation is published under the
+   `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__
+   (Creative Commons) license
 
 
-**Table of Contents**
+.. rst-class:: horizbuttons-tip-m
+
+- :ref:`sitemap`
+
+
+The content of this document is related to TYPO3, a GNU/GPL CMS/Framework
+available from `typo3.org <https://typo3.org/>`__.
+
+
+Table of Contents
+-----------------
 
 .. toctree::
     :maxdepth: 3
@@ -52,7 +49,7 @@ fe_cookies
 
     Introduction/Index
     User/Index
-    Administration/Index
+    Installation/Index
     Configuration/Index
     Developer/Index
     Links

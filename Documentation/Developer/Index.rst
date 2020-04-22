@@ -144,7 +144,7 @@ following (or equivalent) TypoScript:
 
 Now, you can use following classes:
 
-.. code-block:: html
+.. code-block:: css
 
     /* Classes for elements when cookie has NOT been set */
     html.tx_fe_cookies-noCookie {

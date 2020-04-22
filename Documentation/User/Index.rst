@@ -6,9 +6,6 @@
 User
 ====
 
-.. contents:: Table of Contents
-    :local:
-
 .. _section-user-backendmodule:
 
 The backend module

@@ -6,3 +6,4 @@ composer.lock
 .tern-project
 npm-debug.log
 node_modules
+*GENERATED*
