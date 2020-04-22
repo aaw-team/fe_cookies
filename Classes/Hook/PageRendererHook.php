@@ -11,6 +11,7 @@ namespace AawTeam\FeCookies\Hook;
 use AawTeam\FeCookies\Configuration\Configuration;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 /**
  * PageRendererHook
@@ -89,7 +90,7 @@ class PageRendererHook
             return $params['jsFooterLibs']['fe_cookies']['section'];
         }
 
-        $filename = $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js');
+        $filename = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize('EXT:fe_cookies/Resources/Public/JavaScript/Fecookies.js');
         if (isset($params['jsFiles'][$filename])) {
             return $params['jsFiles'][$filename]['section'];
         } elseif (isset($params['jsFooterFiles'][$filename])) {

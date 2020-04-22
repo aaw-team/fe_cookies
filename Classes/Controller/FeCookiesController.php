@@ -9,6 +9,7 @@ namespace AawTeam\FeCookies\Controller;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 /**
  * FeCookiesController
@@ -43,7 +44,7 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         // Add the js file
         if ($this->shouldIncludeJs()) {
             $this->getPagerenderer()->addJsFooterFile(
-                $this->getTypoScriptFrontendController()->tmpl->getFileName('EXT:fe_cookies/Resources/Public/JavaScript/CookieBannerHandler.js'),
+                GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize('EXT:fe_cookies/Resources/Public/JavaScript/CookieBannerHandler.js'),
                 'text/javascript',
                 false,                                                                    // $compress
                 false,                                                                    // $forceOnTop
