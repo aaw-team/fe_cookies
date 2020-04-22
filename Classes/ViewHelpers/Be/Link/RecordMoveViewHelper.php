@@ -8,6 +8,7 @@ namespace AawTeam\FeCookies\ViewHelpers\Be\Link;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
@@ -109,7 +110,7 @@ class RecordMoveViewHelper extends AbstractTagBasedViewHelper
             'redirect' => $this->arguments['returnUrl'] ?? GeneralUtility::getIndpEnv('REQUEST_URI'),
         ];
 
-        $uri = BackendUtility::getModuleUrl('tce_db', $parameters);
+        $uri = GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('tce_db', $parameters);
 
         if ($uri !== '') {
             $this->tag->addAttribute('href', $uri);

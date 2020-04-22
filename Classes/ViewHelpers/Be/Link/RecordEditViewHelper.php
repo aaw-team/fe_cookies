@@ -8,7 +8,7 @@ namespace AawTeam\FeCookies\ViewHelpers\Be\Link;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
@@ -52,7 +52,7 @@ class RecordEditViewHelper extends AbstractTagBasedViewHelper
         if (is_array($this->arguments['fields'])) {
             $parameters['columnsOnly'] = implode(',', $this->arguments['fields']);
         }
-        $uri = BackendUtility::getModuleUrl('record_edit', $parameters);
+        $uri = GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('record_edit', $parameters);
 
         if ($uri !== '') {
             $this->tag->addAttribute('href', $uri);
