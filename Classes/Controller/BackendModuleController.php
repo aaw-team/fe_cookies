@@ -279,7 +279,6 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     {
         /** @var ExtendedTemplateService $templateService */
         $this->templateService = GeneralUtility::makeInstance(ExtendedTemplateService::class);
-        $this->templateService->init();
         $this->templateRow = $this->templateService->ext_getFirstTemplate($pageUid, $templateUid);
         if (is_array($this->templateRow)) {
             // Get the rootLine
