@@ -11,11 +11,12 @@ namespace AawTeam\FeCookies\ViewHelpers\Be\Link;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  * RecordCreateViewHelper
  */
-class RecordCreateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper
+class RecordCreateViewHelper extends AbstractTagBasedViewHelper
 {
     /**
      * @var string
@@ -30,7 +31,7 @@ class RecordCreateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTa
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper::initializeArguments()
+     * @see AbstractTagBasedViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {

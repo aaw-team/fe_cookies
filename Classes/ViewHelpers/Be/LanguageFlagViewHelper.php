@@ -13,11 +13,12 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * LanguageFlagViewHelper
  */
-class LanguageFlagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class LanguageFlagViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool
@@ -26,7 +27,7 @@ class LanguageFlagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+     * @see AbstractViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {

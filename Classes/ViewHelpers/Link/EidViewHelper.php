@@ -9,11 +9,12 @@ namespace AawTeam\FeCookies\ViewHelpers\Link;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  * EidViewHelper
  */
-class EidViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper
+class EidViewHelper extends AbstractTagBasedViewHelper
 {
     /**
      * @var string
@@ -22,7 +23,7 @@ class EidViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVie
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper::initializeArguments()
+     * @see AbstractTagBasedViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {

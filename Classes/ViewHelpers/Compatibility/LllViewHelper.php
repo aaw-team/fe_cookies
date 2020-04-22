@@ -8,10 +8,12 @@ namespace AawTeam\FeCookies\ViewHelpers\Compatibility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * RecordIconViewHelper
  */
-class LllViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class LllViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool
@@ -25,7 +27,7 @@ class LllViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+     * @see AbstractViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {

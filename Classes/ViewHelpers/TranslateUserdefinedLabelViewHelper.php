@@ -9,15 +9,16 @@ namespace AawTeam\FeCookies\ViewHelpers;
  */
 
 use AawTeam\FeCookies\Utility\LocalizationUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * TranslateUserdefinedLabelViewHelper
  */
-class TranslateUserdefinedLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class TranslateUserdefinedLabelViewHelper extends AbstractViewHelper
 {
     /**
      * {@inheritDoc}
-     * @see \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+     * @see AbstractViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {

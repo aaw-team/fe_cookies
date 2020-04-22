@@ -12,11 +12,12 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * RecordIconViewHelper
  */
-class RecordIconViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class RecordIconViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool
@@ -25,7 +26,7 @@ class RecordIconViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 
     /**
      * {@inheritDoc}
-     * @see \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+     * @see AbstractViewHelper::initializeArguments()
      */
     public function initializeArguments()
     {
