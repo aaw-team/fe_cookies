@@ -90,7 +90,7 @@ class LocalizationUtility
         } elseif (!is_string($language) || empty($language)) {
             throw new \InvalidArgumentException('$language must be not empty string or int');
         }
-        $defaultLanguageIsocode = (string)BackendUtility::getModTSconfig(GeneralUtility::_GET('id'), 'mod.fe_cookies.languageManagement.defaultLanguageIsocode')['value'];
+        $defaultLanguageIsocode = BackendUtility::getPagesTSconfig(GeneralUtility::_GET('id'))['mod.']['fe_cookies.']['languageManagement.']['defaultLanguageIsocode'] ?? null;
         if ($language === 'default' || $language === $defaultLanguageIsocode) {
             return self::getBackendUserAuthentication()->checkLanguageAccess(0);
         }
@@ -123,7 +123,7 @@ class LocalizationUtility
                 }
             }
         } else {
-            $storageMode = (string)BackendUtility::getModTSconfig(GeneralUtility::_GET('id'), 'mod.fe_cookies.languageManagement.storageMode')['value'];
+            $storageMode = BackendUtility::getPagesTSconfig(GeneralUtility::_GET('id'))['mod.']['fe_cookies.']['languageManagement.']['storageMode'] ?? null;
             if (preg_match('~^page:(\\d+)$~', $storageMode, $matches)) {
                 $path .= '/page_' . $matches[1];
             } elseif ($storageMode !== 'global') {
@@ -322,7 +322,7 @@ class LocalizationUtility
         if (self::isInFrontendMode()) {
             $allowedLabels = $allLabels;
         } else {
-            $allowedLabels = GeneralUtility::trimExplode(',', (string)BackendUtility::getModTSconfig(GeneralUtility::_GET('id'), 'mod.fe_cookies.languageManagement.allowedLanguageLabels')['value'], true);
+            $allowedLabels = GeneralUtility::trimExplode(',', BackendUtility::getPagesTSconfig(GeneralUtility::_GET('id'))['mod.']['fe_cookies.']['languageManagement.']['allowedLanguageLabels'] ?? '', true);
             if (empty($allowedLabels) || (count($allowedLabels) && $allowedLabels[0] === 'all')) {
                 $allowedLabels = $allLabels;
             } else {

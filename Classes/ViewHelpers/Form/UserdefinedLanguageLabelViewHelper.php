@@ -48,7 +48,7 @@ class UserdefinedLanguageLabelViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
 
         // There is no language 'default', check out the correct code
         if ($language === 'default') {
-            $language = (string)BackendUtility::getModTSconfig(GeneralUtility::_GET('id'), 'mod.fe_cookies.languageManagement.defaultLanguageIsocode')['value'];
+            $language = BackendUtility::getPagesTSconfig(GeneralUtility::_GET('id'))['mod.']['fe_cookies.']['languageManagement.']['defaultLanguageIsocode'] ?? null;
             if (!$language) {
                 throw new \RuntimeException('You must set the defaultLanguageIsocode in mod.fe_cookies.languageManagement.defaultLanguageIsocode');
             }

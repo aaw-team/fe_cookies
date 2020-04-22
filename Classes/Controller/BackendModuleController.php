@@ -93,7 +93,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      */
     protected function userHasAccessToSettings()
     {
-        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.enable')['value'];
+        return $this->getBackendUserAuthentication()->isAdmin() || (BackendUtility::getPagesTSconfig($pageUid)['mod.']['fe_cookies.']['settingsManagement.']['enable'] ?? false);
     }
 
     /**
@@ -101,7 +101,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      */
     protected function userHasAccessToLanguage()
     {
-        return $this->getBackendUserAuthentication()->isAdmin() || (bool)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.languageManagement.enable')['value'];
+        return $this->getBackendUserAuthentication()->isAdmin() || (BackendUtility::getPagesTSconfig($pageUid)['mod.']['fe_cookies.']['languageManagement.']['enable'] ?? false);
     }
 
     /**
@@ -188,8 +188,8 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
         $pagerenderer->loadRequireJsModule('TYPO3/CMS/Tstemplate/ConstantEditor');
 
         // Initialize TemplateService
-        $templateUid = (int)BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.templateUid')['value'];
-        $templatePid = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.templatePid')['value'];
+        $templateUid = (int)BackendUtility::getPagesTSconfig($pageUid)['mod.']['fe_cookies.']['settingsManagement.']['templateUid'] ?? 0;
+        $templatePid = (int)BackendUtility::getPagesTSconfig($pageUid)['mod.']['fe_cookies.']['settingsManagement.']['templatePid'] ?? 0;
         if (!$templatePid || $templatePid < 1) {
             $templatePid = $pageUid;
         }
@@ -218,7 +218,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 
                             // If the user is not allowed to clear 'all' caches, setup an alternative user object
                             // just for this purpose
-                            $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfigVal('options.clearCache.all') !== '0'));
+                            $extendUserPermissionsForCacheClearing = !($this->getBackendUserAuthentication()->getTSConfig()['options.']['clearCache.']['all'] ?? false || ($this->getBackendUserAuthentication()->isAdmin() && $this->getBackendUserAuthentication()->getTSConfig()['options.']['clearCache.']['all'] !== '0'));
                             if ($extendUserPermissionsForCacheClearing) {
                                 $beUser = clone ($this->getBackendUserAuthentication());
                                 is_array($beUser->userTS['options.']) || $beUser->userTS['options.'] = [];
@@ -352,7 +352,7 @@ class BackendModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
             return false;
         }
 
-        $allowedConstantNames = BackendUtility::getModTSconfig($pageUid, 'mod.fe_cookies.settingsManagement.allowedConstantNames')['properties'];
+        $allowedConstantNames = BackendUtility::getPagesTSconfig($pageUid)['mod.']['fe_cookies.']['settingsManagement.']['allowedConstantNames.'] ?? [];
 
         $return = false;
         foreach ($allowedConstantNames as $allowedConstantName) {

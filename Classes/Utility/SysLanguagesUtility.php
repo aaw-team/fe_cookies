@@ -69,7 +69,7 @@ class SysLanguagesUtility
         $defaultLanguageFlag = '';
         $defaultLanguageIsocode = 'default';
 
-        $tsconfig = BackendUtility::getModTSconfig(GeneralUtility::_GET('id'), 'mod.SHARED')['properties'];
+        $tsconfig = BackendUtility::getPagesTSconfig(GeneralUtility::_GET('id'))['mod.']['SHARED.']['properties'] ?? null;
         if (is_array($tsconfig)) {
             if ($tsconfig['defaultLanguageLabel']) {
                 $defaultLanguageLabel = $tsconfig['defaultLanguageLabel'] . ' (' . $defaultLanguageLabel . ')';
