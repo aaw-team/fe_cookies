@@ -1,5 +1,2 @@
-plugin.tx_fecookies {
-    _CSS_DEFAULT_STYLE = 1
-    _CSS_DEFAULT_STYLE.cObject = FILE
-    _CSS_DEFAULT_STYLE.cObject.file = EXT:fe_cookies/Resources/Public/Css/DefaultStyle.css
-}
+page.includeCSS.feCookiesDefaultStyle = EXT:fe_cookies/Resources/Public/Css/DefaultStyle.css
+page.includeCSS.feCookiesDefaultStyle.disableCompression = 1
