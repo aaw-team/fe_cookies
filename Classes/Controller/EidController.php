@@ -11,6 +11,8 @@ namespace AawTeam\FeCookies\Controller;
 use AawTeam\FeCookies\Utility\FeCookiesUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * EidController
@@ -19,15 +21,14 @@ class EidController
 {
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response)
+    public function mainAction(ServerRequestInterface $request): ResponseInterface
     {
         // Analyze query params
         $queryParams = $request->getQueryParams();
         if (!$this->checkQueryParams($queryParams)) {
-            return $response->withStatus(400, 'Bad Request');
+            return $this->createHttpResponse(400);
         }
         $returnUrl = $queryParams['returnUrl'];
         $salt = $queryParams['salt'];
@@ -35,17 +36,35 @@ class EidController
 
         // Try to verify the challenge
         if (!$this->verifyChallenge($challenge, $salt, $returnUrl)) {
-            return $response->withStatus(400, 'Bad Request');
+            return $this->createHttpResponse(400);
         }
 
-        // Set the cookie
-        FeCookiesUtility::setCookie();
-
-        return $response
-            ->withStatus(307, 'Temporary Redirect')
+        $response = $this->createHttpResponse(307)
             ->withHeader('Location', $returnUrl)
-            ->withHeader('X-FeCookie-Set', '1')
-        ;
+            ->withHeader('X-FeCookie-Set', '1');
+        return FeCookiesUtility::addCookie($response);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
+    public function legacyAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        return $this->mainAction($request);
+    }
+
+    /**
+     * Pretty much like PSR-17 ResponseFactory::createResponse().
+     *
+     * @param int $code
+     * @param string $reasonPhrase
+     * @return ResponseInterface
+     */
+    protected function createHttpResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
+    {
+        return GeneralUtility::makeInstance(Response::class)->withStatus($code, $reasonPhrase);
     }
 
     /**

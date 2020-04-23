@@ -9,6 +9,7 @@ namespace AawTeam\FeCookies\Utility;
  */
 
 use AawTeam\FeCookies\Configuration\Configuration;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -37,11 +38,62 @@ class FeCookiesUtility
      */
     public static function setCookie()
     {
+        $cookieParams = self::getCookieParams();
+        return \setcookie(
+            $cookieParams['name'],
+            $cookieParams['value'],
+            $cookieParams['expires'],
+            $cookieParams['path'],
+            $cookieParams['domain'],
+            $cookieParams['secure'],
+            $cookieParams['httponly']
+        );
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @return ResponseInterface
+     */
+    public static function addCookie(ResponseInterface $response): ResponseInterface
+    {
+        $cookieParams = self::getCookieParams();
+        $cookieHeader = urlencode($cookieParams['name']) . '=' . urlencode($cookieParams['value']);
+
+        if ($cookieParams['expires'] > 0) {
+            $cookieHeader .= '; Expires=' . date(\DateTime::COOKIE, $cookieParams['expires']);
+        }
+        if ($cookieParams['domain']) {
+            $cookieHeader .= '; Domain=' . $cookieParams['domain'];
+        }
+        if ($cookieParams['path']) {
+            $cookieHeader .= '; Path=' . $cookieParams['path'];
+        }
+        if ($cookieParams['secure']) {
+            $cookieHeader .= '; Secure';
+        }
+        if ($cookieParams['httponly']) {
+            $cookieHeader .= '; HttpOnly';
+        }
+        if ($cookieParams['samesite']) {
+            $cookieHeader .= '; SameSite=' . $cookieParams['samesite'];
+        }
+
+        return $response->withAddedHeader('Set-Cookie', $cookieHeader);
+    }
+
+    /**
+     * @throws \RuntimeException
+     * @return array
+     */
+    protected static function getCookieParams(): array
+    {
         $lifetime = self::getConfiguration()->getLifetime();
         if ($lifetime === null) {
             $expire = 0;
         } elseif (!is_int($lifetime)) {
-            throw new \InvalidArgumentException('$expire must be integer or null');
+            throw new \RuntimeException('$expire must be integer or null');
         } else {
             $expire = $GLOBALS['ACCESS_TIME'] + $lifetime;
         }
@@ -50,14 +102,14 @@ class FeCookiesUtility
         if ($domain === null) {
             $domain = '';
         } elseif (!is_string($domain)) {
-            throw new \InvalidArgumentException('$domain must be string or null');
+            throw new \RuntimeException('$domain must be string or null');
         }
 
         $path = self::getConfiguration()->getPath();
         if ($path === null) {
             $path = $domain ? '/' : GeneralUtility::getIndpEnv('TYPO3_SITE_PATH');
         } elseif (!is_string($path)) {
-            throw new \InvalidArgumentException('$path must be string or null');
+            throw new \RuntimeException('$path must be string or null');
         }
 
         $secure = self::getConfiguration()->getSecure();
@@ -68,14 +120,23 @@ class FeCookiesUtility
                 throw new \RuntimeException('Cannot set secure cookie over an insecure connection');
             }
         } else {
-            throw new \InvalidArgumentException('$secure must be bool or null');
+            throw new \RuntimeException('$secure must be bool or null');
         }
         $httpOnly = self::getConfiguration()->getHttpOnly();
         if ($httpOnly !== null && !is_bool($httpOnly)) {
-            throw new \InvalidArgumentException('$httpOnly must be bool or null');
+            throw new \RuntimeException('$httpOnly must be bool or null');
         }
 
-        return \setcookie(self::getCookieName(), self::VALUE_DEFAULT, $expire, $path, $domain, $secure, $httpOnly);
+        return [
+            'name' => self::getCookieName(),
+            'value' => self::VALUE_DEFAULT,
+            'expires' => $expire,
+            'path' => $path,
+            'domain' => $domain,
+            'secure' => $secure,
+            'httponly' => $httpOnly,
+            'samesite' => 'Lax',
+        ];
     }
 
     /**
