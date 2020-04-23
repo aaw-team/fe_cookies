@@ -12,14 +12,22 @@ $bootstrap = function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_fecookies_domain_model_block');
 
     // Register the backend module
+    $extensionName = 'FeCookies';
+    $controllerActions = [
+        \AawTeam\FeCookies\Controller\BackendModuleController::class => 'index,settings,language,infoBox',
+    ];
+    // Old-style for TYPO3 versions below 10
+    if (version_compare(TYPO3_version, '10', '<')) {
+        $extensionName = 'AawTeam.' . $extensionName;
+        $controllerActions['BackendModule'] = $controllerActions[\AawTeam\FeCookies\Controller\BackendModuleController::class];
+        unset($controllerActions[\AawTeam\FeCookies\Controller\BackendModuleController::class]);
+    }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'AawTeam.FeCookies',
+        $extensionName,
         'web',
         'fecookies',
         '',
-        [
-            'BackendModule' => 'index,settings,language,infoBox',
-        ],
+        $controllerActions,
         [
             'access' => 'user,group',
             'icon' => 'EXT:fe_cookies/Resources/Public/Icons/Extension.svg',

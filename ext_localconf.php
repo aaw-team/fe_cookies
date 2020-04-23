@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright 2018 Agentur am Wasser | Maeder & Partner AG
  *
@@ -9,12 +10,20 @@
 defined('TYPO3_MODE') or die();
 
 $bootstrap = function () {
+    $extensionName = 'FeCookies';
+    $controllerActions = [
+        \AawTeam\FeCookies\Controller\FeCookiesController::class => 'index',
+    ];
+    // Old-style for TYPO3 versions below 10
+    if (version_compare(TYPO3_version, '10', '<')) {
+        $extensionName = 'AawTeam.' . $extensionName;
+        $controllerActions['FeCookies'] = $controllerActions[\AawTeam\FeCookies\Controller\FeCookiesController::class];
+        unset($controllerActions[\AawTeam\FeCookies\Controller\FeCookiesController::class]);
+    }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'AawTeam.FeCookies',
-        'fecookies',
-        [
-            'FeCookies' => 'index',
-        ]
+        $extensionName,
+        'Fecookies',
+        $controllerActions
     );
 
     // Configuration cache
