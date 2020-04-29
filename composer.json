@@ -34,7 +34,6 @@
         "friendsofphp/php-cs-fixer": "^2.11"
     },
     "replace": {
-        "fe_cookies": "self.version",
         "typo3-ter/fe_cookies": "self.version"
     },
     "autoload": {
