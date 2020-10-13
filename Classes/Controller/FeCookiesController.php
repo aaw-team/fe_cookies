@@ -62,14 +62,14 @@ class FeCookiesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         if (is_array($this->settings['styles'])) {
             $styles = '';
             if (is_array($this->settings['styles']['banner'])) {
-                $styles .= $this->renderCssForProperty($this->settings['styles']['banner'], '#tx_fe_cookies-banner');
+                $styles .= $this->renderCssForProperty($this->settings['styles']['banner'], '.tx_fe_cookies-banner');
             }
             if (is_array($this->settings['styles']['acceptButton'])) {
-                $styles .= $this->renderCssForProperty($this->settings['styles']['acceptButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-accept');
+                $styles .= $this->renderCssForProperty($this->settings['styles']['acceptButton'], '.tx_fe_cookies-banner .tx_fe_cookies-button-accept');
             }
             if (is_array($this->settings['styles']['closeButton'])) {
-                $styles .= $this->renderCssForProperty($this->settings['styles']['closeButton'], '#tx_fe_cookies-banner #tx_fe_cookies-button-close', ['backgroundColor']);
-                $styles .= $this->renderCssForProperty(['backgroundColor' => $this->settings['styles']['closeButton']['color']], '#tx_fe_cookies-banner #tx_fe_cookies-button-close span', ['backgroundColor']);
+                $styles .= $this->renderCssForProperty($this->settings['styles']['closeButton'], '.tx_fe_cookies-banner .tx_fe_cookies-button-close', ['backgroundColor']);
+                $styles .= $this->renderCssForProperty(['backgroundColor' => $this->settings['styles']['closeButton']['color']], '.tx_fe_cookies-banner .tx_fe_cookies-button-close span', ['backgroundColor']);
             }
             if (!empty($styles)) {
                 $this->getPagerenderer()->addCssInlineBlock('fe_cookies_custom_styles', $styles);
